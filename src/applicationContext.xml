@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			 <value>jdbc:mysql://localhost:3306/ak_zhsq?useUnicode=true&amp;characterEncoding=UTF-8
+			<!-- <value>jdbc:mysql://localhost:3306/jinzht2016?useUnicode=true&amp;characterEncoding=UTF-8 --> 
+			</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.akchengtou.web.entity.Contact</value>
+				<value>com.akchengtou.web.entity.Message</value>
+				<value>com.akchengtou.web.entity.User</value>
+				<value>com.akchengtou.web.entity.Eventimages</value>
+				<value>com.akchengtou.web.entity.Building</value>
+				<value>com.akchengtou.web.entity.Authentic</value>
+				<value>com.akchengtou.web.entity.Attendancerecord</value>
+				<value>com.akchengtou.web.entity.Announcement</value>
+				<value>com.akchengtou.web.entity.Orderstatus</value>
+				<value>com.akchengtou.web.entity.Member</value>
+				<value>com.akchengtou.web.entity.Publiccontent</value>
+				<value>com.akchengtou.web.entity.Feedbackimages</value>
+				<value>com.akchengtou.web.entity.Attendance</value>
+				<value>com.akchengtou.web.entity.Contentprise</value>
+				<value>com.akchengtou.web.entity.Contentcomment</value>
+				<value>com.akchengtou.web.entity.Homehouse</value>
+				<value>com.akchengtou.web.entity.Paytype</value>
+				<value>com.akchengtou.web.entity.Contenttype</value>
+				<value>com.akchengtou.web.entity.Orderservice</value>
+				<value>com.akchengtou.web.entity.Authenticstatus</value>
+				<value>com.akchengtou.web.entity.Ordertype</value>
+				<value>com.akchengtou.web.entity.Task</value>
+				<value>com.akchengtou.web.entity.Servicetype</value>
+				<value>com.akchengtou.web.entity.Unit</value>
+				<value>com.akchengtou.web.entity.Serviceimages</value>
+				<value>com.akchengtou.web.entity.Ordercomment</value>
+				<value>com.akchengtou.web.entity.Employertype</value>
+				<value>com.akchengtou.web.entity.Publiccontentimages</value>
+				<value>com.akchengtou.web.entity.Event</value>
+				<value>com.akchengtou.web.entity.House</value>
+				<value>com.akchengtou.web.entity.Feedback</value>
+				<value>com.akchengtou.web.entity.Service</value></list>
+		</property></bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" /><bean
+		id="ContactDAO" class="com.akchengtou.web.entity.ContactDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+</bean>
+	<bean id="MessageDAO" class="com.akchengtou.web.entity.MessageDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UserDAO" class="com.akchengtou.web.entity.UserDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="EventimagesDAO"
+		class="com.akchengtou.web.entity.EventimagesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BuildingDAO" class="com.akchengtou.web.entity.BuildingDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AuthenticDAO"
+		class="com.akchengtou.web.entity.AuthenticDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AttendancerecordDAO"
+		class="com.akchengtou.web.entity.AttendancerecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AnnouncementDAO"
+		class="com.akchengtou.web.entity.AnnouncementDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrderstatusDAO"
+		class="com.akchengtou.web.entity.OrderstatusDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MemberDAO" class="com.akchengtou.web.entity.MemberDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PubliccontentDAO"
+		class="com.akchengtou.web.entity.PubliccontentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FeedbackimagesDAO"
+		class="com.akchengtou.web.entity.FeedbackimagesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AttendanceDAO"
+		class="com.akchengtou.web.entity.AttendanceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ContentpriseDAO"
+		class="com.akchengtou.web.entity.ContentpriseDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ContentcommentDAO"
+		class="com.akchengtou.web.entity.ContentcommentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="HomehouseDAO"
+		class="com.akchengtou.web.entity.HomehouseDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PaytypeDAO" class="com.akchengtou.web.entity.PaytypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ContenttypeDAO"
+		class="com.akchengtou.web.entity.ContenttypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrderserviceDAO"
+		class="com.akchengtou.web.entity.OrderserviceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AuthenticstatusDAO"
+		class="com.akchengtou.web.entity.AuthenticstatusDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrdertypeDAO"
+		class="com.akchengtou.web.entity.OrdertypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TaskDAO" class="com.akchengtou.web.entity.TaskDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ServicetypeDAO"
+		class="com.akchengtou.web.entity.ServicetypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UnitDAO" class="com.akchengtou.web.entity.UnitDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ServiceimagesDAO"
+		class="com.akchengtou.web.entity.ServiceimagesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="OrdercommentDAO"
+		class="com.akchengtou.web.entity.OrdercommentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="EmployertypeDAO"
+		class="com.akchengtou.web.entity.EmployertypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PubliccontentimagesDAO"
+		class="com.akchengtou.web.entity.PubliccontentimagesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="EventDAO" class="com.akchengtou.web.entity.EventDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="HouseDAO" class="com.akchengtou.web.entity.HouseDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FeedbackDAO" class="com.akchengtou.web.entity.FeedbackDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ServiceDAO" class="com.akchengtou.web.entity.ServiceDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean></beans>
