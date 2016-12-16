@@ -1,15 +1,21 @@
 package com.akchengtou.web.entity;
 
 import java.util.List;
+import java.util.Map;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.akchengtou.tools.AKConfig;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -43,11 +49,63 @@ public class MessageDAO {
 	protected void initDao() {
 		// do nothing
 	}
+	
+	public List findByPropertyWithPage(String propertyName, Object value,Integer page) {
+		log.debug("finding Message instance with property: "
+				+ propertyName + ", value: " + value);
+		try {
+			String queryString = "from Message as model where model."
+					+ propertyName + "= ? and model.valid = true order by model.publicDate desc";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setFirstResult(page*AKConfig.STRING_INVESTOR_LIST_MAX_SIZE);
+			queryObject.setMaxResults(AKConfig.STRING_INVESTOR_LIST_MAX_SIZE);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer counterByProperties(Map map) {
+		try {
+			String queryString = "select count(model.messageId) as count from Message as model where model.";
+			Object[] keys = map.keySet().toArray();
+			for(int i = 0;i<keys.length;i++){
+				if(i==0){
+					queryString += keys[i] + "= ?";
+				}else{
+					queryString +=" and " + keys[i] + "= ?";
+				}
+			}
+			
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			for(int i = 0;i<keys.length;i++){
+				queryObject.setParameter(i,map.get( keys[i]));
+			}
+					
+			return  ((Number) queryObject.iterate().next())
+			         .intValue();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 
 	public void save(Message transientInstance) {
 		log.debug("saving Message instance");
 		try {
 			getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+	public void saveOrUpdate(Message transientInstance) {
+		log.debug("saving Message instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);

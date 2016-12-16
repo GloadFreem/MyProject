@@ -2,19 +2,27 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Authenticstatus entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "authenticstatus", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"authentics","valid"})
 public class Authenticstatus implements java.io.Serializable {
 
 	// Fields
@@ -30,15 +38,8 @@ public class Authenticstatus implements java.io.Serializable {
 	public Authenticstatus() {
 	}
 
-	/** minimal constructor */
-	public Authenticstatus(Integer statusId) {
-		this.statusId = statusId;
-	}
-
 	/** full constructor */
-	public Authenticstatus(Integer statusId, String name, Boolean valid,
-			Set<Authentic> authentics) {
-		this.statusId = statusId;
+	public Authenticstatus(String name, Boolean valid, Set<Authentic> authentics) {
 		this.name = name;
 		this.valid = valid;
 		this.authentics = authentics;
@@ -46,6 +47,7 @@ public class Authenticstatus implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "status_id", unique = true, nullable = false)
 	public Integer getStatusId() {
 		return this.statusId;

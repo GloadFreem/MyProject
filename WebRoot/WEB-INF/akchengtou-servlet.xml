@@ -14,9 +14,9 @@
 
 	<!-- if you use annotation you must configure following setting -->
 	<mvc:annotation-driven />
-<!-- 	<mvc:interceptors>
+	<mvc:interceptors>
 		<bean class="com.jinzht.web.filter.LogInterceptor"></bean>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 
 	<!-- HandlerMapping -->
 	<bean
@@ -47,9 +47,15 @@
 			<value>utf-8</value>
 		</property>
 	</bean>
-	
-	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
 	<bean id="userManager" class="com.akchengtou.web.manager.UserManager"></bean>
- 
+	<bean id="authManager" class="com.akchengtou.web.manager.AuthenticManager"></bean>
+	<bean id="serviceManager" class="com.akchengtou.web.manager.ServiceManager"></bean>
+	<bean id="feelingManager" class="com.akchengtou.web.manager.FeelingManager"></bean>
+	<bean id="systemManager" class="com.akchengtou.web.manager.SystemManager"></bean>
+	<bean id="taskManager" class="com.akchengtou.web.manager.TaskManager"></bean>
+
 </beans>

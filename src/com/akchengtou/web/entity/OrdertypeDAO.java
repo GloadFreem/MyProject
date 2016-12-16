@@ -128,6 +128,19 @@ public class OrdertypeDAO {
 			throw re;
 		}
 	}
+	public List findByPage(Integer page) {
+		log.debug("finding all Ordertype instances");
+		try {
+			String queryString = "from Ordertype";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setFirstResult(page*6);
+			queryObject.setMaxResults(6);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 
 	public Ordertype merge(Ordertype detachedInstance) {
 		log.debug("merging Ordertype instance");

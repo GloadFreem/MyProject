@@ -2,27 +2,32 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Homehouse entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "homehouse", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"buildings"})
 public class Homehouse implements java.io.Serializable {
 
 	// Fields
 
 	private Integer homeId;
-	private Authentic authentic;
 	private String name;
 	private Boolean valid;
 	private Set<Building> buildings = new HashSet<Building>(0);
@@ -34,16 +39,9 @@ public class Homehouse implements java.io.Serializable {
 	public Homehouse() {
 	}
 
-	/** minimal constructor */
-	public Homehouse(Integer homeId) {
-		this.homeId = homeId;
-	}
-
 	/** full constructor */
-	public Homehouse(Integer homeId, Authentic authentic, String name,
-			Boolean valid, Set<Building> buildings, Set<Contact> contacts) {
-		this.homeId = homeId;
-		this.authentic = authentic;
+	public Homehouse(String name, Boolean valid, Set<Building> buildings,
+			Set<Contact> contacts) {
 		this.name = name;
 		this.valid = valid;
 		this.buildings = buildings;
@@ -52,6 +50,7 @@ public class Homehouse implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "home_id", unique = true, nullable = false)
 	public Integer getHomeId() {
 		return this.homeId;
@@ -59,16 +58,6 @@ public class Homehouse implements java.io.Serializable {
 
 	public void setHomeId(Integer homeId) {
 		this.homeId = homeId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "auth_id")
-	public Authentic getAuthentic() {
-		return this.authentic;
-	}
-
-	public void setAuthentic(Authentic authentic) {
-		this.authentic = authentic;
 	}
 
 	@Column(name = "name")
@@ -98,7 +87,7 @@ public class Homehouse implements java.io.Serializable {
 		this.buildings = buildings;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "homehouse")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "homehouse")
 	public Set<Contact> getContacts() {
 		return this.contacts;
 	}

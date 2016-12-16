@@ -3,6 +3,8 @@ package com.akchengtou.web.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,20 +29,15 @@ public class Feedbackimages implements java.io.Serializable {
 	public Feedbackimages() {
 	}
 
-	/** minimal constructor */
-	public Feedbackimages(Integer imageId) {
-		this.imageId = imageId;
-	}
-
 	/** full constructor */
-	public Feedbackimages(Integer imageId, Feedback feedback, String url) {
-		this.imageId = imageId;
+	public Feedbackimages(Feedback feedback, String url) {
 		this.feedback = feedback;
 		this.url = url;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "image_id", unique = true, nullable = false)
 	public Integer getImageId() {
 		return this.imageId;

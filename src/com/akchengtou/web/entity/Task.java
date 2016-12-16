@@ -1,27 +1,39 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Task entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "task", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"user","service"})
 public class Task implements java.io.Serializable {
 
 	// Fields
 
 	private Integer taskId;
 	private User user;
+	private String content;
 	private Service service;
-	private Timestamp taskDate;
+	private Date taskDate;
 
 	// Constructors
 
@@ -29,14 +41,8 @@ public class Task implements java.io.Serializable {
 	public Task() {
 	}
 
-	/** minimal constructor */
-	public Task(Integer taskId) {
-		this.taskId = taskId;
-	}
-
 	/** full constructor */
-	public Task(Integer taskId, User user, Service service, Timestamp taskDate) {
-		this.taskId = taskId;
+	public Task(User user, Service service, Date taskDate) {
 		this.user = user;
 		this.service = service;
 		this.taskDate = taskDate;
@@ -44,6 +50,7 @@ public class Task implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "task_id", unique = true, nullable = false)
 	public Integer getTaskId() {
 		return this.taskId;
@@ -74,12 +81,29 @@ public class Task implements java.io.Serializable {
 	}
 
 	@Column(name = "task_date", length = 19)
-	public Timestamp getTaskDate() {
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")  
+	public Date getTaskDate() {
 		return this.taskDate;
 	}
 
-	public void setTaskDate(Timestamp taskDate) {
+	public void setTaskDate(Date taskDate) {
 		this.taskDate = taskDate;
+	}
+
+	/**
+	 * @return the content
+	 */
+	@Column(name="content")
+	public String getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

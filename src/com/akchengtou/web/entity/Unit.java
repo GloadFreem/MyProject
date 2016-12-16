@@ -2,6 +2,7 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Unit entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "unit", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"building","houses"})
 public class Unit implements java.io.Serializable {
 
 	// Fields
@@ -25,7 +29,6 @@ public class Unit implements java.io.Serializable {
 	private Building building;
 	private String name;
 	private Set<House> houses = new HashSet<House>(0);
-	private Set<Attendance> attendances = new HashSet<Attendance>(0);
 
 	// Constructors
 
@@ -41,12 +44,11 @@ public class Unit implements java.io.Serializable {
 
 	/** full constructor */
 	public Unit(Integer unitId, Building building, String name,
-			Set<House> houses, Set<Attendance> attendances) {
+			Set<House> houses) {
 		this.unitId = unitId;
 		this.building = building;
 		this.name = name;
 		this.houses = houses;
-		this.attendances = attendances;
 	}
 
 	// Property accessors
@@ -86,15 +88,6 @@ public class Unit implements java.io.Serializable {
 
 	public void setHouses(Set<House> houses) {
 		this.houses = houses;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "unit")
-	public Set<Attendance> getAttendances() {
-		return this.attendances;
-	}
-
-	public void setAttendances(Set<Attendance> attendances) {
-		this.attendances = attendances;
 	}
 
 }

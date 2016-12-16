@@ -1,23 +1,28 @@
 package com.akchengtou.web.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Contenttype entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "contenttype", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"publiccontent"})
 public class Contenttype implements java.io.Serializable {
 
 	// Fields
 
-	private Integer typeId;
+	private ContenttypeId id;
 	private Publiccontent publiccontent;
 	private String name;
 	private Boolean valid;
@@ -29,32 +34,35 @@ public class Contenttype implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Contenttype(Integer typeId) {
-		this.typeId = typeId;
+	public Contenttype(ContenttypeId id, Publiccontent publiccontent) {
+		this.id = id;
+		this.publiccontent = publiccontent;
 	}
 
 	/** full constructor */
-	public Contenttype(Integer typeId, Publiccontent publiccontent,
+	public Contenttype(ContenttypeId id, Publiccontent publiccontent,
 			String name, Boolean valid) {
-		this.typeId = typeId;
+		this.id = id;
 		this.publiccontent = publiccontent;
 		this.name = name;
 		this.valid = valid;
 	}
 
 	// Property accessors
-	@Id
-	@Column(name = "type_id", unique = true, nullable = false)
-	public Integer getTypeId() {
-		return this.typeId;
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "contentId", column = @Column(name = "content_id", nullable = false)),
+			@AttributeOverride(name = "typeId", column = @Column(name = "type_id", nullable = false)) })
+	public ContenttypeId getId() {
+		return this.id;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setId(ContenttypeId id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "content_id")
+	@JoinColumn(name = "content_id", nullable = false, insertable = false, updatable = false)
 	public Publiccontent getPubliccontent() {
 		return this.publiccontent;
 	}

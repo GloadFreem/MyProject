@@ -1,15 +1,20 @@
 package com.akchengtou.web.entity;
 
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.akchengtou.tools.AKConfig;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -119,6 +124,24 @@ public class ContentcommentDAO {
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List findByPropertyByPage(String propertyName, Object value,Integer page) {
+		log.debug("finding Contentcomment instance with page property: " + propertyName
+				+ ", value: " + value);
+		try {
+			String queryString = "from Contentcomment as model where model."
+					+ propertyName + "= ?";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setMaxResults(10);
+			queryObject.setFirstResult(page*AKConfig.STRING_INVESTOR_LIST_MAX_SIZE);
+			
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
 			throw re;
 		}
 	}

@@ -2,26 +2,34 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Paytype entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "paytype", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"servicetypes"})
 public class Paytype implements java.io.Serializable {
 
 	// Fields
 
 	private Integer typeId;
 	private String name;
-	private Set<Service> services = new HashSet<Service>(0);
+	private Set<Servicetype> servicetypes = new HashSet<Servicetype>(0);
 
 	// Constructors
 
@@ -29,20 +37,15 @@ public class Paytype implements java.io.Serializable {
 	public Paytype() {
 	}
 
-	/** minimal constructor */
-	public Paytype(Integer typeId) {
-		this.typeId = typeId;
-	}
-
 	/** full constructor */
-	public Paytype(Integer typeId, String name, Set<Service> services) {
-		this.typeId = typeId;
+	public Paytype(String name, Set<Servicetype> servicetypes) {
 		this.name = name;
-		this.services = services;
+		this.servicetypes = servicetypes;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "type_id", unique = true, nullable = false)
 	public Integer getTypeId() {
 		return this.typeId;
@@ -62,12 +65,12 @@ public class Paytype implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "paytype")
-	public Set<Service> getServices() {
-		return this.services;
+	public Set<Servicetype> getServicetypes() {
+		return this.servicetypes;
 	}
 
-	public void setServices(Set<Service> services) {
-		this.services = services;
+	public void setServicetypes(Set<Servicetype> servicetypes) {
+		this.servicetypes = servicetypes;
 	}
 
 }

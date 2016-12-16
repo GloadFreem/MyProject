@@ -81,7 +81,8 @@ public class PubliccontentimagesDAO {
 		log.debug("finding Publiccontentimages instance by example");
 		try {
 			List<Publiccontentimages> results = (List<Publiccontentimages>) getCurrentSession()
-					.createCriteria("com.akchengtou.web.entity.Publiccontentimages")
+					.createCriteria(
+							"com.akchengtou.web.entity.Publiccontentimages")
 					.add(create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

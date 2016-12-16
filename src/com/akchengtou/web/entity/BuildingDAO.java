@@ -78,6 +78,21 @@ public class BuildingDAO {
 			throw re;
 		}
 	}
+	
+	public List<Building> findByHomeHouse(Homehouse house) {
+		log.debug("getting Building instance with Homehouse: " + house);
+		try {
+			String sqlString = "from Building as model  where model.homehouse = ?";
+			Query queryObject = getCurrentSession().createQuery(sqlString);
+			queryObject.setParameter(0, house);
+			
+			
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
 
 	public List<Building> findByExample(Building instance) {
 		log.debug("finding Building instance by example");

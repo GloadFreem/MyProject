@@ -1,18 +1,30 @@
 package com.akchengtou.web.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Message entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "message", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"user"})
 public class Message implements java.io.Serializable {
 
 	// Fields
@@ -22,6 +34,8 @@ public class Message implements java.io.Serializable {
 	private String content;
 	private String title;
 	private Boolean readed;
+	private Boolean valid;
+	private Date publicDate;
 
 	// Constructors
 
@@ -29,15 +43,8 @@ public class Message implements java.io.Serializable {
 	public Message() {
 	}
 
-	/** minimal constructor */
-	public Message(Integer messageId) {
-		this.messageId = messageId;
-	}
-
 	/** full constructor */
-	public Message(Integer messageId, User user, String content, String title,
-			Boolean readed) {
-		this.messageId = messageId;
+	public Message(User user, String content, String title, Boolean readed) {
 		this.user = user;
 		this.content = content;
 		this.title = title;
@@ -46,6 +53,7 @@ public class Message implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "message_id", unique = true, nullable = false)
 	public Integer getMessageId() {
 		return this.messageId;
@@ -90,6 +98,32 @@ public class Message implements java.io.Serializable {
 
 	public void setReaded(Boolean readed) {
 		this.readed = readed;
+	}
+
+	@Column(name = "valid")
+	public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
+	}
+
+	/**
+	 * @return the publicDate
+	 */
+	@Column(name="public_date")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") 
+	public Date getPublicDate() {
+		return publicDate;
+	}
+
+	/**
+	 * @param publicDate the publicDate to set
+	 */
+	public void setPublicDate(Date publicDate) {
+		this.publicDate = publicDate;
 	}
 
 }

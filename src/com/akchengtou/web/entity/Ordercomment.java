@@ -1,13 +1,22 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Ordercomment entity. @author MyEclipse Persistence Tools
@@ -19,12 +28,9 @@ public class Ordercomment implements java.io.Serializable {
 	// Fields
 
 	private Integer commentId;
-	private User user;
 	private Orderservice orderservice;
-	private String content;
 	private Float score;
-	private Double gender;
-	private Timestamp commentDate;
+	private Date commentDate;
 
 	// Constructors
 
@@ -32,26 +38,17 @@ public class Ordercomment implements java.io.Serializable {
 	public Ordercomment() {
 	}
 
-	/** minimal constructor */
-	public Ordercomment(Integer commentId) {
-		this.commentId = commentId;
-	}
-
 	/** full constructor */
-	public Ordercomment(Integer commentId, User user,
-			Orderservice orderservice, String content, Float score,
-			Double gender, Timestamp commentDate) {
-		this.commentId = commentId;
-		this.user = user;
+	public Ordercomment(Orderservice orderservice, Float score,
+			Date commentDate) {
 		this.orderservice = orderservice;
-		this.content = content;
 		this.score = score;
-		this.gender = gender;
 		this.commentDate = commentDate;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "comment_id", unique = true, nullable = false)
 	public Integer getCommentId() {
 		return this.commentId;
@@ -59,16 +56,6 @@ public class Ordercomment implements java.io.Serializable {
 
 	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "at_user_id")
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -81,15 +68,6 @@ public class Ordercomment implements java.io.Serializable {
 		this.orderservice = orderservice;
 	}
 
-	@Column(name = "content", length = 2000)
-	public String getContent() {
-		return this.content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	@Column(name = "score", precision = 12, scale = 0)
 	public Float getScore() {
 		return this.score;
@@ -99,21 +77,14 @@ public class Ordercomment implements java.io.Serializable {
 		this.score = score;
 	}
 
-	@Column(name = "gender", precision = 22, scale = 0)
-	public Double getGender() {
-		return this.gender;
-	}
-
-	public void setGender(Double gender) {
-		this.gender = gender;
-	}
-
 	@Column(name = "comment_date", length = 19)
-	public Timestamp getCommentDate() {
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")  
+	public Date getCommentDate() {
 		return this.commentDate;
 	}
 
-	public void setCommentDate(Timestamp commentDate) {
+	public void setCommentDate(Date commentDate) {
 		this.commentDate = commentDate;
 	}
 

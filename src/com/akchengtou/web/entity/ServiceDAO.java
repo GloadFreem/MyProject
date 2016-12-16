@@ -56,6 +56,16 @@ public class ServiceDAO {
 			throw re;
 		}
 	}
+	public void saveOrUpdate(Service transientInstance) {
+		log.debug("saving Service instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
 
 	public void delete(Service persistentInstance) {
 		log.debug("deleting Service instance");
@@ -100,7 +110,7 @@ public class ServiceDAO {
 				+ ", value: " + value);
 		try {
 			String queryString = "from Service as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? order by model.serviceDate desc";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -127,6 +137,19 @@ public class ServiceDAO {
 		try {
 			String queryString = "from Service";
 			Query queryObject = getCurrentSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	public List findAllByPage(Integer page) {
+		log.debug("finding all Service instances");
+		try {
+			String queryString = "from Service";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(10);
+			queryObject.setFirstResult(page*10);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);

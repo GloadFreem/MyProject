@@ -120,7 +120,7 @@ public class AnnouncementDAO {
 	public List findAll() {
 		log.debug("finding all Announcement instances");
 		try {
-			String queryString = "from Announcement";
+			String queryString = "from Announcement model order by  model.publicDate desc";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {

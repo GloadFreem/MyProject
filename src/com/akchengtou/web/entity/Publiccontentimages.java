@@ -3,16 +3,23 @@ package com.akchengtou.web.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Publiccontentimages entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "publiccontentimages", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"publiccontent"})
 public class Publiccontentimages implements java.io.Serializable {
 
 	// Fields
@@ -27,21 +34,15 @@ public class Publiccontentimages implements java.io.Serializable {
 	public Publiccontentimages() {
 	}
 
-	/** minimal constructor */
-	public Publiccontentimages(Integer imageId) {
-		this.imageId = imageId;
-	}
-
 	/** full constructor */
-	public Publiccontentimages(Integer imageId, Publiccontent publiccontent,
-			String url) {
-		this.imageId = imageId;
+	public Publiccontentimages(Publiccontent publiccontent, String url) {
 		this.publiccontent = publiccontent;
 		this.url = url;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "image_id", unique = true, nullable = false)
 	public Integer getImageId() {
 		return this.imageId;

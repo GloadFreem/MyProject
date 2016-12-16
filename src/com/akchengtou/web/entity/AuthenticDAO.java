@@ -3,15 +3,20 @@ package com.akchengtou.web.entity;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -55,6 +60,16 @@ public class AuthenticDAO {
 			throw re;
 		}
 	}
+	public void saveOrUpdate(Authentic transientInstance) {
+		log.debug("saving Authentic instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
 
 	public void delete(Authentic persistentInstance) {
 		log.debug("deleting Authentic instance");
@@ -67,6 +82,25 @@ public class AuthenticDAO {
 		}
 	}
 
+	public List findAuthenticByUserId(Integer userId)
+	{
+		String sqlString = "select * from authentic where user_id=?";
+		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString).addEntity(Authentic.class);
+		queryObject.setParameter(0, userId);
+		
+		return queryObject.list();
+	}
+	
+	
+	public List findAuthenticByIdentiytype(Integer typeId)
+	{
+		String sqlString = "select a.user_id,a.name,u.score,u.image,u.gender from authentic as a left join user as u on a.user_id = u.user_id where a.identiy_type_id =?  order by u.score desc";
+		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString);
+		queryObject.setParameter(0, typeId);
+		
+		return queryObject.list();
+	}
+	
 	public Authentic findById(java.lang.Integer id) {
 		log.debug("getting Authentic instance with id: " + id);
 		try {

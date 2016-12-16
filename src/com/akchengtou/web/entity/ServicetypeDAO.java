@@ -2,11 +2,14 @@ package com.akchengtou.web.entity;
 
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -74,6 +77,20 @@ public class ServicetypeDAO {
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
+			throw re;
+		}
+	}
+	
+	public List findAllByPage(Integer page) {
+		log.debug("finding all Servicetype instances");
+		try {
+			String queryString = "from Servicetype";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(10);
+			queryObject.setFirstResult(page*10);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
 			throw re;
 		}
 	}

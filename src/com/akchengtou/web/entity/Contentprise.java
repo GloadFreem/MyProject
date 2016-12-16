@@ -3,16 +3,23 @@ package com.akchengtou.web.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Contentprise entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "contentprise", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"publiccontent"})
 public class Contentprise implements java.io.Serializable {
 
 	// Fields
@@ -27,20 +34,15 @@ public class Contentprise implements java.io.Serializable {
 	public Contentprise() {
 	}
 
-	/** minimal constructor */
-	public Contentprise(Integer priseId) {
-		this.priseId = priseId;
-	}
-
 	/** full constructor */
-	public Contentprise(Integer priseId, User user, Publiccontent publiccontent) {
-		this.priseId = priseId;
+	public Contentprise(User user, Publiccontent publiccontent) {
 		this.user = user;
 		this.publiccontent = publiccontent;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "prise_id", unique = true, nullable = false)
 	public Integer getPriseId() {
 		return this.priseId;
@@ -50,7 +52,7 @@ public class Contentprise implements java.io.Serializable {
 		this.priseId = priseId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;

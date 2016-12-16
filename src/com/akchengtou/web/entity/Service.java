@@ -1,23 +1,34 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Service entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "service", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"tasks","orderservices","user"})
 public class Service implements java.io.Serializable {
 
 	// Fields
@@ -25,10 +36,9 @@ public class Service implements java.io.Serializable {
 	private Integer serviceId;
 	private Servicetype servicetype;
 	private Member member;
-	private Paytype paytype;
+	private User user;
 	private String name;
-	private Integer price;
-	private Timestamp serviceDate;
+	private Date serviceDate;
 	private String content;
 	private Set<Serviceimages> serviceimageses = new HashSet<Serviceimages>(0);
 	private Set<Task> tasks = new HashSet<Task>(0);
@@ -40,22 +50,14 @@ public class Service implements java.io.Serializable {
 	public Service() {
 	}
 
-	/** minimal constructor */
-	public Service(Integer serviceId) {
-		this.serviceId = serviceId;
-	}
-
 	/** full constructor */
-	public Service(Integer serviceId, Servicetype servicetype, Member member,
-			Paytype paytype, String name, Integer price, Timestamp serviceDate,
-			String content, Set<Serviceimages> serviceimageses,
-			Set<Task> tasks, Set<Orderservice> orderservices) {
-		this.serviceId = serviceId;
+	public Service(Servicetype servicetype, Member member,
+			String name, Date serviceDate, String content,
+			Set<Serviceimages> serviceimageses, Set<Task> tasks,
+			Set<Orderservice> orderservices) {
 		this.servicetype = servicetype;
 		this.member = member;
-		this.paytype = paytype;
 		this.name = name;
-		this.price = price;
 		this.serviceDate = serviceDate;
 		this.content = content;
 		this.serviceimageses = serviceimageses;
@@ -65,6 +67,7 @@ public class Service implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "service_id", unique = true, nullable = false)
 	public Integer getServiceId() {
 		return this.serviceId;
@@ -74,7 +77,7 @@ public class Service implements java.io.Serializable {
 		this.serviceId = serviceId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "type_id")
 	public Servicetype getServicetype() {
 		return this.servicetype;
@@ -84,7 +87,7 @@ public class Service implements java.io.Serializable {
 		this.servicetype = servicetype;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	public Member getMember() {
 		return this.member;
@@ -94,15 +97,6 @@ public class Service implements java.io.Serializable {
 		this.member = member;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Pay_type_id")
-	public Paytype getPaytype() {
-		return this.paytype;
-	}
-
-	public void setPaytype(Paytype paytype) {
-		this.paytype = paytype;
-	}
 
 	@Column(name = "name")
 	public String getName() {
@@ -113,21 +107,15 @@ public class Service implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "price")
-	public Integer getPrice() {
-		return this.price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
 
 	@Column(name = "service_date", length = 19)
-	public Timestamp getServiceDate() {
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")  
+	public Date getServiceDate() {
 		return this.serviceDate;
 	}
 
-	public void setServiceDate(Timestamp serviceDate) {
+	public void setServiceDate(Date serviceDate) {
 		this.serviceDate = serviceDate;
 	}
 
@@ -140,7 +128,7 @@ public class Service implements java.io.Serializable {
 		this.content = content;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "service")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "service")
 	public Set<Serviceimages> getServiceimageses() {
 		return this.serviceimageses;
 	}
@@ -165,6 +153,22 @@ public class Service implements java.io.Serializable {
 
 	public void setOrderservices(Set<Orderservice> orderservices) {
 		this.orderservices = orderservices;
+	}
+
+	/**
+	 * @return the user
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -2,19 +2,27 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Ordertype entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "ordertype", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"orderservices"})
 public class Ordertype implements java.io.Serializable {
 
 	// Fields
@@ -30,15 +38,8 @@ public class Ordertype implements java.io.Serializable {
 	public Ordertype() {
 	}
 
-	/** minimal constructor */
-	public Ordertype(Integer typeId) {
-		this.typeId = typeId;
-	}
-
 	/** full constructor */
-	public Ordertype(Integer typeId, String name, String image,
-			Set<Orderservice> orderservices) {
-		this.typeId = typeId;
+	public Ordertype(String name, String image, Set<Orderservice> orderservices) {
 		this.name = name;
 		this.image = image;
 		this.orderservices = orderservices;
@@ -46,6 +47,7 @@ public class Ordertype implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "type_id", unique = true, nullable = false)
 	public Integer getTypeId() {
 		return this.typeId;

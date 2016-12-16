@@ -2,28 +2,36 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Member entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "member", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"tasks","services","user"})
 public class Member implements java.io.Serializable {
 
 	// Fields
 
 	private Integer memberId;
 	private User user;
-	private Employertype employertype;
+	private Servicetype servicetype;
 	private String name;
 	private String telephone;
 	private String image;
@@ -36,18 +44,12 @@ public class Member implements java.io.Serializable {
 	public Member() {
 	}
 
-	/** minimal constructor */
-	public Member(Integer memberId) {
-		this.memberId = memberId;
-	}
-
 	/** full constructor */
-	public Member(Integer memberId, User user, Employertype employertype,
-			String name, String telephone, String image, Double gender,
-			Set<Service> services) {
-		this.memberId = memberId;
+	public Member(User user, 
+			Servicetype servicetype, String name, String telephone,
+			String image, Double gender, Set<Service> services) {
 		this.user = user;
-		this.employertype = employertype;
+		this.servicetype = servicetype;
 		this.name = name;
 		this.telephone = telephone;
 		this.image = image;
@@ -57,6 +59,7 @@ public class Member implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "member_id", unique = true, nullable = false)
 	public Integer getMemberId() {
 		return this.memberId;
@@ -76,14 +79,14 @@ public class Member implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employer_id")
-	public Employertype getEmployertype() {
-		return this.employertype;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "service_type_id")
+	public Servicetype getServicetype() {
+		return this.servicetype;
 	}
 
-	public void setEmployertype(Employertype employertype) {
-		this.employertype = employertype;
+	public void setServicetype(Servicetype servicetype) {
+		this.servicetype = servicetype;
 	}
 
 	@Column(name = "name")

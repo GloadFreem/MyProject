@@ -3,21 +3,29 @@ package com.akchengtou.web.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Contentcomment entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "contentcomment", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"publiccontent"})
 public class Contentcomment implements java.io.Serializable {
 
 	// Fields
 
 	private Integer commentId;
+	private String content;
 	private User userByUserId;
 	private User userByAtUserId;
 	private Publiccontent publiccontent;
@@ -29,15 +37,9 @@ public class Contentcomment implements java.io.Serializable {
 	public Contentcomment() {
 	}
 
-	/** minimal constructor */
-	public Contentcomment(Integer commentId) {
-		this.commentId = commentId;
-	}
-
 	/** full constructor */
-	public Contentcomment(Integer commentId, User userByUserId,
-			User userByAtUserId, Publiccontent publiccontent, Boolean valid) {
-		this.commentId = commentId;
+	public Contentcomment(User userByUserId, User userByAtUserId,
+			Publiccontent publiccontent, Boolean valid) {
 		this.userByUserId = userByUserId;
 		this.userByAtUserId = userByAtUserId;
 		this.publiccontent = publiccontent;
@@ -46,6 +48,7 @@ public class Contentcomment implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "comment_id", unique = true, nullable = false)
 	public Integer getCommentId() {
 		return this.commentId;
@@ -55,7 +58,7 @@ public class Contentcomment implements java.io.Serializable {
 		this.commentId = commentId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUserByUserId() {
 		return this.userByUserId;
@@ -65,7 +68,7 @@ public class Contentcomment implements java.io.Serializable {
 		this.userByUserId = userByUserId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "at_user_id")
 	public User getUserByAtUserId() {
 		return this.userByAtUserId;
@@ -92,6 +95,14 @@ public class Contentcomment implements java.io.Serializable {
 
 	public void setValid(Boolean valid) {
 		this.valid = valid;
+	}
+	@Column(name = "content")
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

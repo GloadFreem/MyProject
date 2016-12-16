@@ -3,11 +3,14 @@ package com.akchengtou.web.entity;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -49,6 +52,16 @@ public class OrderserviceDAO {
 		log.debug("saving Orderservice instance");
 		try {
 			getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+	public void saveOrUpdate(Orderservice transientInstance) {
+		log.debug("saving Orderservice instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -118,6 +131,34 @@ public class OrderserviceDAO {
 		try {
 			String queryString = "from Orderservice";
 			Query queryObject = getCurrentSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List findAllByUserPage(Service service,Integer page) {
+		log.debug("finding all Orderservice instances");
+		try {
+			String queryString = "from Orderservice model where model.service=?";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, service);
+			queryObject.setMaxResults(10);
+			queryObject.setFirstResult(page*10);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	public List findAllByPage(Integer page) {
+		log.debug("finding all Orderservice instances");
+		try {
+			String queryString = "from Orderservice";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(10);
+			queryObject.setFirstResult(page*10);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);

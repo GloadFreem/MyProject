@@ -137,6 +137,20 @@ public class MemberDAO {
 			throw re;
 		}
 	}
+	public List findByType(Servicetype type,Integer page) {
+		log.debug("finding all Member instances");
+		try {
+			String queryString = "from Member where servicetype=?";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, type);
+			queryObject.setFirstResult(10*page);
+			queryObject.setMaxResults(10);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 
 	public Member merge(Member detachedInstance) {
 		log.debug("merging Member instance");

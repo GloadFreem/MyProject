@@ -1,16 +1,26 @@
 package com.akchengtou.web.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Feedback entity. @author MyEclipse Persistence Tools
@@ -24,6 +34,7 @@ public class Feedback implements java.io.Serializable {
 	private Integer feedId;
 	private User user;
 	private String content;
+	private Date feedDate;
 	private Set<Feedbackimages> feedbackimageses = new HashSet<Feedbackimages>(
 			0);
 
@@ -33,15 +44,9 @@ public class Feedback implements java.io.Serializable {
 	public Feedback() {
 	}
 
-	/** minimal constructor */
-	public Feedback(Integer feedId) {
-		this.feedId = feedId;
-	}
-
 	/** full constructor */
-	public Feedback(Integer feedId, User user, String content,
+	public Feedback(User user, String content,
 			Set<Feedbackimages> feedbackimageses) {
-		this.feedId = feedId;
 		this.user = user;
 		this.content = content;
 		this.feedbackimageses = feedbackimageses;
@@ -49,6 +54,7 @@ public class Feedback implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "feed_id", unique = true, nullable = false)
 	public Integer getFeedId() {
 		return this.feedId;
@@ -84,6 +90,17 @@ public class Feedback implements java.io.Serializable {
 
 	public void setFeedbackimageses(Set<Feedbackimages> feedbackimageses) {
 		this.feedbackimageses = feedbackimageses;
+	}
+
+	public Date getFeedDate() {
+		return feedDate;
+	}
+
+	@Column(name = "feed_date")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")  
+	public void setFeedDate(Date feedDate) {
+		this.feedDate = feedDate;
 	}
 
 }

@@ -81,7 +81,8 @@ public class AttendancerecordDAO {
 		log.debug("finding Attendancerecord instance by example");
 		try {
 			List<Attendancerecord> results = (List<Attendancerecord>) getCurrentSession()
-					.createCriteria("com.akchengtou.web.entity.Attendancerecord")
+					.createCriteria(
+							"com.akchengtou.web.entity.Attendancerecord")
 					.add(create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

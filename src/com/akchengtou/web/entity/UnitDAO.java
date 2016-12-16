@@ -2,11 +2,14 @@ package com.akchengtou.web.entity;
 
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -119,6 +122,21 @@ public class UnitDAO {
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List<Building> findByBuilding(Building building) {
+		log.debug("getting Unit instance with Homehouse: " + building);
+		try {
+			String sqlString = "from Unit as model  where model.building = ?";
+			Query queryObject = getCurrentSession().createQuery(sqlString);
+			queryObject.setParameter(0, building);
+			
+			
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
 			throw re;
 		}
 	}

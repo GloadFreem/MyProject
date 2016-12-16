@@ -1,33 +1,42 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Authentic entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "authentic", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"user"})
 public class Authentic implements java.io.Serializable {
 
 	// Fields
 
 	private Integer authId;
 	private User user;
+	private String idCard;
+	private String name;
+	private House house;
+	private Identity identity;
 	private Authenticstatus authenticstatus;
-	private Timestamp authDate;
-	private Short status;
-	private Set<Homehouse> homehouses = new HashSet<Homehouse>(0);
+	private Date authDate;
 
 	// Constructors
 
@@ -35,25 +44,20 @@ public class Authentic implements java.io.Serializable {
 	public Authentic() {
 	}
 
-	/** minimal constructor */
-	public Authentic(Integer authId) {
-		this.authId = authId;
-	}
-
 	/** full constructor */
-	public Authentic(Integer authId, User user,
-			Authenticstatus authenticstatus, Timestamp authDate, Short status,
-			Set<Homehouse> homehouses) {
-		this.authId = authId;
+	public Authentic(User user, House house, Identity identity,
+			Authenticstatus authenticstatus, Date authDate, Short status,String name) {
 		this.user = user;
+		this.house = house;
+		this.identity = identity;
 		this.authenticstatus = authenticstatus;
 		this.authDate = authDate;
-		this.status = status;
-		this.homehouses = homehouses;
+		this.name = name;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "auth_id", unique = true, nullable = false)
 	public Integer getAuthId() {
 		return this.authId;
@@ -73,7 +77,27 @@ public class Authentic implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "hourse_id")
+	public House getHouse() {
+		return this.house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "identiy_type_id")
+	public Identity getIdentity() {
+		return this.identity;
+	}
+
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "status_id")
 	public Authenticstatus getAuthenticstatus() {
 		return this.authenticstatus;
@@ -84,30 +108,37 @@ public class Authentic implements java.io.Serializable {
 	}
 
 	@Column(name = "auth_date", length = 19)
-	public Timestamp getAuthDate() {
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")  
+	public Date getAuthDate() {
 		return this.authDate;
 	}
 
-	public void setAuthDate(Timestamp authDate) {
+	public void setAuthDate(Date authDate) {
 		this.authDate = authDate;
 	}
 
-	@Column(name = "status")
-	public Short getStatus() {
-		return this.status;
+	public String getName() {
+		return name;
 	}
 
-	public void setStatus(Short status) {
-		this.status = status;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authentic")
-	public Set<Homehouse> getHomehouses() {
-		return this.homehouses;
+	/**
+	 * @return the idCard
+	 */
+	@Column(name="idCard")
+	public String getIdCard() {
+		return idCard;
 	}
 
-	public void setHomehouses(Set<Homehouse> homehouses) {
-		this.homehouses = homehouses;
+	/**
+	 * @param idCard the idCard to set
+	 */
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
 
 }

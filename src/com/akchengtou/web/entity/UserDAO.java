@@ -34,6 +34,8 @@ public class UserDAO {
 	public static final String INTRODUCE = "introduce";
 	public static final String SCORE = "score";
 	public static final String GENDER = "gender";
+	public static final String PLATFORM = "platform";
+	public static final String REG_ID = "regId";
 
 	private SessionFactory sessionFactory;
 
@@ -53,6 +55,16 @@ public class UserDAO {
 		log.debug("saving User instance");
 		try {
 			getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+	public void saveOrUpdate(User transientInstance) {
+		log.debug("saving User instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -117,8 +129,21 @@ public class UserDAO {
 		return findByProperty(NAME, name);
 	}
 
-	public List<User> findByTelephone(Object telephone) {
-		return findByProperty(TELEPHONE, telephone);
+	public List<User> findByTelephone(String telephone) {
+		
+		log.debug("finding User instance with property: " + TELEPHONE
+				+ ", value: " + telephone);
+		try {
+			String queryString = "from User as model where model."
+					+ TELEPHONE + "= ?";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, telephone);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+		
 	}
 
 	public List<User> findByImage(Object image) {
@@ -135,6 +160,14 @@ public class UserDAO {
 
 	public List<User> findByGender(Object gender) {
 		return findByProperty(GENDER, gender);
+	}
+
+	public List<User> findByPlatform(Object platform) {
+		return findByProperty(PLATFORM, platform);
+	}
+
+	public List<User> findByRegId(Object regId) {
+		return findByProperty(REG_ID, regId);
 	}
 
 	public List findAll() {

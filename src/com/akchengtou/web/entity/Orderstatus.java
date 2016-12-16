@@ -2,19 +2,27 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Orderstatus entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "orderstatus", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"orderservices"})
 public class Orderstatus implements java.io.Serializable {
 
 	// Fields
@@ -29,21 +37,15 @@ public class Orderstatus implements java.io.Serializable {
 	public Orderstatus() {
 	}
 
-	/** minimal constructor */
-	public Orderstatus(Integer statusId) {
-		this.statusId = statusId;
-	}
-
 	/** full constructor */
-	public Orderstatus(Integer statusId, String name,
-			Set<Orderservice> orderservices) {
-		this.statusId = statusId;
+	public Orderstatus(String name, Set<Orderservice> orderservices) {
 		this.name = name;
 		this.orderservices = orderservices;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "status_id", unique = true, nullable = false)
 	public Integer getStatusId() {
 		return this.statusId;

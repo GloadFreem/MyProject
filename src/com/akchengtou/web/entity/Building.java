@@ -2,21 +2,29 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Building entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "building", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"homehouse","attendances"})
 public class Building implements java.io.Serializable {
 
 	// Fields
@@ -25,6 +33,7 @@ public class Building implements java.io.Serializable {
 	private Homehouse homehouse;
 	private String name;
 	private Boolean valid;
+	private Set<Attendance> attendances = new HashSet<Attendance>(0);
 	private Set<Unit> units = new HashSet<Unit>(0);
 
 	// Constructors
@@ -33,23 +42,19 @@ public class Building implements java.io.Serializable {
 	public Building() {
 	}
 
-	/** minimal constructor */
-	public Building(Integer buildId) {
-		this.buildId = buildId;
-	}
-
 	/** full constructor */
-	public Building(Integer buildId, Homehouse homehouse, String name,
-			Boolean valid, Set<Unit> units) {
-		this.buildId = buildId;
+	public Building(Homehouse homehouse, String name, Boolean valid,
+			Set<Attendance> attendances, Set<Unit> units) {
 		this.homehouse = homehouse;
 		this.name = name;
 		this.valid = valid;
+		this.attendances = attendances;
 		this.units = units;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "build_id", unique = true, nullable = false)
 	public Integer getBuildId() {
 		return this.buildId;
@@ -88,6 +93,15 @@ public class Building implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "building")
+	public Set<Attendance> getAttendances() {
+		return this.attendances;
+	}
+
+	public void setAttendances(Set<Attendance> attendances) {
+		this.attendances = attendances;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "building")
 	public Set<Unit> getUnits() {
 		return this.units;
 	}

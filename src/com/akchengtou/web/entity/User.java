@@ -1,34 +1,52 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "user", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value = { "contentcommentsForUserId", "attendances",
+		"events", "contentcommentsForAtUserId", "members", "attendancerecords",
+		"tasks", "feedbacks", "ordercomments", "publiccontents", "messages",
+		"contentprises","orderServices" })
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class User implements java.io.Serializable {
 
 	// Fields
 
 	private Integer userId;
 	private String name;
-	private Long telephone;
+	private String telephone;
 	private String image;
-	private String introduce;
-	private Timestamp registDate;
-	private Timestamp loginTime;
+	private String intro;
+	private Date registDate;
+	private Date loginTime;
 	private Integer score;
 	private Short gender;
+	private String regId;
+	private Short platform;
 	private Set<Contentcomment> contentcommentsForUserId = new HashSet<Contentcomment>(
 			0);
 	private Set<Attendance> attendances = new HashSet<Attendance>(0);
@@ -40,11 +58,11 @@ public class User implements java.io.Serializable {
 			0);
 	private Set<Task> tasks = new HashSet<Task>(0);
 	private Set<Feedback> feedbacks = new HashSet<Feedback>(0);
-	private Set<Ordercomment> ordercomments = new HashSet<Ordercomment>(0);
 	private Set<Publiccontent> publiccontents = new HashSet<Publiccontent>(0);
 	private Set<Message> messages = new HashSet<Message>(0);
 	private Set<Contentprise> contentprises = new HashSet<Contentprise>(0);
 	private Set<Authentic> authentics = new HashSet<Authentic>(0);
+	private Set<Service> orderServices = new HashSet<Service>(0);
 
 	// Constructors
 
@@ -52,32 +70,28 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	/** minimal constructor */
-	public User(Integer userId) {
-		this.userId = userId;
-	}
-
 	/** full constructor */
-	public User(Integer userId, String name, Long telephone, String image,
-			String introduce, Timestamp registDate, Timestamp loginTime,
-			Integer score, Short gender,
+	public User(String name, String telephone, String image, String introduce,
+			Date registDate, Date loginTime, Integer score, Short gender,
+			String regId, Short platform,
 			Set<Contentcomment> contentcommentsForUserId,
 			Set<Attendance> attendances, Set<Event> events,
 			Set<Contentcomment> contentcommentsForAtUserId,
 			Set<Member> members, Set<Attendancerecord> attendancerecords,
 			Set<Task> tasks, Set<Feedback> feedbacks,
-			Set<Ordercomment> ordercomments, Set<Publiccontent> publiccontents,
-			Set<Message> messages, Set<Contentprise> contentprises,
-			Set<Authentic> authentics) {
-		this.userId = userId;
+			Set<Publiccontent> publiccontents, Set<Message> messages,
+			Set<Contentprise> contentprises, Set<Authentic> authentics,
+			Set<Service> orderServices) {
 		this.name = name;
 		this.telephone = telephone;
 		this.image = image;
-		this.introduce = introduce;
+		this.intro = introduce;
 		this.registDate = registDate;
 		this.loginTime = loginTime;
 		this.score = score;
 		this.gender = gender;
+		this.regId = regId;
+		this.platform = platform;
 		this.contentcommentsForUserId = contentcommentsForUserId;
 		this.attendances = attendances;
 		this.events = events;
@@ -86,15 +100,16 @@ public class User implements java.io.Serializable {
 		this.attendancerecords = attendancerecords;
 		this.tasks = tasks;
 		this.feedbacks = feedbacks;
-		this.ordercomments = ordercomments;
 		this.publiccontents = publiccontents;
 		this.messages = messages;
 		this.contentprises = contentprises;
 		this.authentics = authentics;
+		this.orderServices = orderServices;
 	}
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "user_id", unique = true, nullable = false)
 	public Integer getUserId() {
 		return this.userId;
@@ -113,12 +128,12 @@ public class User implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "telephone", precision = 11, scale = 0)
-	public Long getTelephone() {
+	@Column(name = "telephone", length = 20)
+	public String getTelephone() {
 		return this.telephone;
 	}
 
-	public void setTelephone(Long telephone) {
+	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
 
@@ -132,29 +147,31 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "introduce", length = 1000)
-	public String getIntroduce() {
-		return this.introduce;
+	public String getIntro() {
+		return this.intro;
 	}
 
-	public void setIntroduce(String introduce) {
-		this.introduce = introduce;
+	public void setIntro(String introduce) {
+		this.intro = introduce;
 	}
 
 	@Column(name = "regist_date", length = 19)
-	public Timestamp getRegistDate() {
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	public Date getRegistDate() {
 		return this.registDate;
 	}
 
-	public void setRegistDate(Timestamp registDate) {
+	public void setRegistDate(Date registDate) {
 		this.registDate = registDate;
 	}
 
 	@Column(name = "login_time", length = 19)
-	public Timestamp getLoginTime() {
+	public Date getLoginTime() {
 		return this.loginTime;
 	}
 
-	public void setLoginTime(Timestamp loginTime) {
+	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
 	}
 
@@ -174,6 +191,24 @@ public class User implements java.io.Serializable {
 
 	public void setGender(Short gender) {
 		this.gender = gender;
+	}
+
+	@Column(name = "reg_id", length = 100)
+	public String getRegId() {
+		return this.regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	@Column(name = "platform")
+	public Short getPlatform() {
+		return this.platform;
+	}
+
+	public void setPlatform(Short platform) {
+		this.platform = platform;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userByUserId")
@@ -251,15 +286,6 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Ordercomment> getOrdercomments() {
-		return this.ordercomments;
-	}
-
-	public void setOrdercomments(Set<Ordercomment> ordercomments) {
-		this.ordercomments = ordercomments;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<Publiccontent> getPubliccontents() {
 		return this.publiccontents;
 	}
@@ -286,13 +312,29 @@ public class User implements java.io.Serializable {
 		this.contentprises = contentprises;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Authentic> getAuthentics() {
 		return this.authentics;
 	}
 
 	public void setAuthentics(Set<Authentic> authentics) {
 		this.authentics = authentics;
+	}
+
+	/**
+	 * @return the orderServices
+	 */
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Service> getOrderServices() {
+		return orderServices;
+	}
+
+	/**
+	 * @param orderServices
+	 *            the orderServices to set
+	 */
+	public void setOrderServices(Set<Service> orderServices) {
+		this.orderServices = orderServices;
 	}
 
 }

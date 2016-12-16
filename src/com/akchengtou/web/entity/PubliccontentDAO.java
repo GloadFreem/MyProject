@@ -3,15 +3,20 @@ package com.akchengtou.web.entity;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.akchengtou.tools.AKConfig;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -50,6 +55,16 @@ public class PubliccontentDAO {
 		log.debug("saving Publiccontent instance");
 		try {
 			getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+	public void saveOrUpdate(Publiccontent transientInstance) {
+		log.debug("saving Publiccontent instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -123,6 +138,37 @@ public class PubliccontentDAO {
 		try {
 			String queryString = "from Publiccontent";
 			Query queryObject = getCurrentSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List findByUserAndCursor(User user,int cursor){
+		log.debug("finding Publiccontent instances by cursor");
+		try {
+			String queryString = "from Publiccontent where user=?  order by contentId desc";
+			Query queryObject = getCurrentSession().createQuery(queryString)
+					.setFirstResult(cursor*AKConfig.STRING_FEELING_PAGESIZE)
+					.setMaxResults(AKConfig.STRING_FEELING_PAGESIZE)
+					;
+			queryObject.setParameter(0, user);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List findByCursor(int cursor){
+		log.debug("finding Publiccontent instances by cursor");
+		try {
+			String queryString = "from Publiccontent  order by publicDate desc";
+			Query queryObject = getCurrentSession().createQuery(queryString)
+					.setFirstResult(cursor*AKConfig.STRING_FEELING_PAGESIZE)
+					.setMaxResults(AKConfig.STRING_FEELING_PAGESIZE)
+					;
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);

@@ -2,21 +2,29 @@ package com.akchengtou.web.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Event entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "event", catalog = "ak_zhsq")
+//@JsonIgnoreProperties(value={"user"})
 public class Event implements java.io.Serializable {
 
 	// Fields
@@ -32,15 +40,8 @@ public class Event implements java.io.Serializable {
 	public Event() {
 	}
 
-	/** minimal constructor */
-	public Event(Integer eventId) {
-		this.eventId = eventId;
-	}
-
 	/** full constructor */
-	public Event(Integer eventId, User user, String content,
-			Set<Eventimages> eventimageses) {
-		this.eventId = eventId;
+	public Event(User user, String content, Set<Eventimages> eventimageses) {
 		this.user = user;
 		this.content = content;
 		this.eventimageses = eventimageses;
@@ -48,6 +49,7 @@ public class Event implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "event_id", unique = true, nullable = false)
 	public Integer getEventId() {
 		return this.eventId;
@@ -57,7 +59,7 @@ public class Event implements java.io.Serializable {
 		this.eventId = eventId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;
@@ -76,7 +78,7 @@ public class Event implements java.io.Serializable {
 		this.content = content;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "event")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "event")
 	public Set<Eventimages> getEventimageses() {
 		return this.eventimageses;
 	}

@@ -1,31 +1,39 @@
 package com.akchengtou.web.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Attendance entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "attendance", catalog = "ak_zhsq")
+@JsonIgnoreProperties(value={"user","attendancerecords"})
 public class Attendance implements java.io.Serializable {
 
 	// Fields
 
 	private Integer attendId;
 	private User user;
-	private Unit unit;
-	private Timestamp requireDate;
+	private Building building;
+	private Date requireDate;
 	private String content;
 	private Set<Attendancerecord> attendancerecords = new HashSet<Attendancerecord>(
 			0);
@@ -36,18 +44,11 @@ public class Attendance implements java.io.Serializable {
 	public Attendance() {
 	}
 
-	/** minimal constructor */
-	public Attendance(Integer attendId) {
-		this.attendId = attendId;
-	}
-
 	/** full constructor */
-	public Attendance(Integer attendId, User user, Unit unit,
-			Timestamp requireDate, String content,
-			Set<Attendancerecord> attendancerecords) {
-		this.attendId = attendId;
+	public Attendance(User user, Building building, Date requireDate,
+			String content, Set<Attendancerecord> attendancerecords) {
 		this.user = user;
-		this.unit = unit;
+		this.building = building;
 		this.requireDate = requireDate;
 		this.content = content;
 		this.attendancerecords = attendancerecords;
@@ -55,6 +56,7 @@ public class Attendance implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "attend_id", unique = true, nullable = false)
 	public Integer getAttendId() {
 		return this.attendId;
@@ -74,22 +76,22 @@ public class Attendance implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "unit_id")
-	public Unit getUnit() {
-		return this.unit;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "build_id")
+	public Building getBuilding() {
+		return this.building;
 	}
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
+	public void setBuilding(Building building) {
+		this.building = building;
 	}
 
 	@Column(name = "require_date", length = 19)
-	public Timestamp getRequireDate() {
+	public Date getRequireDate() {
 		return this.requireDate;
 	}
 
-	public void setRequireDate(Timestamp requireDate) {
+	public void setRequireDate(Date requireDate) {
 		this.requireDate = requireDate;
 	}
 
