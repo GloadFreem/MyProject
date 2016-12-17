@@ -96,8 +96,19 @@ public class ServiceController extends BaseController {
 		this.result = new HashMap();
 		User user = this.findUserInSession(session);
 
-		List list = this.getServiceManager().findAllOrders(user, page);
-
+		List<Orderservice> list = this.getServiceManager().findAllOrders(user, page);
+		
+		for(Orderservice s : list)
+		{
+			Service service = s.getService();
+			
+			if(s.getPrice()!=0)
+			{
+				service.getServicetype().setPrice((float)s.getPrice());
+			}
+		}
+		
+		
 		this.status = 200;
 		this.result.put("data", list);
 		this.message = "服务列表获取成功!";
@@ -330,6 +341,13 @@ public class ServiceController extends BaseController {
 		// 创建订单
 		Orderservice order = getServiceManager().getOrderServiceDao().findById(
 				orderId);
+		
+		Service service = order.getService();
+		
+		if(order.getPrice()!=0)
+		{
+			service.getServicetype().setPrice((float)order.getPrice());
+		}
 
 		this.status = 200;
 		this.result.put("data", order);
@@ -439,7 +457,6 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	public Map requestPrePayInfo(
-			@RequestParam(value = "orderId") Integer orderId,
 			@RequestParam(value = "type") Integer type, HttpSession session)
 					throws JSONException, HttpException, IOException, JDOMException {
 		this.result = new HashMap();
@@ -461,7 +478,8 @@ public class ServiceController extends BaseController {
 		
 		return getResult();
 	}
-
+	
+	
 	@RequestMapping(value="findUserPropertyCharges")
 	@ResponseBody
 	public Map findUserPropertyCharges(
@@ -478,7 +496,8 @@ public class ServiceController extends BaseController {
 			user = this.userManager.findUserById(userId);
 		}
 		
-		List list = this.serviceManager.findUserPropertyChargesOrders(user, page);
+//		List list = this.serviceManager.findUserPropertyChargesOrders(user, page);
+		List list = this.serviceManager.getPropertychargesDao().findAll();
 		
 		//配置
 		this.status=200;

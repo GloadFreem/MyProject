@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/jsp/new_admin/header.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-user-list.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/userDetail.jsp=UTF-8
 encoding/<project>=UTF-8
 encoding/src=UTF-8

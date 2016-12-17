@@ -210,6 +210,11 @@ public class UserController extends BaseController {
 					if (regid != null && !regid.equals("")) {
 						user.setRegId(regid);
 					}
+					
+					if(user.getImage()==null)
+					{
+						user.setImage("http://59.110.11.95:8080/akchengtou/newSystem/images/avatar_default.jpg");
+					}
 
 					this.userManger.getUserDao().saveOrUpdate(user);
 

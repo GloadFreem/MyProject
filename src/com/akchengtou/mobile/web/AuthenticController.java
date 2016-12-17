@@ -367,6 +367,9 @@ public class AuthenticController extends BaseController {
 					authentic.setHouse(house);
 					authentic.setIdCard(entity.getIdCard());
 					authentic.setAuthDate(new Date());
+					
+					this.authenticManager.getAuthenticDao().save(
+							authentic);
 				}
 
 				// 保存更新用户的身份认证信息
@@ -381,7 +384,7 @@ public class AuthenticController extends BaseController {
 				identity.setIdentiyTypeId(1);
 				authentic.setIdentity(identity);
 
-				this.authenticManager.getAuthenticDao().save(
+				this.authenticManager.getAuthenticDao().saveOrUpdate(
 						authentic);
 
 				this.userManager.getUserDao().saveOrUpdate(user);

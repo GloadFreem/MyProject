@@ -74,10 +74,10 @@
 											<td>${item.gender}</td>
 											<td>${item.registDate}</td>
 											<td>${item.loginTime}</td>
-											<td><a href="createChatRoomPage.action?contentId=${item.userId }" class="active"><i
+											<td><a href="userDetail.action?contentId=${item.userId }" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
-												href="#modal" data-href="deleteChatRoom.action?contentId=${item.userId }" data-toggle="modal"
+												href="#modal" data-href="deleteUser.action?contentId=${item.userId }" data-toggle="modal"
 												class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

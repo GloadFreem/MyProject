@@ -84,6 +84,51 @@ public class WebController extends BaseController {
 		map.put("content", "table-user-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+	
+	
+	@RequestMapping(value="newSystem/userDetail")
+	public String userDetail(
+			@RequestParam(value="contentId",required=false)Integer  contentId,
+			ModelMap map)
+	{
+		
+		User user = this.userManger.getUserDao().findById(contentId);
+		
+		map.put("result", user);
+		map.put("content", "userDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value="newSystem/editUser")
+	public String editUser(
+			@RequestParam(value="contentId",required=false)Integer  contentId,
+			ModelMap map)
+	{
+		
+		User user = this.userManger.getUserDao().findById(contentId);
+		
+		map.put("result", user);
+		map.put("content", "userDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value="newSystem/deleteUser")
+	public String deleteUser(
+			@RequestParam(value="contentId",required=false)Integer  contentId,
+			ModelMap map)
+	{
+		
+		User user = this.userManger.getUserDao().findById(contentId);
+		
+		this.userManger.getUserDao().delete(user);
+		
+		List list = this.userManger.getUserDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-user-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
 	//---------------用户------------------------//
 	
 	/***
