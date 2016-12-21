@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.akchengtou.web.entity.Authentic;
 import com.akchengtou.web.entity.AuthenticDAO;
+import com.akchengtou.web.entity.MemberDAO;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.entity.UserDAO;
 
@@ -18,6 +19,7 @@ public class UserManager {
 	// private static UsersDAO userDao = (UsersDAO)context.getBean("UsersDAO");
 	private UserDAO userDao;
 	private AuthenticDAO authenticDao;
+	private MemberDAO memberDao;
 
 	/***
 	 * @return 用户列表
@@ -84,6 +86,15 @@ public class UserManager {
 	@Autowired
 	public void setAuthenticDao(AuthenticDAO authenticDao) {
 		this.authenticDao = authenticDao;
+	}
+
+	public MemberDAO getMemberDao() {
+		return memberDao;
+	}
+
+	@Autowired
+	public void setMemberDao(MemberDAO memberDao) {
+		this.memberDao = memberDao;
 	}
 
 }

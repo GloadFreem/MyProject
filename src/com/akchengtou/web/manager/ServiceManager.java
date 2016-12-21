@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.DateUtils;
+import com.akchengtou.web.entity.EventDAO;
 import com.akchengtou.web.entity.MemberDAO;
 import com.akchengtou.web.entity.OrdercommentDAO;
 import com.akchengtou.web.entity.Orderservice;
@@ -55,6 +56,7 @@ public class ServiceManager {
 	private PropertychargesDAO propertychargesDao;
 	private PriceDAO priceDao;
 	private OrderstatusDAO orderStatusDao;
+	private EventDAO eventDao;
 
 	/***
 	 * 获取分页服务列表
@@ -127,8 +129,8 @@ public class ServiceManager {
 	 * @throws JDOMException
 	 */
 	public String orderPayDescription(Orderservice order, String timeLetf,
-			int payType, String osType,boolean flag) throws JSONException, HttpException,
-			IOException, JDOMException {
+			int payType, String osType, boolean flag) throws JSONException,
+			HttpException, IOException, JDOMException {
 
 		// 日志测试Log4
 		// ================支付宝支付业务开始=============================
@@ -150,13 +152,11 @@ public class ServiceManager {
 			jsonObject.put(AlipayConfig.body_str, AlipayConfig.body); // 商品描述
 			jsonObject.put("product_code", "QUICK_MSECURITY_PAY"); // 商品描述
 			jsonObject.put("goods_type", "1"); // 商品描述
-			
-			if(flag)
-			{
-				jsonObject.put(
-						AlipayConfig.total_fee_str,
+
+			if (flag) {
+				jsonObject.put(AlipayConfig.total_fee_str,
 						String.valueOf(order.getPrice())); // 商品价格
-			}else{
+			} else {
 				jsonObject.put(
 						AlipayConfig.total_fee_str,
 						String.valueOf(order.getService().getServicetype()
@@ -231,15 +231,13 @@ public class ServiceManager {
 
 			// ---------------设置订单预支付参数开始------------------------
 			float price;
-			if(flag)
-			{
+			if (flag) {
 				// 价格
 				price = order.getPrice();
-			}else{
+			} else {
 				price = order.getService().getServicetype().getPrice();
 			}
-			
-			
+
 			String priceStr = String.valueOf(price * 100);
 
 			priceStr = priceStr.replace(".0", "");
@@ -457,7 +455,6 @@ public class ServiceManager {
 			map.put("total_fee", priceStr);
 			map.put(AlipayConfig.TRADE_TYPE_STR, "APP");
 
-		
 			map.put(AlipayConfig.BODY_STR, new String(order.getName()));
 			// ---------------设置订单预支付参数结束------------------------
 
@@ -609,7 +606,8 @@ public class ServiceManager {
 	}
 
 	/**
-	 * @param priceDao the priceDao to set
+	 * @param priceDao
+	 *            the priceDao to set
 	 */
 	@Autowired
 	public void setPriceDao(PriceDAO priceDao) {
@@ -624,13 +622,21 @@ public class ServiceManager {
 	}
 
 	/**
-	 * @param orderStatusDao the orderStatusDao to set
+	 * @param orderStatusDao
+	 *            the orderStatusDao to set
 	 */
 	@Autowired
 	public void setOrderStatusDao(OrderstatusDAO orderStatusDao) {
 		this.orderStatusDao = orderStatusDao;
 	}
-	
-	
+
+	public EventDAO getEventDao() {
+		return eventDao;
+	}
+
+	@Autowired
+	public void setEventDao(EventDAO eventDao) {
+		this.eventDao = eventDao;
+	}
 
 }

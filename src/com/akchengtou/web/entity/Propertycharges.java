@@ -70,7 +70,7 @@ public class Propertycharges implements java.io.Serializable {
 		this.chargeId = chargeId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;

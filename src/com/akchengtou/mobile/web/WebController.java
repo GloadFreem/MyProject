@@ -42,9 +42,11 @@ import com.akchengtou.web.entity.Authentic;
 import com.akchengtou.web.entity.Authenticstatus;
 import com.akchengtou.web.entity.Identity;
 import com.akchengtou.web.entity.Identiytype;
+import com.akchengtou.web.entity.Member;
 import com.akchengtou.web.entity.MessageBean;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.manager.AuthenticManager;
+import com.akchengtou.web.manager.ServiceManager;
 import com.akchengtou.web.manager.UserManager;
 
 @Controller
@@ -52,6 +54,10 @@ public class WebController extends BaseController {
 
 	@Autowired
 	private UserManager userManger;
+	@Autowired
+	private AuthenticManager authenticManager;
+	@Autowired
+	private ServiceManager serviceManager;
 	
 	/***    ---------------------------------------------后端管理系统升级-------------------------------------------***/
 	/***
@@ -71,7 +77,7 @@ public class WebController extends BaseController {
 	
 	
 	//---------------用户------------------------//
-	//聊天室列表
+	//用户列表
 	@RequestMapping(value="newSystem/userList")
 	public String userList(
 			@RequestParam(value="size",required=false)Integer  size,
@@ -84,7 +90,145 @@ public class WebController extends BaseController {
 		map.put("content", "table-user-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+	//认证审核
+	@RequestMapping(value="newSystem/authenticList")
+	public String authenticList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.userManger.getAuthenticDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-authentic-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	//员工
+	@RequestMapping(value="newSystem/memberList")
+	public String memberList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.userManger.getMemberDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-member-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	//排行榜
+	@RequestMapping(value="newSystem/userRankList")
+	public String userRankList(
+			@RequestParam(value="type",required=false)Integer  type,
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		if(type==null)
+		{
+			type=1;
+		}
+		Authentic authentic = new Authentic();
+
+		Identity identity = new Identity();
+		identity.setIdentiyTypeId(type);
+		
+		authentic.setIdentity(identity);
+		
+		
+		// 根据用户身份类型获取排行榜
+		List list = this.authenticManager.findRankingByIdentitype(authentic
+				.getIdentity());
+		
+		map.put("result", list);
+		map.put("content", "table-user-rank-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
 	
+	@RequestMapping(value="newSystem/serviceList")
+	public String serviceList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.serviceManager.getServiceTypeDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-service-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	//物业费订单
+	@RequestMapping(value="newSystem/propertyChargesList")
+	public String propertyChargesList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.serviceManager.getPropertychargesDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-charges-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	//预约订单
+	@RequestMapping(value="newSystem/orderList")
+	public String orderList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.serviceManager.getOrderServiceDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-order-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	//员工订单
+	@RequestMapping(value="newSystem/memberOrderList")
+	public String memberOrderList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List<Member> list = this.serviceManager.getMemberDao().findAll();
+		
+		//ser
+		List result = new ArrayList();
+		Map data;
+		for(int i =0;i<list.size();i++)
+		{
+			data = new HashMap();
+			
+			Member member = list.get(i);
+			List l = this.serviceManager.getServiceDao().findByProperty("member", member);
+			
+			data.put("member", member);
+			data.put("orders", l);
+			
+			result.add(data);
+			
+		}
+		map.put("result", result);
+		map.put("content", "table-member-order-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	//事件列表
+	@RequestMapping(value="newSystem/eventList")
+	public String eventList(
+			@RequestParam(value="size",required=false)Integer  size,
+			@RequestParam(value="page",required=false)Integer  page,
+			ModelMap map)
+	{
+		
+		List list = this.serviceManager.getEventDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-event-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
 	
 	@RequestMapping(value="newSystem/userDetail")
 	public String userDetail(

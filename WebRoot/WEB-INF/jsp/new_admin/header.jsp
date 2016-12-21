@@ -102,13 +102,13 @@
 											<li><a href="userList.action"> <i
 													class="fa fa-angle-right"></i> <span>用户列表</span>
 											</a></li>
-											<li><a href="layout-r.html"> <i
+											<li><a href="authenticList.action"> <i
 													class="fa fa-angle-right"></i> <span>认证审核</span>
 											</a></li>
-											<li><a href="layout-r.html"> <i
+											<li><a href="memberList.action"> <i
 													class="fa fa-angle-right"></i> <span>员工管理</span>
 											</a></li>
-											<li><a href="layout-r.html"> <i
+											<li><a href="userRankList.action"> <i
 													class="fa fa-angle-right"></i> <span>排行榜</span>
 											</a></li>
 											<li><a href="layout-h.html"> <i
@@ -123,19 +123,28 @@
 										</span> <span>服务管理</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="buttons.html"> <i
-													class="fa fa-angle-right"></i> <span>服务列表</span>
-											</a></li>
 											<li><a href="#table"> <i
 													class="fa fa-angle-down text"></i> <i
-													class="fa fa-angle-up text-active"></i> <span>服务操作</span>
+													class="fa fa-angle-up text-active"></i> <span>服务管理</span>
 											</a>
 												<ul class="nav bg">
-													<li><a href="table-datatable.html"> <i
+													<li><a href="serviceList.action"> <i
+															class="fa fa-angle-right"></i> <span>服务列表</span>
+													</a></li>
+													<li><a href="addSerrvice.action"> <i
 															class="fa fa-angle-right"></i> <span>添加服务</span>
 													</a></li>
-													<li><a href="table-datagrid.html"> <i
-															class="fa fa-angle-right"></i> <span>物业费录入</span>
+												</ul></li>
+											<li><a href="#table"> <i
+													class="fa fa-angle-down text"></i> <i
+													class="fa fa-angle-up text-active"></i> <span>费用缴纳</span>
+											</a>
+												<ul class="nav bg">
+													<li><a href="propertyChargesList.action"> <i
+															class="fa fa-angle-right"></i> <span>物业费缴纳订单</span>
+													</a></li>
+													<li><a href="importPropertyCharges.action"> <i
+															class="fa fa-angle-right"></i> <span>录入物业费</span>
 													</a></li>
 												</ul></li>
 											<!--<li > <a href="#form" > <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> <span>Form</span> </a>-->
@@ -154,67 +163,33 @@
 										</span> <span>订单管理</span>
 									</a>
 										<ul class="nav lt">
-											<li>
-												<a href="#table"> <i
-													class="fa fa-angle-down text"></i> <i
-													class="fa fa-angle-up text-active"></i> <span>用户管理</span>
-											</a>
-												<ul class="nav bg">
-													<li><a href="list.html"> <i
-															class="fa fa-angle-right"></i> <span>IM用户注册</span>
-													</a></li>
-													<li><a href="icons.html"> <b
-															class="badge bg-info pull-right">369</b> <i
-															class="fa fa-angle-right"></i> <span>IM用户列表</span>
-													</a></li>
-												</ul>
-											</li>
 											<li><a href="#table"> <i
 													class="fa fa-angle-down text"></i> <i
-													class="fa fa-angle-up text-active"></i> <span>消息管理</span>
+													class="fa fa-angle-up text-active"></i> <span>预约订单</span>
 											</a>
 												<ul class="nav bg">
-													<li><a href="list.html"> <i
-															class="fa fa-angle-right"></i> <span>发送消息</span>
+													<li><a href="orderList.action"> <i
+															class="fa fa-angle-right"></i> <span>订单列表</span>
 													</a></li>
-													<li><a href="icons.html"> <b
+													<li><a href="addOrder.action"> <i
+															class="fa fa-angle-right"></i> <span>添加订单</span>
+													</a></li>
+													<li><a href="memberOrderList.action"> <b
 															class="badge bg-info pull-right">369</b> <i
-															class="fa fa-angle-right"></i> <span>聊天记录</span>
+															class="fa fa-angle-right"></i> <span>员工订单</span>
 													</a></li>
 												</ul></li>
-											<li><a href="list.html"> <i
-													class="fa fa-angle-right"></i> <span>上传下载</span>
-											</a></li>
-											<li>
-												<a href="#table"> <i
-													class="fa fa-angle-down text"></i> <i
-													class="fa fa-angle-up text-active"></i> <span>群组管理</span>
-											</a>
-												<ul class="nav bg">
-													<li><a href="list.html"> <i
-															class="fa fa-angle-right"></i> <span>创建群组</span>
-													</a></li>
-													<li><a href="icons.html"> <b
-															class="badge bg-info pull-right">369</b> <i
-															class="fa fa-angle-right"></i> <span>群组列表</span>
-													</a></li>
-													<li><a href="icons.html"> <b
-															class="badge bg-info pull-right">369</b> <i
-															class="fa fa-angle-right"></i> <span>聊天记录</span>
-													</a></li>
-												</ul>
-											</li>
 											<li><a href="#table"> <i
 													class="fa fa-angle-down text"></i> <i
-													class="fa fa-angle-up text-active"></i> <span>聊天室管理</span>
+													class="fa fa-angle-up text-active"></i> <span>订单统计</span>
 											</a>
 												<ul class="nav bg">
-													<li><a href="createChatRoomPage.action"> <i
-															class="fa fa-angle-right"></i> <span>聊天室创建</span>
+													<li><a href="orderList.action"> <i
+															class="fa fa-angle-right"></i> <span>当日订单</span>
 													</a></li>
-													<li><a href="chatRoomList.action"> <b
+													<li><a href="orderList.action"> <b
 															class="badge bg-info pull-right">369</b> <i
-															class="fa fa-angle-right"></i> <span>聊天室列表</span>
+															class="fa fa-angle-right"></i> <span>历史订单</span>
 													</a></li>
 												</ul></li>
 											<!--<li > <a href="#form" > <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> <span>Form</span> </a>-->
@@ -233,13 +208,13 @@
 										</span> <span>事件管理</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="gallery.html"> <i
+											<li><a href="eventList.action"> <i
 													class="fa fa-angle-right"></i> <span>事件列表</span>
 											</a></li>
-											<li><a href="profile.html"> <i
+											<li><a href="eventList.action"> <i
 													class="fa fa-angle-right"></i> <span>上报事件</span>
 											</a></li>
-											<li><a href="invoice.html"> <i
+											<li><a href="eventList.action"> <i
 													class="fa fa-angle-right"></i> <span>业主投诉</span>
 											</a></li>
 										</ul></li>

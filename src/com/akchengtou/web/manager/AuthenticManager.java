@@ -85,7 +85,7 @@ public class AuthenticManager {
 				map.put("score", l[2]);
 				map.put("image", l[3]);
 				map.put("gender", l[4]);
-				map.put("sort", i);
+				map.put("sort", i+1);
 				map.put("orderList", 10);
 				
 				results.add(map);

@@ -19,7 +19,7 @@
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value>Changeme_123</value>
+			<value></value>
 		</property>
 	</bean>
 	<bean id="sessionFactory"
