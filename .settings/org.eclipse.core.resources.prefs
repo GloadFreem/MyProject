@@ -1,12 +1,16 @@
 eclipse.preferences.version=1
 encoding//WebRoot/WEB-INF/jsp/new_admin/header.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/table-announce-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-authentic-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-charges-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-event-list.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/table-feeling-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-member-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-member-order-list.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/table-message-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-order-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-service-list.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/table-task-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-user-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/table-user-rank-list.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/userDetail.jsp=UTF-8

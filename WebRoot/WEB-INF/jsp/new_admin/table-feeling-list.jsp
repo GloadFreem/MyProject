@@ -49,8 +49,7 @@
 								</span>
 								</th>
 								<th>头像</th>
-								<th width="80">姓名</th>
-								<th width="10%">手机号码</th>
+								<th width="80">发布人</th>
 								<th width="40%">内容</th>
 								<th>图片</th>
 								<th width="80">操作</th>
@@ -62,25 +61,24 @@
 									<c:forEach items="${result}" var="item" varStatus="status">
 										<tr>
 											<td><input type="checkbox" name="post[]"
-												value="${item.eventId}"></td>
-											<td>${item.eventId}</td>
+												value="${item.contentId}"></td>
+											<td>${item.contentId}</td>
 											<td width="100"><a href="${item.user.image}"
 												target="blank"><img src="${item.user.image}" alt="城投逸园"
 													class="img-responsive" /></a></td>
 											<td>${item.user.name}</td>
-											<td>${item.user.telephone}</td>
 											<td>${item.content}</td>
-											<td><c:forEach var="image" items="${item.eventimageses}">
+											<td><c:forEach var="image" items="${item.publiccontentimageses}">
 											<a href="${image.url}" target="blank"><img
 														src="${image.url}" alt="城投逸园" style="width:100px;m-l" />
 													</a>
 												</c:forEach></td>
 											<td><a
-												href="memberDetail.action?contentId=${item.eventId }"
+												href="feelingDetail.action?contentId=${item.contentId }"
 												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"
-												data-href="deleteMember.action?contentId=${item.eventId }"
+												data-href="deleteFeeling.action?contentId=${item.contentId }"
 												data-toggle="modal" class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

@@ -226,13 +226,13 @@
 										</span> <span>圈子管理</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="gallery.html"> <i
+											<li><a href="feelingList.action"> <i
 													class="fa fa-angle-right"></i> <span>圈子列表</span>
 											</a></li>
-											<li><a href="invoice.html"> <i
-													class="fa fa-angle-right"></i> <span>分享收藏</span>
+											<li><a href="feelingList.action"> <i
+													class="fa fa-angle-right"></i> <span>发布圈子</span>
 											</a></li>
-											<li><a href="intro.html"> <i
+											<li><a href="feelingList.action"> <i
 													class="fa fa-angle-right"></i> <span>黑名单</span>
 											</a></li>
 										</ul></li>
@@ -244,16 +244,16 @@
 										</span> <span>任务管理</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="gallery.html"> <i
+											<li><a href="taskList.action"> <i
 													class="fa fa-angle-right"></i> <span>任务列表</span>
 											</a></li>
-											<li><a href="invoice.html"> <i
+											<li><a href="addTask.action"> <i
 													class="fa fa-angle-right"></i> <span>任务分配</span>
 											</a></li>
-											<li><a href="invoice.html"> <i
+											<li><a href="employerTask.action"> <i
 													class="fa fa-angle-right"></i> <span>员工考勤</span>
 											</a></li>
-											<li><a href="intro.html"> <i
+											<li><a href="workResult.action"> <i
 													class="fa fa-angle-right"></i> <span>绩效管理</span>
 											</a></li>
 										</ul></li>
@@ -265,16 +265,33 @@
 										</span> <span>消息管理</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="newsBanner.action"> <i
-													class="fa fa-angle-right"></i> <span>公告列表</span>
-											</a></li>
-											<li><a href="newsBanner.action"> <i
-													class="fa fa-angle-right"></i> <span>消息列表 </span>
-											</a></li>
-											<li><a href="originalBanner.action"> <i
-													class="fa fa-angle-right"></i> <span>原创Banner</span>
-											</a></li>
-										</ul></li>
+											<li><a href="#table"> <i
+													class="fa fa-angle-down text"></i> <i
+													class="fa fa-angle-up text-active"></i> <span>公告管理</span>
+											</a>
+												<ul class="nav bg">
+													<li><a href="announceList.action"> <i
+															class="fa fa-angle-right"></i> <span>公告列表</span>
+													</a></li>
+													<li><a href="addAnnounce.action"> <i
+															class="fa fa-angle-right"></i> <span>发布公告</span>
+													</a></li>
+												</ul></li>
+											<li><a href="#table"> <i
+													class="fa fa-angle-down text"></i> <i
+													class="fa fa-angle-up text-active"></i> <span>消息管理</span>
+											</a>
+												<ul class="nav bg">
+													<li><a href="messageList.action"> <i
+															class="fa fa-angle-right"></i> <span>消息列表</span>
+													</a></li>
+													<li><a href="addAnnounce.action"> <i
+															class="fa fa-angle-right"></i> <span>添加消息</span>
+													</a></li>
+													<li><a href="addAnnounce.action"> <i
+															class="fa fa-angle-right"></i> <span>推送消息</span>
+													</a></li>
+												</ul></li> </ul></li>
 									<li><a href="notebook.action"> <i
 											class="fa fa-pencil icon"> <b class="bg-info"></b>
 										</i> <span>信息反馈</span>

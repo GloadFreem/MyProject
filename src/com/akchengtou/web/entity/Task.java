@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "task", catalog = "ak_zhsq")
-@JsonIgnoreProperties(value={"user","service"})
+@JsonIgnoreProperties(value={"service"})
 public class Task implements java.io.Serializable {
 
 	// Fields
@@ -60,7 +60,7 @@ public class Task implements java.io.Serializable {
 		this.taskId = taskId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "task_ower")
 	public User getUser() {
 		return this.user;

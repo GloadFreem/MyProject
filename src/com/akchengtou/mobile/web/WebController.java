@@ -46,7 +46,10 @@ import com.akchengtou.web.entity.Member;
 import com.akchengtou.web.entity.MessageBean;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.manager.AuthenticManager;
+import com.akchengtou.web.manager.FeelingManager;
 import com.akchengtou.web.manager.ServiceManager;
+import com.akchengtou.web.manager.SystemManager;
+import com.akchengtou.web.manager.TaskManager;
 import com.akchengtou.web.manager.UserManager;
 
 @Controller
@@ -58,703 +61,730 @@ public class WebController extends BaseController {
 	private AuthenticManager authenticManager;
 	@Autowired
 	private ServiceManager serviceManager;
-	
-	/***    ---------------------------------------------后端管理系统升级-------------------------------------------***/
+	@Autowired
+	private FeelingManager feelingManager;
+	@Autowired
+	private TaskManager taskManager;
+	@Autowired
+	private SystemManager systemManager;
+
+	/***
+	 * ---------------------------------------------后端管理系统升级--------------------
+	 * -----------------------
+	 ***/
 	/***
 	 * 首页
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/index")
-	public String requestIndexPage(
-			ModelMap map,
-			HttpSession session)
-	{
-		map.put("content","content");
+	@RequestMapping(value = "newSystem/index")
+	public String requestIndexPage(ModelMap map, HttpSession session) {
+		map.put("content", "content");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	//---------------用户------------------------//
-	//用户列表
-	@RequestMapping(value="newSystem/userList")
+
+	// ---------------用户------------------------//
+	// 用户列表
+	@RequestMapping(value = "newSystem/userList")
 	public String userList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-user-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//认证审核
-	@RequestMapping(value="newSystem/authenticList")
+
+	// 认证审核
+	@RequestMapping(value = "newSystem/authenticList")
 	public String authenticList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.userManger.getAuthenticDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-authentic-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//员工
-	@RequestMapping(value="newSystem/memberList")
+
+	// 员工
+	@RequestMapping(value = "newSystem/memberList")
 	public String memberList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.userManger.getMemberDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-member-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//排行榜
-	@RequestMapping(value="newSystem/userRankList")
+
+	// 排行榜
+	@RequestMapping(value = "newSystem/userRankList")
 	public String userRankList(
-			@RequestParam(value="type",required=false)Integer  type,
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		if(type==null)
-		{
-			type=1;
+			@RequestParam(value = "type", required = false) Integer type,
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+		if (type == null) {
+			type = 1;
 		}
 		Authentic authentic = new Authentic();
 
 		Identity identity = new Identity();
 		identity.setIdentiyTypeId(type);
-		
+
 		authentic.setIdentity(identity);
-		
-		
+
 		// 根据用户身份类型获取排行榜
 		List list = this.authenticManager.findRankingByIdentitype(authentic
 				.getIdentity());
-		
+
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	@RequestMapping(value="newSystem/serviceList")
+
+	@RequestMapping(value = "newSystem/serviceList")
 	public String serviceList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.serviceManager.getServiceTypeDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-service-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//物业费订单
-	@RequestMapping(value="newSystem/propertyChargesList")
+
+	// 物业费订单
+	@RequestMapping(value = "newSystem/propertyChargesList")
 	public String propertyChargesList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.serviceManager.getPropertychargesDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-charges-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	//预约订单
-	@RequestMapping(value="newSystem/orderList")
+
+	// 预约订单
+	@RequestMapping(value = "newSystem/orderList")
 	public String orderList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.serviceManager.getOrderServiceDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-order-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//员工订单
-	@RequestMapping(value="newSystem/memberOrderList")
+
+	// 员工订单
+	@RequestMapping(value = "newSystem/memberOrderList")
 	public String memberOrderList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List<Member> list = this.serviceManager.getMemberDao().findAll();
-		
-		//ser
+
+		// ser
 		List result = new ArrayList();
 		Map data;
-		for(int i =0;i<list.size();i++)
-		{
+		for (int i = 0; i < list.size(); i++) {
 			data = new HashMap();
-			
+
 			Member member = list.get(i);
-			List l = this.serviceManager.getServiceDao().findByProperty("member", member);
-			
+			List l = this.serviceManager.getServiceDao().findByProperty(
+					"member", member);
+
 			data.put("member", member);
 			data.put("orders", l);
-			
+
 			result.add(data);
-			
+
 		}
 		map.put("result", result);
 		map.put("content", "table-member-order-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	//事件列表
-	@RequestMapping(value="newSystem/eventList")
+
+	// 事件列表
+	@RequestMapping(value = "newSystem/eventList")
 	public String eventList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
 		List list = this.serviceManager.getEventDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-event-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	@RequestMapping(value="newSystem/userDetail")
+
+	// 圈子列表
+	@RequestMapping(value = "newSystem/feelingList")
+	public String feelingList(
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
+		List list = this.feelingManager.getPublicContentDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-feeling-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	// 任务列表
+	@RequestMapping(value = "newSystem/taskList")
+	public String taskList(
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+		List list = this.taskManager.getTaskDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-task-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	// 公告列表
+	@RequestMapping(value = "newSystem/announceList")
+	public String announceList(
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+		List list = this.systemManager.getNoticeDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-announce-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	// 消息列表
+	@RequestMapping(value = "newSystem/messageList")
+	public String messageList(
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+		List list = this.systemManager.getSystemMessageDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-message-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/userDetail")
 	public String userDetail(
-			@RequestParam(value="contentId",required=false)Integer  contentId,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+
 		User user = this.userManger.getUserDao().findById(contentId);
-		
+
 		map.put("result", user);
 		map.put("content", "userDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	@RequestMapping(value="newSystem/editUser")
+
+	@RequestMapping(value = "newSystem/editUser")
 	public String editUser(
-			@RequestParam(value="contentId",required=false)Integer  contentId,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+
 		User user = this.userManger.getUserDao().findById(contentId);
-		
+
 		map.put("result", user);
 		map.put("content", "userDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	@RequestMapping(value="newSystem/deleteUser")
+
+	@RequestMapping(value = "newSystem/deleteUser")
 	public String deleteUser(
-			@RequestParam(value="contentId",required=false)Integer  contentId,
-			ModelMap map)
-	{
-		
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+
 		User user = this.userManger.getUserDao().findById(contentId);
-		
+
 		this.userManger.getUserDao().delete(user);
-		
+
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-user-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	//---------------用户------------------------//
-	
+
+	// ---------------用户------------------------//
+
 	/***
 	 * 资讯内容
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/news")
-	public String requestNewsPage(
-			ModelMap map,
-			HttpSession session)
-	{
-		map.put("content","buttons");
+	@RequestMapping(value = "newSystem/news")
+	public String requestNewsPage(ModelMap map, HttpSession session) {
+		map.put("content", "buttons");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	/***
 	 * 资讯内容
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/notebook")
-	public String requestNotebook(
-			ModelMap map,
-			HttpSession session)
-	{
-		map.put("content","notebook");
+	@RequestMapping(value = "newSystem/notebook")
+	public String requestNotebook(ModelMap map, HttpSession session) {
+		map.put("content", "notebook");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	/***
 	 * 资讯Banner
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/newsBanner")
+	@RequestMapping(value = "newSystem/newsBanner")
 	public String requestNewsBanner(
-			@RequestParam(value="page",required=false)Integer page,
-			@RequestParam(value="size",required=false)Integer size,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		List list = this.messageManager.getNewsbannerDAO().findAll();
-		
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size,
+			ModelMap map, HttpSession session) {
+
+		// List list = this.messageManager.getNewsbannerDAO().findAll();
+
 		List list = new ArrayList();
-		map.put("content","table-news-banner");
-		map.put("result",list);
+		map.put("content", "table-news-banner");
+		map.put("result", list);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	/***
 	 * 删除资讯Banner
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/delNewsBanner")
+	@RequestMapping(value = "newSystem/delNewsBanner")
 	public String requestDelNewsBanner(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Newsbanner banner = this.messageManager.getNewsbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				this.messageManager.getNewsbannerDAO().delete(banner);
-//			}
-//			
-//		}
-//		
-//		
-//		List list = this.messageManager.getNewsbannerDAO().findAll();
-		
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Newsbanner banner =
+		// this.messageManager.getNewsbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// this.messageManager.getNewsbannerDAO().delete(banner);
+		// }
+		//
+		// }
+		//
+		//
+		// List list = this.messageManager.getNewsbannerDAO().findAll();
+
 		List list = new ArrayList();
-		map.put("content","table-news-banner");
-		map.put("result",list);
+		map.put("content", "table-news-banner");
+		map.put("result", list);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	/***
 	 * 资讯Banner详情
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/newBannerDetail")
+	@RequestMapping(value = "newSystem/newBannerDetail")
 	public String newBannerDetail(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Newsbanner banner = this.messageManager.getNewsbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				map.put("data", banner);
-//			}
-//		}
-		
-		map.put("content","newBannerContent");
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Newsbanner banner =
+		// this.messageManager.getNewsbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// map.put("data", banner);
+		// }
+		// }
+
+		map.put("content", "newBannerContent");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	/***
 	 * 编辑Banner详情
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/editNewBanner")
+	@RequestMapping(value = "newSystem/editNewBanner")
 	public String editNewBanner(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			@RequestParam(value="desc",required=false)String desc,
-			@RequestParam(value="image",required=false)String image,
-			@RequestParam(value="url",required=false)String url,
-			@RequestParam(value="file",required=false)MultipartFile[] images,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Newsbanner banner = this.messageManager.getNewsbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				//更新
-//				if(desc!=null)
-//				{
-//					banner.setDesc(desc);
-//				}
-//				
-//				if(image!=null)
-//				{
-//					banner.setImage(image);
-//				}
-//				
-//				if(url!=null)
-//				{
-//					banner.setUrl(url);
-//				}
-//				
-//				// 保存图片
-//				String fileName = "";
-//				String result = "";
-//				if (images != null && images.length > 0) {
-//
-//					MultipartFile file = null;
-//					Set items = new HashSet();
-//					for (int i = 0; i < images.length; i++) {
-//						if (images[i] != null) {
-//							file = images[i];
-//							fileName = String.format(
-//									AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
-//									new Date().getTime(), i);
-//							result = FileUtil.savePicture(file, fileName,
-//									"upload/uploadImages/");
-//							if (!result.equals("")) {
-//								fileName = AKConfig.STRING_SYSTEM_ADDRESS
-//										+ "upload/uploadImages/" + result;
-//							} else {
-//								fileName = "";
-//							}
-//
-//						}
-//					}
-//					
-//					if(fileName!=null && fileName!="")
-//					{
-//						banner.setImage(fileName);
-//					}else{
-//						if(image!=null && image!="")
-//						{
-//							banner.setImage(image);
-//						}
-//					}
-//				}
-//				
-//				//保存
-//				this.messageManager.getNewsbannerDAO().saveOrUpdate(banner);
-//				map.put("data", banner);
-//			}
-//		}
-//		
-		map.put("content","newBannerContent");
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "desc", required = false) String desc,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "url", required = false) String url,
+			@RequestParam(value = "file", required = false) MultipartFile[] images,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Newsbanner banner =
+		// this.messageManager.getNewsbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// //更新
+		// if(desc!=null)
+		// {
+		// banner.setDesc(desc);
+		// }
+		//
+		// if(image!=null)
+		// {
+		// banner.setImage(image);
+		// }
+		//
+		// if(url!=null)
+		// {
+		// banner.setUrl(url);
+		// }
+		//
+		// // 保存图片
+		// String fileName = "";
+		// String result = "";
+		// if (images != null && images.length > 0) {
+		//
+		// MultipartFile file = null;
+		// Set items = new HashSet();
+		// for (int i = 0; i < images.length; i++) {
+		// if (images[i] != null) {
+		// file = images[i];
+		// fileName = String.format(
+		// AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
+		// new Date().getTime(), i);
+		// result = FileUtil.savePicture(file, fileName,
+		// "upload/uploadImages/");
+		// if (!result.equals("")) {
+		// fileName = AKConfig.STRING_SYSTEM_ADDRESS
+		// + "upload/uploadImages/" + result;
+		// } else {
+		// fileName = "";
+		// }
+		//
+		// }
+		// }
+		//
+		// if(fileName!=null && fileName!="")
+		// {
+		// banner.setImage(fileName);
+		// }else{
+		// if(image!=null && image!="")
+		// {
+		// banner.setImage(image);
+		// }
+		// }
+		// }
+		//
+		// //保存
+		// this.messageManager.getNewsbannerDAO().saveOrUpdate(banner);
+		// map.put("data", banner);
+		// }
+		// }
+		//
+		map.put("content", "newBannerContent");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	/***
 	 * 原创Banner
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/originalBanner")
+	@RequestMapping(value = "newSystem/originalBanner")
 	public String originalNewsBanner(
-			@RequestParam(value="page",required=false)Integer page,
-			@RequestParam(value="size",required=false)Integer size,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		List list = this.messageManager.getOriginalbannerDAO().findAll();
-		
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size,
+			ModelMap map, HttpSession session) {
+
+		// List list = this.messageManager.getOriginalbannerDAO().findAll();
+
 		List list = new ArrayList();
-		map.put("content","table-original-banner");
-		map.put("result",list);
+		map.put("content", "table-original-banner");
+		map.put("result", list);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	/***
 	 * 删除原创Banner
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/delOriginalBanner")
+	@RequestMapping(value = "newSystem/delOriginalBanner")
 	public String requestDelOriginalBanner(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Originalbanner banner = this.messageManager.getOriginalbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				this.messageManager.getOriginalbannerDAO().delete(banner);
-//			}
-//			
-//		}
-//		
-//		
-//		List list = this.messageManager.getOriginalbannerDAO().findAll();
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Originalbanner banner =
+		// this.messageManager.getOriginalbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// this.messageManager.getOriginalbannerDAO().delete(banner);
+		// }
+		//
+		// }
+		//
+		//
+		// List list = this.messageManager.getOriginalbannerDAO().findAll();
 		List list = new ArrayList();
-		map.put("content","table-original-banner");
-		map.put("result",list);
+		map.put("content", "table-original-banner");
+		map.put("result", list);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	/***
 	 * 原创Banner详情
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/originalBannerDetail")
+	@RequestMapping(value = "newSystem/originalBannerDetail")
 	public String originalBannerDetail(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Originalbanner banner = this.messageManager.getOriginalbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				map.put("data", banner);
-//			}
-//		}
-		
-		map.put("content","originalBannerContent");
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Originalbanner banner =
+		// this.messageManager.getOriginalbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// map.put("data", banner);
+		// }
+		// }
+
+		map.put("content", "originalBannerContent");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	/***
 	 * 编辑Banner详情
+	 * 
 	 * @param map
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="newSystem/editOriginalBanner")
+	@RequestMapping(value = "newSystem/editOriginalBanner")
 	public String editOriginalBanner(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			@RequestParam(value="desc",required=false)String desc,
-			@RequestParam(value="image",required=false)String image,
-			@RequestParam(value="url",required=false)String url,
-			@RequestParam(value="file",required=false)MultipartFile[] images,
-			ModelMap map,
-			HttpSession session)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Originalbanner banner = this.messageManager.getOriginalbannerDAO().findById(contentId);
-//			if(banner!=null)
-//			{
-//				//更新
-//				if(desc!=null)
-//				{
-//					banner.setDesc(desc);
-//				}
-//				
-//				if(image!=null)
-//				{
-//					banner.setImage(image);
-//				}
-//				
-//				if(url!=null)
-//				{
-//					banner.setUrl(url);
-//				}
-//				
-//				// 保存图片
-//				String fileName = "";
-//				String result = "";
-//				if (images != null && images.length > 0) {
-//					
-//					MultipartFile file = null;
-//					Set items = new HashSet();
-//					for (int i = 0; i < images.length; i++) {
-//						if (images[i] != null) {
-//							file = images[i];
-//							fileName = String.format(
-//									AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
-//									new Date().getTime(), i);
-//							result = FileUtil.savePicture(file, fileName,
-//									"upload/uploadImages/");
-//							if (!result.equals("")) {
-//								fileName = AKConfig.STRING_SYSTEM_ADDRESS
-//										+ "upload/uploadImages/" + result;
-//							} else {
-//								fileName = "";
-//							}
-//							
-//						}
-//					}
-//					
-//					if(fileName!=null && fileName!="")
-//					{
-//						banner.setImage(fileName);
-//					}else{
-//						if(image!=null && image!="")
-//						{
-//							banner.setImage(image);
-//						}
-//					}
-//				}
-//				
-//				//保存
-//				this.messageManager.getOriginalbannerDAO().saveOrUpdate(banner);
-//				map.put("data", banner);
-//			}
-//		}
-//		
-		map.put("content","originalBannerContent");
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "desc", required = false) String desc,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "url", required = false) String url,
+			@RequestParam(value = "file", required = false) MultipartFile[] images,
+			ModelMap map, HttpSession session) {
+
+		// if(contentId!=null)
+		// {
+		// Originalbanner banner =
+		// this.messageManager.getOriginalbannerDAO().findById(contentId);
+		// if(banner!=null)
+		// {
+		// //更新
+		// if(desc!=null)
+		// {
+		// banner.setDesc(desc);
+		// }
+		//
+		// if(image!=null)
+		// {
+		// banner.setImage(image);
+		// }
+		//
+		// if(url!=null)
+		// {
+		// banner.setUrl(url);
+		// }
+		//
+		// // 保存图片
+		// String fileName = "";
+		// String result = "";
+		// if (images != null && images.length > 0) {
+		//
+		// MultipartFile file = null;
+		// Set items = new HashSet();
+		// for (int i = 0; i < images.length; i++) {
+		// if (images[i] != null) {
+		// file = images[i];
+		// fileName = String.format(
+		// AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
+		// new Date().getTime(), i);
+		// result = FileUtil.savePicture(file, fileName,
+		// "upload/uploadImages/");
+		// if (!result.equals("")) {
+		// fileName = AKConfig.STRING_SYSTEM_ADDRESS
+		// + "upload/uploadImages/" + result;
+		// } else {
+		// fileName = "";
+		// }
+		//
+		// }
+		// }
+		//
+		// if(fileName!=null && fileName!="")
+		// {
+		// banner.setImage(fileName);
+		// }else{
+		// if(image!=null && image!="")
+		// {
+		// banner.setImage(image);
+		// }
+		// }
+		// }
+		//
+		// //保存
+		// this.messageManager.getOriginalbannerDAO().saveOrUpdate(banner);
+		// map.put("data", banner);
+		// }
+		// }
+		//
+		map.put("content", "originalBannerContent");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	
-	//聊天室页面
-	@RequestMapping(value="newSystem/createChatRoomPage")
+
+	// 聊天室页面
+	@RequestMapping(value = "newSystem/createChatRoomPage")
 	public String createChatRoomPage(
-			@RequestParam(value="contentId",required=false)Integer contentId,
-			ModelMap map)
-	{
-//		if(contentId!=null)
-//		{
-//			Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
-//			map.put("data", room);
-//			Integer userId =Integer.parseInt(room.getOwner()) ;
-//			Users u=this.userManager.findUserById(userId);
-//			map.put("img", u.getHeadSculpture());
-//		}
-		
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		// if(contentId!=null)
+		// {
+		// Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
+		// map.put("data", room);
+		// Integer userId =Integer.parseInt(room.getOwner()) ;
+		// Users u=this.userManager.findUserById(userId);
+		// map.put("img", u.getHeadSculpture());
+		// }
+
 		map.put("content", "createChatRoom");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	//聊天室添加
-	@RequestMapping(value="newSystem/createChatRoom")
-	public String createChatRoom(
-			@RequestParam(value="name")String  name,
-			@RequestParam(value="desc")String  desc,
-			@RequestParam(value="maxusers")Integer  maxusers,
-			@RequestParam(value="owner")Integer  userId,
-			@RequestParam(value="projectId")Integer  projectId,
-			@RequestParam(value="contentId")Integer  contentId,
-			ModelMap map)
-	{
-//		Users u = this.userManager.findUserById(userId);
-//		Chatroom room ;
-//		if(contentId!=null)
-//		{
-//			room=this.imManager.getChatRoomDao().findById(contentId);
-//		}else{
-//			room=new Chatroom();
-//		}
-//		
-//		if(contentId==null)
-//		{
-//			Map result = this.imManager.createChatRoom(name, desc, maxusers, u);
-//			if(result.get("data")!=null)
-//			{
-//				Map m  = (Map) result.get("data");
-//				String id =m.get("id").toString();
-//				room.setCode(id);
-//						
-//			}
-//			map.put("result", result);
-//		}
-//		
-//		
-//		room.setName(name);
-//		room.setDescription(desc);
-//		room.setMaxusers(maxusers);
-//		room.setAffiliationsCount(0);
-//		room.setCreateDate(new Date());
-//		room.setOwnerName(u.getName());
-//		room.setOwner(String.valueOf(userId));
-//		room.setExt(String.valueOf(projectId));
-//		
-//		if(contentId!=null)
-//		{
-//			this.imManager.getChatRoomDao().saveOrUpdate(room);
-//		}else{
-//			this.imManager.getChatRoomDao().save(room);
-//		}
-//		
-		
-//		map.put("img", u.getHeadSculpture());
-//		map.put("data", room);
+
+	// 聊天室添加
+	@RequestMapping(value = "newSystem/createChatRoom")
+	public String createChatRoom(@RequestParam(value = "name") String name,
+			@RequestParam(value = "desc") String desc,
+			@RequestParam(value = "maxusers") Integer maxusers,
+			@RequestParam(value = "owner") Integer userId,
+			@RequestParam(value = "projectId") Integer projectId,
+			@RequestParam(value = "contentId") Integer contentId, ModelMap map) {
+		// Users u = this.userManager.findUserById(userId);
+		// Chatroom room ;
+		// if(contentId!=null)
+		// {
+		// room=this.imManager.getChatRoomDao().findById(contentId);
+		// }else{
+		// room=new Chatroom();
+		// }
+		//
+		// if(contentId==null)
+		// {
+		// Map result = this.imManager.createChatRoom(name, desc, maxusers, u);
+		// if(result.get("data")!=null)
+		// {
+		// Map m = (Map) result.get("data");
+		// String id =m.get("id").toString();
+		// room.setCode(id);
+		//
+		// }
+		// map.put("result", result);
+		// }
+		//
+		//
+		// room.setName(name);
+		// room.setDescription(desc);
+		// room.setMaxusers(maxusers);
+		// room.setAffiliationsCount(0);
+		// room.setCreateDate(new Date());
+		// room.setOwnerName(u.getName());
+		// room.setOwner(String.valueOf(userId));
+		// room.setExt(String.valueOf(projectId));
+		//
+		// if(contentId!=null)
+		// {
+		// this.imManager.getChatRoomDao().saveOrUpdate(room);
+		// }else{
+		// this.imManager.getChatRoomDao().save(room);
+		// }
+		//
+
+		// map.put("img", u.getHeadSculpture());
+		// map.put("data", room);
 		map.put("content", "createChatRoom");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	//聊天室列表
-	@RequestMapping(value="newSystem/chatRoomList")
+
+	// 聊天室列表
+	@RequestMapping(value = "newSystem/chatRoomList")
 	public String chatRoomList(
-			@RequestParam(value="size",required=false)Integer  size,
-			@RequestParam(value="page",required=false)Integer  page,
-			ModelMap map)
-	{
-		
-//		List list = this.imManager.getChatRoomDao().findAll();
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+
+		// List list = this.imManager.getChatRoomDao().findAll();
 		List list = new ArrayList();
 		map.put("result", list);
 		map.put("content", "table-chatroom-banner");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	//删除聊天室
-	@RequestMapping(value="newSystem/deleteChatRoom")
+
+	// 删除聊天室
+	@RequestMapping(value = "newSystem/deleteChatRoom")
 	public String deleteChatRoom(
-			@RequestParam(value="contentId",required=false)Integer  contentId,
-			ModelMap map)
-	{
-		
-//		if(contentId!=null)
-//		{
-//			Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
-//			
-//			if(room!=null){
-//				this.imManager.getChatRoomDao().delete(room);
-//			}
-//		}
-//		
-//		List list = this.imManager.getChatRoomDao().findAll();
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+
+		// if(contentId!=null)
+		// {
+		// Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
+		//
+		// if(room!=null){
+		// this.imManager.getChatRoomDao().delete(room);
+		// }
+		// }
+		//
+		// List list = this.imManager.getChatRoomDao().findAll();
 		List list = new ArrayList();
 		map.put("result", list);
 		map.put("content", "table-chatroom-banner");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	/***    ---------------------------------------------后端管理系统升级-------------------------------------------***/
-	
+
+	/***
+	 * ---------------------------------------------后端管理系统升级--------------------
+	 * -----------------------
+	 ***/
 
 	/***
 	 * 从当前session获取用户对象

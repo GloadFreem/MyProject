@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "message", catalog = "ak_zhsq")
-@JsonIgnoreProperties(value={"user"})
+//@JsonIgnoreProperties(value={"user"})
 public class Message implements java.io.Serializable {
 
 	// Fields
@@ -63,7 +63,7 @@ public class Message implements java.io.Serializable {
 		this.messageId = messageId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;
