@@ -2,11 +2,15 @@ package com.akchengtou.web.entity;
 
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -104,6 +108,22 @@ public class MemberDAO {
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	
+	public Integer findByMemberIdSQL(Integer memberId) {
+		try {
+			String queryString = "select user_id from member where member_id=?";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			queryObject.setParameter(0, memberId);
+			
+			List l = queryObject.list();
+			
+			return (Integer) l.get(0);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;

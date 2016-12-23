@@ -76,11 +76,11 @@
 													</a>
 												</c:forEach></td>
 											<td><a
-												href="memberDetail.action?contentId=${item.eventId }"
+												href="eventDetail.action?contentId=${item.eventId }"
 												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"
-												data-href="deleteMember.action?contentId=${item.eventId }"
+												data-href="deleteEvent.action?contentId=${item.eventId }"
 												data-toggle="modal" class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

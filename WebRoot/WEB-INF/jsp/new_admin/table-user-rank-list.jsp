@@ -21,11 +21,9 @@
 					<div class="col-sm-4 m-b-xs">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-sm btn-default active"> <input
-								type="radio" name="options" id="option1"> 今日
+								type="radio" name="options" id="option1"> 用户
 							</label> <label class="btn btn-sm btn-default"> <input
-								type="radio" name="options" id="option2"> 本周
-							</label> <label class="btn btn-sm btn-default"> <input
-								type="radio" name="options" id="option2"> 本月
+								type="radio" name="options" id="option2"> 员工
 							</label>
 						</div>
 					</div>
@@ -70,10 +68,10 @@
 											<td>${item.score}</td>
 											<td>${item.gender}</td>
 											<td>${item.sort}</td>
-											<td><a href="memberDetail.action?contentId=${item.memberId }" class="active"><i
+											<td><a href="userDetail.action?contentId=${item.userId }" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
-												href="#modal" data-href="deleteMember.action?contentId=${item.memberId }" data-toggle="modal"
+												href="#modal" data-href="deleteUser.action?contentId=${item.userId }" data-toggle="modal"
 												class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

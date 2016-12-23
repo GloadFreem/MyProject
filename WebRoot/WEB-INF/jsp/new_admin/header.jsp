@@ -131,7 +131,7 @@
 													<li><a href="serviceList.action"> <i
 															class="fa fa-angle-right"></i> <span>服务列表</span>
 													</a></li>
-													<li><a href="addSerrvice.action"> <i
+													<li><a href="serviceDetail.action"> <i
 															class="fa fa-angle-right"></i> <span>添加服务</span>
 													</a></li>
 												</ul></li>
@@ -171,7 +171,7 @@
 													<li><a href="orderList.action"> <i
 															class="fa fa-angle-right"></i> <span>订单列表</span>
 													</a></li>
-													<li><a href="addOrder.action"> <i
+													<li><a href="orderDetail.action"> <i
 															class="fa fa-angle-right"></i> <span>添加订单</span>
 													</a></li>
 													<li><a href="memberOrderList.action"> <b
@@ -211,7 +211,7 @@
 											<li><a href="eventList.action"> <i
 													class="fa fa-angle-right"></i> <span>事件列表</span>
 											</a></li>
-											<li><a href="eventList.action"> <i
+											<li><a href="eventDetail.action"> <i
 													class="fa fa-angle-right"></i> <span>上报事件</span>
 											</a></li>
 											<li><a href="eventList.action"> <i

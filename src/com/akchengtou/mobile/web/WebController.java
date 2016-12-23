@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+
+
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.FileUtil;
@@ -40,10 +42,14 @@ import com.akchengtou.tools.MsgUtil;
 import com.akchengtou.tools.Tools;
 import com.akchengtou.web.entity.Authentic;
 import com.akchengtou.web.entity.Authenticstatus;
+import com.akchengtou.web.entity.Event;
 import com.akchengtou.web.entity.Identity;
 import com.akchengtou.web.entity.Identiytype;
 import com.akchengtou.web.entity.Member;
 import com.akchengtou.web.entity.MessageBean;
+import com.akchengtou.web.entity.Orderservice;
+import com.akchengtou.web.entity.Propertycharges;
+import com.akchengtou.web.entity.Servicetype;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.manager.AuthenticManager;
 import com.akchengtou.web.manager.FeelingManager;
@@ -290,6 +296,87 @@ public class WebController extends BaseController {
 
 		map.put("result", user);
 		map.put("content", "userDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/authenticDetail")
+	public String authenticDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		
+		Authentic authentic = this.authenticManager.getAuthenticDao().findById(contentId);
+		
+		map.put("result", authentic);
+		map.put("content", "authenticDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/memberDetail")
+	public String memberDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		
+		Member member = this.userManger.getMemberDao().findById(contentId);
+		
+		Integer userId = this.userManger.getMemberDao().findByMemberIdSQL(member.getMemberId());
+		User user = this.userManger.findUserById(userId);
+		
+		
+		map.put("user", user);
+		map.put("result", member);
+		map.put("content", "memberDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/serviceDetail")
+	public String serviceDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Servicetype type = this.serviceManager.getServiceTypeDao().findById(contentId);
+			map.put("result", type);
+		}
+		map.put("content", "serviceDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/chargeDetail")
+	public String chargeDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Propertycharges charges = this.serviceManager.getPropertychargesDao().findById(contentId);
+			map.put("result", charges);
+		}
+		map.put("content", "chargeDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/orderDetail")
+	public String orderDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Orderservice order = this.serviceManager.getOrderServiceDao().findById(contentId);
+			map.put("result", order);
+		}
+		map.put("content", "orderDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/eventDetail")
+	public String eventDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Event event = this.serviceManager.getEventDao().findById(contentId);
+			map.put("result", event);
+		}
+		map.put("content", "eventDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
