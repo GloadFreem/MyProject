@@ -241,21 +241,37 @@
 										</i> <span class="pull-right"> <i
 												class="fa fa-angle-down text"></i> <i
 												class="fa fa-angle-up text-active"></i>
-										</span> <span>任务管理</span>
+										</span> <span>考勤任务</span>
 									</a>
 										<ul class="nav lt">
-											<li><a href="taskList.action"> <i
-													class="fa fa-angle-right"></i> <span>任务列表</span>
-											</a></li>
-											<li><a href="taskDetail.action"> <i
-													class="fa fa-angle-right"></i> <span>任务分配</span>
-											</a></li>
-											<li><a href="employerTask.action"> <i
+											<li><a href="#table"> <i
+													class="fa fa-angle-down text"></i> <i
+													class="fa fa-angle-up text-active"></i> <span>任务管理</span>
+											</a>
+												<ul class="nav bg">
+													<li><a href="taskList.action"> <i
+															class="fa fa-angle-right"></i> <span>任务列表</span>
+													</a></li>
+													<li><a href="taskDetail.action"> <i
+															class="fa fa-angle-right"></i> <span>任务分配</span>
+													</a></li>
+												</ul></li>
+												
+											<li><a href="#table"> <i
+													class="fa fa-angle-down text"></i> <i
+													class="fa fa-angle-up text-active"></i> <span>考勤管理</span>
+											</a>
+												<ul class="nav bg">
+													<li><a href="employerTask.action"> <i
 													class="fa fa-angle-right"></i> <span>员工考勤</span>
 											</a></li>
 											<li><a href="workResult.action"> <i
 													class="fa fa-angle-right"></i> <span>绩效管理</span>
 											</a></li>
+												</ul></li>
+
+
+											
 										</ul></li>
 									<li><a href="#pages"> <i class="fa fa-envelope-o icon">
 												<b class="bg-primary"></b>
@@ -291,7 +307,8 @@
 													<li><a href="addAnnounce.action"> <i
 															class="fa fa-angle-right"></i> <span>推送消息</span>
 													</a></li>
-												</ul></li> </ul></li>
+												</ul></li>
+										</ul></li>
 									<li><a href="notebook.action"> <i
 											class="fa fa-pencil icon"> <b class="bg-info"></b>
 										</i> <span>信息反馈</span>

@@ -36,12 +36,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 
+
+
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.FileUtil;
 import com.akchengtou.tools.MessageType;
 import com.akchengtou.tools.MsgUtil;
 import com.akchengtou.tools.Tools;
+import com.akchengtou.web.entity.Attendance;
+import com.akchengtou.web.entity.Attendancerecord;
 import com.akchengtou.web.entity.Authentic;
 import com.akchengtou.web.entity.Authenticstatus;
 import com.akchengtou.web.entity.Event;
@@ -290,6 +294,33 @@ public class WebController extends BaseController {
 		map.put("content", "table-message-list");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+	
+	@RequestMapping(value = "newSystem/workResult")
+	public String workResult(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		
+		List list  = this.taskManager.getAttendanceRecordDao().findAll();
+		
+		map.put("result", list);
+		map.put("content", "table-workResult-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	
+	
+	// 消息列表
+	@RequestMapping(value = "newSystem/employerTask")
+	public String employerTask(
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
+			ModelMap map) {
+		List list = this.taskManager.getAttendanceDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-attendance-list");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
 
 	@RequestMapping(value = "newSystem/userDetail")
 	public String userDetail(
@@ -302,7 +333,6 @@ public class WebController extends BaseController {
 		map.put("content", "userDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
 	
 	@RequestMapping(value = "newSystem/authenticDetail")
 	public String authenticDetail(
@@ -403,6 +433,28 @@ public class WebController extends BaseController {
 			map.put("result", content);
 		}
 		map.put("content", "feelingDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/attendanceDetail")
+	public String attendanceDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Attendance content = this.taskManager.getAttendanceDao().findById(contentId);
+			map.put("result", content);
+		}
+		map.put("content", "attendanceDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/recordDetail")
+	public String recordDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Attendancerecord content = this.taskManager.getAttendanceRecordDao().findById(contentId);
+			map.put("result", content);
+		}
+		map.put("content", "recordDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
