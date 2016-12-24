@@ -65,14 +65,52 @@ public class TaskManager {
 		return list;
 	}
 	
+	
+	/***
+	 * 根据用户及taskId查询
+	 * 
+	 * @param user
+	 * @param page
+	 * @return
+	 */
+	public List findUserDayTaskById(User user,Integer taskId) {
+		List list = new ArrayList();
+		if (user != null) {
+			String dateString = DateUtil.formatDate(new Date(),"yyyy-MM-dd");
+			dateString+=" 00:00:01";
+			Date date;
+			try {
+				date = DateUtils.stringToDate(dateString, "yyyy-MM-dd HH:mm:ss");
+				list = getTaskDao().findByTaskIdAndUser(user, taskId, date);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
 	/**
 	 * 根据考勤获取考勤记录
 	 * @param attendance
 	 * @return
 	 */
-	public List findHasAttendanced(Attendance attendance)
+	public List findHasAttendanced(User user,Attendance attendance)
 	{
-		return getAttendanceRecordDao().findByProperty("attendance", attendance);
+		List list = new ArrayList();
+		if (user != null) {
+			String dateString = DateUtil.formatDate(new Date(),"yyyy-MM-dd");
+			dateString+=" 00:00:01";
+			Date date;
+			try {
+				date = DateUtils.stringToDate(dateString, "yyyy-MM-dd HH:mm:ss");
+				list = getAttendanceRecordDao().findByRecordIdAndUser(user, attendance.getAttendId(), date);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 	/**

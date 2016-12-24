@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -50,6 +51,16 @@ public class TaskDAO {
 		log.debug("saving Task instance");
 		try {
 			getCurrentSession().save(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+	public void saveOrUpdate(Task transientInstance) {
+		log.debug("saving Task instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -145,6 +156,23 @@ public class TaskDAO {
 			String queryString = "from Task as model  where model.taskDate>?";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, date);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	
+	public List findByTaskIdAndUser(User user,Integer taskId,Date date)
+	{
+		log.debug("finding  Task by user day instances");
+		try {
+			String queryString = "select * from task as model  where model.task_ower=? and model.task_id=? and model.task_date>?";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString).addEntity(Task.class);
+			queryObject.setParameter(0, user);
+			queryObject.setParameter(1, taskId);
+			queryObject.setParameter(2, date);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);

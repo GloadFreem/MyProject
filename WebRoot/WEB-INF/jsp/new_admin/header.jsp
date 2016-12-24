@@ -229,7 +229,7 @@
 											<li><a href="feelingList.action"> <i
 													class="fa fa-angle-right"></i> <span>圈子列表</span>
 											</a></li>
-											<li><a href="feelingList.action"> <i
+											<li><a href="feelingDetail.action"> <i
 													class="fa fa-angle-right"></i> <span>发布圈子</span>
 											</a></li>
 											<li><a href="feelingList.action"> <i
@@ -247,7 +247,7 @@
 											<li><a href="taskList.action"> <i
 													class="fa fa-angle-right"></i> <span>任务列表</span>
 											</a></li>
-											<li><a href="addTask.action"> <i
+											<li><a href="taskDetail.action"> <i
 													class="fa fa-angle-right"></i> <span>任务分配</span>
 											</a></li>
 											<li><a href="employerTask.action"> <i

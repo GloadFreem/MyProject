@@ -51,7 +51,8 @@
 								<th>头像</th>
 								<th width="80">任务人</th>
 								<th width="10%">手机号码</th>
-								<th width="40%">内容</th>
+								<th width="30%">内容</th>
+								<th >二维码</th>
 								<th>任务日期</th>
 								<th width="80">操作</th>
 							</tr>
@@ -70,6 +71,16 @@
 											<td>${item.user.name}</td>
 											<td>${item.user.telephone}</td>
 											<td>${item.content}</td>
+											<td>
+											
+											<img src="genErCode.action?url='requestCompleteTask.action?taskId=${item.taskId}'&width=100&height=100" alt="任务码"
+													class="img-responsive" />
+													
+													
+							<!-- 				<img src="genErCode.action?url='requestUserAttendWork.action'&width=100&height=100" alt="任务码"
+													class="img-responsive" /> -->
+													
+													</td>
 											<td>${item.taskDate}</td>
 											<td><a
 												href="taskDetail.action?contentId=${item.taskId }"

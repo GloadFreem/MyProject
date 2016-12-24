@@ -1,12 +1,17 @@
 package com.akchengtou.web.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -107,12 +112,42 @@ public class AttendancerecordDAO {
 			throw re;
 		}
 	}
+	
+	
+	public List findByDate(Date date) {
+		try {
+			String queryString = "from Attendancerecord as model where model.attendDate>?";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, date);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 
 	public List findAll() {
 		log.debug("finding all Attendancerecord instances");
 		try {
 			String queryString = "from Attendancerecord";
 			Query queryObject = getCurrentSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	
+	public List findByRecordIdAndUser(User user,Integer taskId,Date date)
+	{
+		log.debug("finding  Task by user day instances");
+		try {
+			String queryString = "select * from attendancerecord as model  where model.user_id=? and model.record_id=? and model.attend_date>?";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString).addEntity(Task.class);
+			queryObject.setParameter(0, user);
+			queryObject.setParameter(1, taskId);
+			queryObject.setParameter(2, date);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);

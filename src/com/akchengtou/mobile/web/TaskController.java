@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.DateUtils;
 import com.akchengtou.tools.FileUtil;
+import com.akchengtou.tools.MatrixToImageWriter;
 import com.akchengtou.tools.MessageType;
 import com.akchengtou.tools.MsgUtil;
 import com.akchengtou.tools.Tools;
@@ -117,6 +118,61 @@ public class TaskController extends BaseController {
 		return getResult();
 	}
 
+	@RequestMapping("/newSystem/genErCode")
+	public void gen(String url, HttpServletResponse response, Integer width,
+			Integer height) {
+
+		try {
+
+			int iWidth = (width == null ? 200 : width);
+			int iHeight = (height == null ? 200 : height);
+
+			MatrixToImageWriter.createRqCode(url, iWidth, iHeight,
+					response.getOutputStream());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+
+	@RequestMapping("/requestCompleteTask")
+	@ResponseBody
+	/***
+	 * 打卡
+	 * @return Map 返回值
+	 */
+	public Map requestCompleteTask(
+			@RequestParam(value = "taskId",required=false) Integer taskId, HttpSession session) {
+		this.result = new HashMap();
+
+		User user = this.findUserInSession(session);
+		if (user != null) {
+			List<Task> tasks = this.taskMananager.findUserDayTaskById(user,
+					taskId);
+			if (tasks != null && tasks.size() > 0) {
+				Task task = tasks.get(0);
+
+				// 设置已完成
+				task.setComplete(true);
+				// 保存
+				this.taskMananager.getTaskDao().saveOrUpdate(task);
+				this.status = 200;
+				this.result.put("data", "");
+				this.message = "完成打卡！";
+
+				return getResult();
+			}
+
+		}
+
+		this.status = 400;
+		this.result.put("data", "");
+		this.message = "任务不属于该用户";
+
+		return getResult();
+	}
+
 	@RequestMapping("/requestUserTodayTaskList")
 	@ResponseBody
 	/***
@@ -137,8 +193,7 @@ public class TaskController extends BaseController {
 
 		return getResult();
 	}
-	
-	
+
 	@RequestMapping("/requestEventListByType")
 	@ResponseBody
 	/***
@@ -147,18 +202,16 @@ public class TaskController extends BaseController {
 	 */
 	public Map requestEventListByType(
 			@RequestParam(value = "page") Integer page,
-			@RequestParam(value = "type") Integer type,
-			HttpSession session) {
+			@RequestParam(value = "type") Integer type, HttpSession session) {
 		this.result = new HashMap();
 		List list = this.taskMananager.getEventDao().findAll();
-		if(list==null)
-		{
+		if (list == null) {
 			list = new ArrayList();
 		}
 		this.status = 200;
 		this.result.put("data", list);
 		this.message = "";
-		
+
 		return getResult();
 	}
 
@@ -168,37 +221,47 @@ public class TaskController extends BaseController {
 	 * 员工考勤
 	 * @return Map 返回值
 	 */
-	public Map requestUserAttendWork(
-			@RequestParam(value = "attendanceId") Integer attendanceId,
-			@RequestParam(value = "page") Integer page, HttpSession session) {
+	public Map requestUserAttendWork(HttpSession session) {
 		this.result = new HashMap();
 		User user = this.findUserInSession(session);
 		if (user != null) {
-			Attendance attendance = this.taskMananager.getAttendanceDao()
-					.findById(attendanceId);
-			if (attendance != null) {
-				// 查看用户是否已经执行
-				List list = this.taskMananager.findHasAttendanced(attendance);
-				if (list != null && list.size() > 0) {
-					this.status = 400;
-					this.message = "您已执行该任务，无需重复执行";
+			List<Attendance> attendances = this.taskMananager
+					.getAttendanceDao().findByProperty("user", user);
+			if (attendances != null && attendances.size() > 0) {
+				Attendance attendance = attendances.get(0);
+				if (attendance != null) {
+					// 查看用户是否已经执行
+					List list = this.taskMananager
+							.findHasAttendanced(user,attendance);
+					if (list != null && list.size() > 0) {
+						this.status = 400;
+						this.message = "您已执行该任务，无需重复执行";
 
+						return getResult();
+					}
+
+					Attendancerecord record = new Attendancerecord();
+					record.setAttendance(attendance);
+					record.setAttendDate(new Date());
+					record.setUser(user);
+
+					// 保存
+					this.taskMananager.getAttendanceRecordDao().save(record);
+					
+					this.status = 200;
+					this.result.put("data", "");
+					this.message = "信息提交成功!";
+					
 					return getResult();
 				}
+			} else {
 
-				Attendancerecord record = new Attendancerecord();
-				record.setAttendance(attendance);
-				record.setAttendDate(new Date());
-				record.setUser(user);
-
-				// 保存
-				this.taskMananager.getAttendanceRecordDao().save(record);
 			}
 
 		}
-		this.status = 200;
+		this.status = 400;
 		this.result.put("data", "");
-		this.message = "信息提交成功!";
+		this.message = "暂时无法进行打卡!";
 
 		return getResult();
 	}

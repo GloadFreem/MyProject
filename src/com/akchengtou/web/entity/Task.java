@@ -34,6 +34,7 @@ public class Task implements java.io.Serializable {
 	private String content;
 	private Service service;
 	private Date taskDate;
+	private boolean isComplete;
 
 	// Constructors
 
@@ -42,10 +43,11 @@ public class Task implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Task(User user, Service service, Date taskDate) {
+	public Task(User user, Service service, Date taskDate,boolean isComplete) {
 		this.user = user;
 		this.service = service;
 		this.taskDate = taskDate;
+		this.isComplete = isComplete;
 	}
 
 	// Property accessors
@@ -104,6 +106,14 @@ public class Task implements java.io.Serializable {
 	 */
 	public void setContent(String content) {
 		this.content = content;
+	}
+	@Column(name="is_complete")
+	public boolean isComplete() {
+		return isComplete;
+	}
+
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 
 }

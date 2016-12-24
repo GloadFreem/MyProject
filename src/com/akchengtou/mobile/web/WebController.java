@@ -34,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 
+
+
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.FileUtil;
@@ -49,7 +51,9 @@ import com.akchengtou.web.entity.Member;
 import com.akchengtou.web.entity.MessageBean;
 import com.akchengtou.web.entity.Orderservice;
 import com.akchengtou.web.entity.Propertycharges;
+import com.akchengtou.web.entity.Publiccontent;
 import com.akchengtou.web.entity.Servicetype;
+import com.akchengtou.web.entity.Task;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.manager.AuthenticManager;
 import com.akchengtou.web.manager.FeelingManager;
@@ -377,6 +381,28 @@ public class WebController extends BaseController {
 			map.put("result", event);
 		}
 		map.put("content", "eventDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/taskDetail")
+	public String TaskDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Task task = this.taskManager.getTaskDao().findById(contentId);
+			map.put("result", task);
+		}
+		map.put("content", "TaskDetail");
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/feelingDetail")
+	public String feelingDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			ModelMap map) {
+		if(contentId!=null){
+			Publiccontent content = this.feelingManager.getPublicContentDao().findById(contentId);
+			map.put("result", content);
+		}
+		map.put("content", "feelingDetail");
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
