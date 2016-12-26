@@ -5,7 +5,7 @@
 <section id="content">
 	<section class="vbox">
 		<header class="header bg-light bg-gradient b-b">
-			<p>认证信息</p>
+			<p>订单详情</p>
 		</header>
 		<section class="scrollable wrapper">
 			<form action="editAuthentic.action" method="post"

@@ -5,22 +5,31 @@
 <section id="content">
 	<section class="vbox">
 		<header class="header bg-light bg-gradient b-b">
-			<p>考勤记录</p>
+			<p>编辑消息</p>
 		</header>
 		<section class="scrollable wrapper">
 			<form action="editAuthentic.action" method="post"
 				enctype="multipart/form-result">
 				<div class="">
-					<input name="contentId" value="${result.recordId}"
+					<input name="contentId" value="${result.messageId}"
 						style="display:none">
 					<ul class="list-group gutter list-group-lg list-group-sp">
 						<li class="list-group-item">
-							<div class="clear">员工</div>
+							<div class="clear">标题</div>
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
 								<input name="desc" class="form-control alert-success"
-									placeholder="请输入服务名称" value=${result.user.name }></input>
+									placeholder="请输入服务名称" value=${result.title }></input>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="clear">名称</div>
+						</li>
+						<li class="list-group-item">
+							<div class="clear">
+								<input name="desc" class="form-control alert-success"
+									placeholder="请输入用户" value=${result.user.name }></input>
 							</div>
 						</li>
 
@@ -29,7 +38,7 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<img alt="${result.user.image }" src="${result.user.image }"
+								<img alt="${result.user.name }" src="${result.user.image }"
 									class="col-xs-2 m-b"> <input name="image"
 									class="form-control alert-success" value="${result.user.image }"
 									placeholder="请输入内容链接">
@@ -37,15 +46,6 @@
 				</div>
 				</li>
 
-				<li class="list-group-item">
-					<div class="clear">楼室</div>
-				</li>
-				<li class="list-group-item">
-					<div class="clear">
-						<input name="desc" class="form-control alert-success"
-							placeholder="请输入价格" value=${result.attendance.building.name }></input>
-					</div>
-				</li>
 
 				<li class="list-group-item">
 					<div class="clear">内容</div>
@@ -53,24 +53,24 @@
 				<li class="list-group-item">
 					<div class="clear">
 						<textarea name="desc" class="form-control alert-success"
-							placeholder="请输入内容描述">${result.attendance.content }</textarea>
+							placeholder="请输入内容描述">${result.content }</textarea>
 					</div>
 				</li>
 				<li class="list-group-item">
-					<div class="clear">要求时间</div>
+					<div class="clear">是否已阅读</div>
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
 						<input name="desc" class="form-control alert-success"
-							placeholder="请输入价格" value=${result.attendance.requireDate }></input>
+							placeholder="请输入价格" value=${result.readed }></input>
 					</div>
 				</li>
 
 				<li class="list-group-item">
-					<div class="clear">打卡时间</div>
+					<div class="clear">通知时间</div>
 				</li>
 				<li class="list-group-item"><input name="url"
-					class="form-control alert-success" value="${result.attendDate }"
+					class="form-control alert-success" value="${result.publicDate }"
 					placeholder="请输入支付方式">
 				</div>
 				</li>

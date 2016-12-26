@@ -32,18 +32,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
-
-
-
-
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.AKConfig;
 import com.akchengtou.tools.FileUtil;
 import com.akchengtou.tools.MessageType;
 import com.akchengtou.tools.MsgUtil;
 import com.akchengtou.tools.Tools;
+import com.akchengtou.web.entity.Announcement;
 import com.akchengtou.web.entity.Attendance;
 import com.akchengtou.web.entity.Attendancerecord;
 import com.akchengtou.web.entity.Authentic;
@@ -52,6 +47,7 @@ import com.akchengtou.web.entity.Event;
 import com.akchengtou.web.entity.Identity;
 import com.akchengtou.web.entity.Identiytype;
 import com.akchengtou.web.entity.Member;
+import com.akchengtou.web.entity.Message;
 import com.akchengtou.web.entity.MessageBean;
 import com.akchengtou.web.entity.Orderservice;
 import com.akchengtou.web.entity.Propertycharges;
@@ -96,6 +92,8 @@ public class WebController extends BaseController {
 	@RequestMapping(value = "newSystem/index")
 	public String requestIndexPage(ModelMap map, HttpSession session) {
 		map.put("content", "content");
+		map.put("menu", 0);
+		map.put("submenu", 0);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -105,11 +103,19 @@ public class WebController extends BaseController {
 	public String userList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-user-list");
+
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -118,11 +124,17 @@ public class WebController extends BaseController {
 	public String authenticList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.userManger.getAuthenticDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-authentic-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -131,11 +143,17 @@ public class WebController extends BaseController {
 	public String memberList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.userManger.getMemberDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-member-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -145,6 +163,9 @@ public class WebController extends BaseController {
 			@RequestParam(value = "type", required = false) Integer type,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 		if (type == null) {
 			type = 1;
@@ -162,6 +183,9 @@ public class WebController extends BaseController {
 
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -169,11 +193,17 @@ public class WebController extends BaseController {
 	public String serviceList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.serviceManager.getServiceTypeDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-service-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -182,11 +212,17 @@ public class WebController extends BaseController {
 	public String propertyChargesList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.serviceManager.getPropertychargesDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-charges-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -195,11 +231,17 @@ public class WebController extends BaseController {
 	public String orderList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.serviceManager.getOrderServiceDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-order-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -208,6 +250,9 @@ public class WebController extends BaseController {
 	public String memberOrderList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List<Member> list = this.serviceManager.getMemberDao().findAll();
@@ -230,6 +275,9 @@ public class WebController extends BaseController {
 		}
 		map.put("result", result);
 		map.put("content", "table-member-order-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -238,11 +286,17 @@ public class WebController extends BaseController {
 	public String eventList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.serviceManager.getEventDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-event-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -251,11 +305,17 @@ public class WebController extends BaseController {
 	public String feelingList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		List list = this.feelingManager.getPublicContentDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-feeling-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -264,10 +324,16 @@ public class WebController extends BaseController {
 	public String taskList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 		List list = this.taskManager.getTaskDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-task-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -276,10 +342,16 @@ public class WebController extends BaseController {
 	public String announceList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 		List list = this.systemManager.getNoticeDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-announce-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
@@ -288,191 +360,347 @@ public class WebController extends BaseController {
 	public String messageList(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 		List list = this.systemManager.getSystemMessageDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-message-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	@RequestMapping(value = "newSystem/workResult")
 	public String workResult(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
-		List list  = this.taskManager.getAttendanceRecordDao().findAll();
-		
+
+		List list = this.taskManager.getAttendanceRecordDao().findAll();
+
 		map.put("result", list);
 		map.put("content", "table-workResult-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
-	
-	
+
 	// 消息列表
 	@RequestMapping(value = "newSystem/employerTask")
 	public String employerTask(
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 		List list = this.taskManager.getAttendanceDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-attendance-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
 	@RequestMapping(value = "newSystem/userDetail")
 	public String userDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		User user = this.userManger.getUserDao().findById(contentId);
 
 		map.put("result", user);
 		map.put("content", "userDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	@RequestMapping(value = "newSystem/authenticDetail")
 	public String authenticDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
-		Authentic authentic = this.authenticManager.getAuthenticDao().findById(contentId);
-		
+
+		Authentic authentic = this.authenticManager.getAuthenticDao().findById(
+				contentId);
+
 		map.put("result", authentic);
 		map.put("content", "authenticDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/memberDetail")
 	public String memberDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Member member = this.userManger.getMemberDao().findById(contentId);
-		
-		Integer userId = this.userManger.getMemberDao().findByMemberIdSQL(member.getMemberId());
+
+		Integer userId = this.userManger.getMemberDao().findByMemberIdSQL(
+				member.getMemberId());
 		User user = this.userManger.findUserById(userId);
-		
-		
+
 		map.put("user", user);
 		map.put("result", member);
 		map.put("content", "memberDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	@RequestMapping(value = "newSystem/serviceDetail")
 	public String serviceDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Servicetype type = this.serviceManager.getServiceTypeDao().findById(contentId);
+		if (contentId != null) {
+			Servicetype type = this.serviceManager.getServiceTypeDao()
+					.findById(contentId);
 			map.put("result", type);
 		}
 		map.put("content", "serviceDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	@RequestMapping(value = "newSystem/chargeDetail")
 	public String chargeDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Propertycharges charges = this.serviceManager.getPropertychargesDao().findById(contentId);
+		if (contentId != null) {
+			Propertycharges charges = this.serviceManager
+					.getPropertychargesDao().findById(contentId);
 			map.put("result", charges);
 		}
 		map.put("content", "chargeDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	@RequestMapping(value = "newSystem/orderDetail")
 	public String orderDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Orderservice order = this.serviceManager.getOrderServiceDao().findById(contentId);
+		if (contentId != null) {
+			Orderservice order = this.serviceManager.getOrderServiceDao()
+					.findById(contentId);
 			map.put("result", order);
 		}
 		map.put("content", "orderDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	@RequestMapping(value = "newSystem/eventDetail")
 	public String eventDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
+		if (contentId != null) {
 			Event event = this.serviceManager.getEventDao().findById(contentId);
 			map.put("result", event);
 		}
 		map.put("content", "eventDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/taskDetail")
 	public String TaskDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
+		if (contentId != null) {
 			Task task = this.taskManager.getTaskDao().findById(contentId);
 			map.put("result", task);
 		}
 		map.put("content", "TaskDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/feelingDetail")
 	public String feelingDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Publiccontent content = this.feelingManager.getPublicContentDao().findById(contentId);
+		if (contentId != null) {
+			Publiccontent content = this.feelingManager.getPublicContentDao()
+					.findById(contentId);
 			map.put("result", content);
 		}
 		map.put("content", "feelingDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/attendanceDetail")
 	public String attendanceDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Attendance content = this.taskManager.getAttendanceDao().findById(contentId);
+		if (contentId != null) {
+			Attendance content = this.taskManager.getAttendanceDao().findById(
+					contentId);
 			map.put("result", content);
 		}
 		map.put("content", "attendanceDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/recordDetail")
 	public String recordDetail(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		if(contentId!=null){
-			Attendancerecord content = this.taskManager.getAttendanceRecordDao().findById(contentId);
+		if (contentId != null) {
+			Attendancerecord content = this.taskManager
+					.getAttendanceRecordDao().findById(contentId);
 			map.put("result", content);
 		}
 		map.put("content", "recordDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/announceDetail")
+	public String announceDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		if (contentId != null) {
+			Announcement content = this.systemManager.getNoticeDao().findById(
+					contentId);
+			map.put("result", content);
+		}
+		map.put("content", "announceDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/messageDetail")
+	public String messageDetail(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		if (contentId != null) {
+			Message message = this.systemManager.getSystemMessageDao()
+					.findById(contentId);
+			map.put("result", message);
+		}
+		map.put("content", "messageDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/PushMessage")
+	public String PushMessage(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		if (contentId != null) {
+			Message message = this.systemManager.getSystemMessageDao()
+					.findById(contentId);
+			map.put("result", message);
+		}
+		map.put("content", "PushMessage");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
 	@RequestMapping(value = "newSystem/editUser")
 	public String editUser(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
 		User user = this.userManger.getUserDao().findById(contentId);
 
 		map.put("result", user);
 		map.put("content", "userDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 
 	@RequestMapping(value = "newSystem/deleteUser")
 	public String deleteUser(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
 			ModelMap map) {
 
 		User user = this.userManger.getUserDao().findById(contentId);
@@ -482,467 +710,9 @@ public class WebController extends BaseController {
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-user-list");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	// ---------------用户------------------------//
-
-	/***
-	 * 资讯内容
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/news")
-	public String requestNewsPage(ModelMap map, HttpSession session) {
-		map.put("content", "buttons");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 资讯内容
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/notebook")
-	public String requestNotebook(ModelMap map, HttpSession session) {
-		map.put("content", "notebook");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 资讯Banner
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/newsBanner")
-	public String requestNewsBanner(
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			ModelMap map, HttpSession session) {
-
-		// List list = this.messageManager.getNewsbannerDAO().findAll();
-
-		List list = new ArrayList();
-		map.put("content", "table-news-banner");
-		map.put("result", list);
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 删除资讯Banner
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/delNewsBanner")
-	public String requestDelNewsBanner(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Newsbanner banner =
-		// this.messageManager.getNewsbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// this.messageManager.getNewsbannerDAO().delete(banner);
-		// }
-		//
-		// }
-		//
-		//
-		// List list = this.messageManager.getNewsbannerDAO().findAll();
-
-		List list = new ArrayList();
-		map.put("content", "table-news-banner");
-		map.put("result", list);
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 资讯Banner详情
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/newBannerDetail")
-	public String newBannerDetail(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Newsbanner banner =
-		// this.messageManager.getNewsbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// map.put("data", banner);
-		// }
-		// }
-
-		map.put("content", "newBannerContent");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 编辑Banner详情
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/editNewBanner")
-	public String editNewBanner(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			@RequestParam(value = "desc", required = false) String desc,
-			@RequestParam(value = "image", required = false) String image,
-			@RequestParam(value = "url", required = false) String url,
-			@RequestParam(value = "file", required = false) MultipartFile[] images,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Newsbanner banner =
-		// this.messageManager.getNewsbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// //更新
-		// if(desc!=null)
-		// {
-		// banner.setDesc(desc);
-		// }
-		//
-		// if(image!=null)
-		// {
-		// banner.setImage(image);
-		// }
-		//
-		// if(url!=null)
-		// {
-		// banner.setUrl(url);
-		// }
-		//
-		// // 保存图片
-		// String fileName = "";
-		// String result = "";
-		// if (images != null && images.length > 0) {
-		//
-		// MultipartFile file = null;
-		// Set items = new HashSet();
-		// for (int i = 0; i < images.length; i++) {
-		// if (images[i] != null) {
-		// file = images[i];
-		// fileName = String.format(
-		// AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
-		// new Date().getTime(), i);
-		// result = FileUtil.savePicture(file, fileName,
-		// "upload/uploadImages/");
-		// if (!result.equals("")) {
-		// fileName = AKConfig.STRING_SYSTEM_ADDRESS
-		// + "upload/uploadImages/" + result;
-		// } else {
-		// fileName = "";
-		// }
-		//
-		// }
-		// }
-		//
-		// if(fileName!=null && fileName!="")
-		// {
-		// banner.setImage(fileName);
-		// }else{
-		// if(image!=null && image!="")
-		// {
-		// banner.setImage(image);
-		// }
-		// }
-		// }
-		//
-		// //保存
-		// this.messageManager.getNewsbannerDAO().saveOrUpdate(banner);
-		// map.put("data", banner);
-		// }
-		// }
-		//
-		map.put("content", "newBannerContent");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 原创Banner
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/originalBanner")
-	public String originalNewsBanner(
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			ModelMap map, HttpSession session) {
-
-		// List list = this.messageManager.getOriginalbannerDAO().findAll();
-
-		List list = new ArrayList();
-		map.put("content", "table-original-banner");
-		map.put("result", list);
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 删除原创Banner
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/delOriginalBanner")
-	public String requestDelOriginalBanner(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Originalbanner banner =
-		// this.messageManager.getOriginalbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// this.messageManager.getOriginalbannerDAO().delete(banner);
-		// }
-		//
-		// }
-		//
-		//
-		// List list = this.messageManager.getOriginalbannerDAO().findAll();
-		List list = new ArrayList();
-		map.put("content", "table-original-banner");
-		map.put("result", list);
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 原创Banner详情
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/originalBannerDetail")
-	public String originalBannerDetail(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Originalbanner banner =
-		// this.messageManager.getOriginalbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// map.put("data", banner);
-		// }
-		// }
-
-		map.put("content", "originalBannerContent");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	/***
-	 * 编辑Banner详情
-	 * 
-	 * @param map
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "newSystem/editOriginalBanner")
-	public String editOriginalBanner(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			@RequestParam(value = "desc", required = false) String desc,
-			@RequestParam(value = "image", required = false) String image,
-			@RequestParam(value = "url", required = false) String url,
-			@RequestParam(value = "file", required = false) MultipartFile[] images,
-			ModelMap map, HttpSession session) {
-
-		// if(contentId!=null)
-		// {
-		// Originalbanner banner =
-		// this.messageManager.getOriginalbannerDAO().findById(contentId);
-		// if(banner!=null)
-		// {
-		// //更新
-		// if(desc!=null)
-		// {
-		// banner.setDesc(desc);
-		// }
-		//
-		// if(image!=null)
-		// {
-		// banner.setImage(image);
-		// }
-		//
-		// if(url!=null)
-		// {
-		// banner.setUrl(url);
-		// }
-		//
-		// // 保存图片
-		// String fileName = "";
-		// String result = "";
-		// if (images != null && images.length > 0) {
-		//
-		// MultipartFile file = null;
-		// Set items = new HashSet();
-		// for (int i = 0; i < images.length; i++) {
-		// if (images[i] != null) {
-		// file = images[i];
-		// fileName = String.format(
-		// AKConfig.STRING_USER_FEELING_PICTUREA_FORMAT,
-		// new Date().getTime(), i);
-		// result = FileUtil.savePicture(file, fileName,
-		// "upload/uploadImages/");
-		// if (!result.equals("")) {
-		// fileName = AKConfig.STRING_SYSTEM_ADDRESS
-		// + "upload/uploadImages/" + result;
-		// } else {
-		// fileName = "";
-		// }
-		//
-		// }
-		// }
-		//
-		// if(fileName!=null && fileName!="")
-		// {
-		// banner.setImage(fileName);
-		// }else{
-		// if(image!=null && image!="")
-		// {
-		// banner.setImage(image);
-		// }
-		// }
-		// }
-		//
-		// //保存
-		// this.messageManager.getOriginalbannerDAO().saveOrUpdate(banner);
-		// map.put("data", banner);
-		// }
-		// }
-		//
-		map.put("content", "originalBannerContent");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	// 聊天室页面
-	@RequestMapping(value = "newSystem/createChatRoomPage")
-	public String createChatRoomPage(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map) {
-		// if(contentId!=null)
-		// {
-		// Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
-		// map.put("data", room);
-		// Integer userId =Integer.parseInt(room.getOwner()) ;
-		// Users u=this.userManager.findUserById(userId);
-		// map.put("img", u.getHeadSculpture());
-		// }
-
-		map.put("content", "createChatRoom");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	// 聊天室添加
-	@RequestMapping(value = "newSystem/createChatRoom")
-	public String createChatRoom(@RequestParam(value = "name") String name,
-			@RequestParam(value = "desc") String desc,
-			@RequestParam(value = "maxusers") Integer maxusers,
-			@RequestParam(value = "owner") Integer userId,
-			@RequestParam(value = "projectId") Integer projectId,
-			@RequestParam(value = "contentId") Integer contentId, ModelMap map) {
-		// Users u = this.userManager.findUserById(userId);
-		// Chatroom room ;
-		// if(contentId!=null)
-		// {
-		// room=this.imManager.getChatRoomDao().findById(contentId);
-		// }else{
-		// room=new Chatroom();
-		// }
-		//
-		// if(contentId==null)
-		// {
-		// Map result = this.imManager.createChatRoom(name, desc, maxusers, u);
-		// if(result.get("data")!=null)
-		// {
-		// Map m = (Map) result.get("data");
-		// String id =m.get("id").toString();
-		// room.setCode(id);
-		//
-		// }
-		// map.put("result", result);
-		// }
-		//
-		//
-		// room.setName(name);
-		// room.setDescription(desc);
-		// room.setMaxusers(maxusers);
-		// room.setAffiliationsCount(0);
-		// room.setCreateDate(new Date());
-		// room.setOwnerName(u.getName());
-		// room.setOwner(String.valueOf(userId));
-		// room.setExt(String.valueOf(projectId));
-		//
-		// if(contentId!=null)
-		// {
-		// this.imManager.getChatRoomDao().saveOrUpdate(room);
-		// }else{
-		// this.imManager.getChatRoomDao().save(room);
-		// }
-		//
-
-		// map.put("img", u.getHeadSculpture());
-		// map.put("data", room);
-		map.put("content", "createChatRoom");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	// 聊天室列表
-	@RequestMapping(value = "newSystem/chatRoomList")
-	public String chatRoomList(
-			@RequestParam(value = "size", required = false) Integer size,
-			@RequestParam(value = "page", required = false) Integer page,
-			ModelMap map) {
-
-		// List list = this.imManager.getChatRoomDao().findAll();
-		List list = new ArrayList();
-		map.put("result", list);
-		map.put("content", "table-chatroom-banner");
-		return AKConfig.NEW_SERVER_CONTROL;
-	}
-
-	// 删除聊天室
-	@RequestMapping(value = "newSystem/deleteChatRoom")
-	public String deleteChatRoom(
-			@RequestParam(value = "contentId", required = false) Integer contentId,
-			ModelMap map) {
-
-		// if(contentId!=null)
-		// {
-		// Chatroom room = this.imManager.getChatRoomDao().findById(contentId);
-		//
-		// if(room!=null){
-		// this.imManager.getChatRoomDao().delete(room);
-		// }
-		// }
-		//
-		// List list = this.imManager.getChatRoomDao().findAll();
-		List list = new ArrayList();
-		map.put("result", list);
-		map.put("content", "table-chatroom-banner");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
 

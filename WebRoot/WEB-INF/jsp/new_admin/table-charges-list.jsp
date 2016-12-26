@@ -5,8 +5,8 @@
 		<section class="scrollable padder">
 			<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
 				<li><a href="index.action"><i class="fa fa-home"></i> 首页</a></li>
-				<li><a href="index.action"><i class="fa"></i> 用户管理</a></li>
-				<li><a href="index.action"><i class="fa"></i> 用户列表</a></li>
+				<li><a href="index.action"><i class="fa"></i> 服务管理</a></li>
+				<li><a href="index.action"><i class="fa"></i> 费用中心</a></li>
 			</ul>
 			<section class="panel panel-default">
 				<header class="panel-heading"> 物业费缴纳订单 </header>

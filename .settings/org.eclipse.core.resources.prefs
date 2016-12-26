@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/jsp/new_admin/PushMessage.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/TaskDetail.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/announceDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/attendanceDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/authenticDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/chargeDetail.jsp=UTF-8
@@ -7,6 +9,7 @@ encoding//WebRoot/WEB-INF/jsp/new_admin/eventDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/feelingDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/header.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/memberDetail.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/new_admin/messageDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/orderDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/recordDetail.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/new_admin/serviceDetail.jsp=UTF-8
