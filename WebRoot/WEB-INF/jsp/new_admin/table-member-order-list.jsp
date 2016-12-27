@@ -72,11 +72,7 @@
 											<td><a href="#" class="text-danger">${item.orders.size()}</a>&nbsp;&nbsp;单</td>
 											<td><a href="memberDetail.action?contentId=${item.member.memberId }" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
-													class="fa fa-edit text-danger text"></i></a> | <a
-												href="#modal" data-href="deleteMember.action?contentId=${item.member.memberId }" data-toggle="modal"
-												class="active"><i
-													class="fa fa-trash-o text-success text-active"></i><i
-													class="fa fa-trash-o text-danger text"></i></a>
+													class="fa fa-edit text-danger text"></i></a>
 										</tr>
 									</c:forEach>
 								</c:when>

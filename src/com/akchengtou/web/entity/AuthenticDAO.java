@@ -92,10 +92,12 @@ public class AuthenticDAO {
 	}
 	
 	
-	public List findAuthenticByIdentiytype(Integer typeId)
+	public List findAuthenticByIdentiytype(Integer typeId,Integer page)
 	{
 		String sqlString = "select a.user_id,a.name,u.score,u.image,u.gender from authentic as a left join user as u on a.user_id = u.user_id where a.identiy_type_id =?  order by u.score desc";
 		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString);
+		queryObject.setFirstResult(10*page);
+		queryObject.setMaxResults(10);
 		queryObject.setParameter(0, typeId);
 		
 		return queryObject.list();

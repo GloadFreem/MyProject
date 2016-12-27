@@ -80,8 +80,8 @@ public class ServiceManager {
 
 	public List findAllOrders(User user, Integer page) {
 		List list = new ArrayList();
-		List<Service> services = this.getServiceDao().findByProperty("user",
-				user);
+		List<Service> services = this.getServiceDao().findByPropertyPage("user",
+				user,page);
 		if (services != null && services.size() > 0) {
 			for (int i = 0; i < services.size(); i++) {
 				Service service = services.get(i);

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <section class="vbox">
-	${menu} ${sortmenu} ${submenu}
 	<header class="bg-dark dk header navbar navbar-fixed-top-xs">
 		<div class="navbar-header aside-md">
 			<a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen"
@@ -452,7 +451,7 @@
 										</c:choose>
 
 										<a
-											href="eventDetail.action?&menu=4&sortmenu=0&submenu=2&page=0&size=10">
+											href="eventList.action?&menu=4&sortmenu=0&submenu=2&page=0&size=10">
 											<i class="fa fa-angle-right"></i> <span>上报事件</span>
 										</a>
 										</li>

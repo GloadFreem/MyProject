@@ -179,7 +179,7 @@ public class WebController extends BaseController {
 
 		// 根据用户身份类型获取排行榜
 		List list = this.authenticManager.findRankingByIdentitype(authentic
-				.getIdentity());
+				.getIdentity(),page);
 
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
@@ -710,6 +710,254 @@ public class WebController extends BaseController {
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-user-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteAuthentic")
+	public String deleteAuthentic(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Authentic authentic = this.userManger.getAuthenticDao().findById(
+				contentId);
+
+		this.userManger.getAuthenticDao().delete(authentic);
+
+		List list = this.userManger.getAuthenticDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-authentic-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteMember")
+	public String deleteMember(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Member member = this.userManger.getMemberDao().findById(contentId);
+
+		this.userManger.getMemberDao().delete(member);
+
+		List list = this.userManger.getMemberDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-member-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteOrder")
+	public String deleteOrder(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Orderservice service = this.serviceManager.getOrderServiceDao()
+				.findById(contentId);
+
+		this.serviceManager.getOrderServiceDao().delete(service);
+
+		List list = this.serviceManager.getOrderServiceDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-order-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteCharge")
+	public String deleteCharge(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Propertycharges charge = this.serviceManager.getPropertychargesDao()
+				.findById(contentId);
+
+		this.serviceManager.getPropertychargesDao().delete(charge);
+
+		List list = this.serviceManager.getPropertychargesDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-charges-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteService")
+	public String deleteService(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Servicetype type = this.serviceManager.getServiceTypeDao().findById(
+				contentId);
+
+		this.serviceManager.getServiceTypeDao().delete(type);
+
+		List list = this.serviceManager.getServiceTypeDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-service-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteEvent")
+	public String deleteEvent(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Event event = this.serviceManager.getEventDao().findById(contentId);
+
+		this.serviceManager.getEventDao().delete(event);
+
+		List list = this.serviceManager.getEventDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-event-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteFeeling")
+	public String deleteFeeling(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Publiccontent content = this.feelingManager.getPublicContentDao()
+				.findById(contentId);
+
+		this.feelingManager.getPublicContentDao().delete(content);
+
+		List list = this.feelingManager.getPublicContentDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-feeling-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteTask")
+	public String deleteTask(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Task task = this.taskManager.getTaskDao().findById(contentId);
+
+		this.taskManager.getTaskDao().delete(task);
+
+		List list = this.taskManager.getTaskDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-task-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/deleteAttendance")
+	public String deleteAttendance(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+
+			ModelMap map) {
+
+		Attendance attendance = this.taskManager.getAttendanceDao().findById(
+				contentId);
+
+		this.taskManager.getAttendanceDao().delete(attendance);
+
+		List list = this.taskManager.getAttendanceDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-attendance-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/deleteAnnounce")
+	public String deleteAnnounce(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			
+			ModelMap map) {
+		
+		Announcement announcement = this.systemManager.getNoticeDao().findById(
+				contentId);
+		
+		this.systemManager.getNoticeDao().delete(announcement);
+		
+		List list = this.systemManager.getNoticeDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-announce-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/deleteMessage")
+	public String deleteMessage(
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			
+			ModelMap map) {
+		
+		Message message = this.systemManager.getSystemMessageDao().findById(
+				contentId);
+		
+		this.systemManager.getSystemMessageDao().delete(message);
+		
+		List list = this.systemManager.getSystemMessageDao().findAll();
+		map.put("result", list);
+		map.put("content", "table-message-list");
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
 		map.put("submenu", submenu);

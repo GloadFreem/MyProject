@@ -73,7 +73,7 @@
 											<td><a href="serviceDetail.action?contentId=${item.typeId }" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
-												href="#modal" data-href="deleteService.action?contentId=${item.typeId }" data-toggle="modal"
+												href="#modal" data-href="deleteService.action?contentId=${item.typeId }&menu=2&sortmenu=1&submenu=1&page=0&size=10" data-toggle="modal"
 												class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

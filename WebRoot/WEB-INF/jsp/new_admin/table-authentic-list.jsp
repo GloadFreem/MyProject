@@ -75,7 +75,7 @@
 											<td><a href="authenticDetail.action?contentId=${item.authId }" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
-												href="#modal" data-href="deleteAuthentic.action?contentId=${item.authId }" data-toggle="modal"
+												href="#modal" data-href="deleteAuthentic.action?contentId=${item.authId }&menu=1&submenu=2&page=0&size=10" data-toggle="modal"
 												class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

@@ -348,7 +348,7 @@ public class UserController extends BaseController {
 			}
 			// 根据用户身份类型获取排行榜
 			list = this.authenticManager.findRankingByIdentitype(authentic
-					.getIdentity());
+					.getIdentity(),page);
 		} else {
 			list = new ArrayList();
 		}
@@ -381,7 +381,7 @@ public class UserController extends BaseController {
 
 			// 根据用户身份类型获取排行榜
 			list = this.authenticManager.findRankingByIdentitype(authentic
-					.getIdentity());
+					.getIdentity(),page);
 		} else {
 			list = new ArrayList();
 		}
@@ -409,7 +409,7 @@ public class UserController extends BaseController {
 		Identity type = new Identity();
 		type.setIdentiyTypeId(2);
 		// 根据用户身份类型获取排行榜
-		list = this.authenticManager.findRankingByIdentitype(type);
+		list = this.authenticManager.findRankingByIdentitype(type,page);
 		if (list == null) {
 			list = new ArrayList();
 		}

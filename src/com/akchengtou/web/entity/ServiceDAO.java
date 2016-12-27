@@ -119,6 +119,23 @@ public class ServiceDAO {
 			throw re;
 		}
 	}
+	public List findByPropertyPage(String propertyName, Object value,Integer page) {
+		log.debug("finding Service instance with property: " + propertyName
+				+ ", value: " + value);
+		try {
+			String queryString = "from Service as model where model."
+					+ propertyName + "= ? order by model.serviceDate desc";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			
+			queryObject.setFirstResult(10*page);
+			queryObject.setMaxResults(10);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 
 	public List<Service> findByName(Object name) {
 		return findByProperty(NAME, name);
