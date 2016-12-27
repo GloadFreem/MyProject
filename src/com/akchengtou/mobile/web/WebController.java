@@ -178,8 +178,8 @@ public class WebController extends BaseController {
 		authentic.setIdentity(identity);
 
 		// 根据用户身份类型获取排行榜
-		List list = this.authenticManager.findRankingByIdentitype(authentic
-				.getIdentity(),page);
+		List list = this.authenticManager.findRankingByIdentitype(
+				authentic.getIdentity(), page);
 
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
@@ -678,6 +678,15 @@ public class WebController extends BaseController {
 
 	@RequestMapping(value = "newSystem/editUser")
 	public String editUser(
+			@RequestParam(value = "platform", required = false) short platform,
+			@RequestParam(value = "intro", required = false) String intro,
+			@RequestParam(value = "regId", required = false) String regId,
+			@RequestParam(value = "gender", required = false) short gender,
+			@RequestParam(value = "score", required = false) Integer score,
+			@RequestParam(value = "telephone", required = false) String telephone,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "contentId", required = false) Integer contentId,
 			@RequestParam(value = "menu", required = false) Integer menu,
 			@RequestParam(value = "submenu", required = false) Integer submenu,
@@ -685,6 +694,36 @@ public class WebController extends BaseController {
 			ModelMap map) {
 
 		User user = this.userManger.getUserDao().findById(contentId);
+		if (user != null) {
+			user.setName(name);
+			user.setTelephone(telephone);
+			user.setPlatform(platform);
+			user.setScore(score);
+			user.setGender(gender);
+			user.setRegId(regId);
+			user.setIntro(intro);
+
+			// 保存头像
+			if (image != null) {
+				user.setImage(image);
+			}
+
+			if (file != null) {
+				// 保存图片
+				String fileName = String.format(
+						AKConfig.STRING_USER_HEADER_PICTURE_FORMAT,
+						new Date().getTime());
+				String result = FileUtil.savePicture(file, fileName,
+						"upload/headerImages/");
+				if (!result.equals("")) {
+					fileName = AKConfig.STRING_SYSTEM_ADDRESS
+							+ "upload/headerImages/" + result;
+					user.setImage(fileName);
+				}
+			}
+
+			this.userManger.getUserDao().saveOrUpdate(user);
+		}
 
 		map.put("result", user);
 		map.put("content", "userDetail");
@@ -705,7 +744,9 @@ public class WebController extends BaseController {
 
 		User user = this.userManger.getUserDao().findById(contentId);
 
-		this.userManger.getUserDao().delete(user);
+		if (user != null) {
+			this.userManger.getUserDao().delete(user);
+		}
 
 		List list = this.userManger.getUserDao().findAll();
 		map.put("result", list);
@@ -727,9 +768,9 @@ public class WebController extends BaseController {
 
 		Authentic authentic = this.userManger.getAuthenticDao().findById(
 				contentId);
-
-		this.userManger.getAuthenticDao().delete(authentic);
-
+		if (authentic != null) {
+			this.userManger.getAuthenticDao().delete(authentic);
+		}
 		List list = this.userManger.getAuthenticDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-authentic-list");
@@ -749,8 +790,9 @@ public class WebController extends BaseController {
 			ModelMap map) {
 
 		Member member = this.userManger.getMemberDao().findById(contentId);
-
-		this.userManger.getMemberDao().delete(member);
+		if (member != null) {
+			this.userManger.getMemberDao().delete(member);
+		}
 
 		List list = this.userManger.getMemberDao().findAll();
 		map.put("result", list);
@@ -773,8 +815,9 @@ public class WebController extends BaseController {
 		Orderservice service = this.serviceManager.getOrderServiceDao()
 				.findById(contentId);
 
-		this.serviceManager.getOrderServiceDao().delete(service);
-
+		if (service != null) {
+			this.serviceManager.getOrderServiceDao().delete(service);
+		}
 		List list = this.serviceManager.getOrderServiceDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-order-list");
@@ -796,8 +839,9 @@ public class WebController extends BaseController {
 		Propertycharges charge = this.serviceManager.getPropertychargesDao()
 				.findById(contentId);
 
-		this.serviceManager.getPropertychargesDao().delete(charge);
-
+		if (charge != null) {
+			this.serviceManager.getPropertychargesDao().delete(charge);
+		}
 		List list = this.serviceManager.getPropertychargesDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-charges-list");
@@ -818,9 +862,9 @@ public class WebController extends BaseController {
 
 		Servicetype type = this.serviceManager.getServiceTypeDao().findById(
 				contentId);
-
-		this.serviceManager.getServiceTypeDao().delete(type);
-
+		if (type != null) {
+			this.serviceManager.getServiceTypeDao().delete(type);
+		}
 		List list = this.serviceManager.getServiceTypeDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-service-list");
@@ -840,9 +884,9 @@ public class WebController extends BaseController {
 			ModelMap map) {
 
 		Event event = this.serviceManager.getEventDao().findById(contentId);
-
-		this.serviceManager.getEventDao().delete(event);
-
+		if (event != null) {
+			this.serviceManager.getEventDao().delete(event);
+		}
 		List list = this.serviceManager.getEventDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-event-list");
@@ -864,8 +908,9 @@ public class WebController extends BaseController {
 		Publiccontent content = this.feelingManager.getPublicContentDao()
 				.findById(contentId);
 
-		this.feelingManager.getPublicContentDao().delete(content);
-
+		if (content != null) {
+			this.feelingManager.getPublicContentDao().delete(content);
+		}
 		List list = this.feelingManager.getPublicContentDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-feeling-list");
@@ -886,8 +931,9 @@ public class WebController extends BaseController {
 
 		Task task = this.taskManager.getTaskDao().findById(contentId);
 
-		this.taskManager.getTaskDao().delete(task);
-
+		if (task != null) {
+			this.taskManager.getTaskDao().delete(task);
+		}
 		List list = this.taskManager.getTaskDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-task-list");
@@ -909,8 +955,9 @@ public class WebController extends BaseController {
 		Attendance attendance = this.taskManager.getAttendanceDao().findById(
 				contentId);
 
-		this.taskManager.getAttendanceDao().delete(attendance);
-
+		if (attendance != null) {
+			this.taskManager.getAttendanceDao().delete(attendance);
+		}
 		List list = this.taskManager.getAttendanceDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-attendance-list");
@@ -919,20 +966,22 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/deleteAnnounce")
 	public String deleteAnnounce(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
 			@RequestParam(value = "menu", required = false) Integer menu,
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
-			
+
 			ModelMap map) {
-		
+
 		Announcement announcement = this.systemManager.getNoticeDao().findById(
 				contentId);
-		
-		this.systemManager.getNoticeDao().delete(announcement);
-		
+
+		if (announcement != null) {
+			this.systemManager.getNoticeDao().delete(announcement);
+		}
 		List list = this.systemManager.getNoticeDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-announce-list");
@@ -941,20 +990,21 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/deleteMessage")
 	public String deleteMessage(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
 			@RequestParam(value = "menu", required = false) Integer menu,
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
-			
+
 			ModelMap map) {
-		
+
 		Message message = this.systemManager.getSystemMessageDao().findById(
 				contentId);
-		
-		this.systemManager.getSystemMessageDao().delete(message);
-		
+		if (message != null) {
+			this.systemManager.getSystemMessageDao().delete(message);
+		}
 		List list = this.systemManager.getSystemMessageDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-message-list");

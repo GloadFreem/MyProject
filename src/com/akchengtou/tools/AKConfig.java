@@ -182,7 +182,8 @@ public class AKConfig {
 	public static String STRING_APPP_SHARE_TITLE = "【金指投投融资】";
 	public static String STRING_APPP_SHARE_CONTENT = "金指投--专注于中国成长型企业股权投融资平台";
 	public static String STRING_PYTHON_SYSTEM_ADDRESS = "http://www.jinzht.com/phone5/";
-	public static String STRING_SYSTEM_ADDRESS = "http://59.110.11.95:8080/akchengtou/";
+//	public static String STRING_SYSTEM_ADDRESS = "http://59.110.11.95:8080/akchengtou/";
+	public static String STRING_SYSTEM_ADDRESS = "http://localhost:8080/akchengtou/";
 	// public static String STRING_SYSTEM_ADDRESS =
 	// "http://www.jinzht.com:8080/jinzht/";
 	// public static String STRING_SYSTEM_INTRODUCE

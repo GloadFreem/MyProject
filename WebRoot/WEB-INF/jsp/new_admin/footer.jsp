@@ -14,3 +14,4 @@
 <script src="js/calendar/demo.js" cache="false"></script>
 <script src="js/sortable/jquery.sortable.js" cache="false"></script>
 <script src="js/fileupload/fileinput.js" cache="false"></script>
+<script src="js/bootstrap-select.min.js" cache="false"></script>
