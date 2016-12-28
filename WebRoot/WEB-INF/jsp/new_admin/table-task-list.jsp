@@ -83,7 +83,7 @@
 													</td>
 											<td>${item.taskDate}</td>
 											<td><a
-												href="taskDetail.action?contentId=${item.taskId }"
+												href="taskDetail.action?contentId=${item.taskId }&menu=6&sortmenu=1&submenu=1&page=0&size=10"
 												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"

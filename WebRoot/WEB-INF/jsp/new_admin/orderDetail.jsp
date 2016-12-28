@@ -8,7 +8,7 @@
 			<p>订单详情</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
+			<form action="editOrder.action?menu=3&sortmenu=1&submenu=1&page=0&size=10" method="post"
 				enctype="multipart/form-result">
 				<div class="">
 					<input name="contentId" value="${result.orderId}"
@@ -56,7 +56,7 @@
 						<li class="list-group-item">
 							<div class="clear">
 								<input name="desc" class="form-control alert-success"
-									placeholder="请输入服务名称" value=${result.service.serviceDate} ></input>
+									placeholder="请输入预约时间" value=${result.service.serviceDate} ></input>
 							</div>
 						</li>
 						<li class="list-group-item">
@@ -65,7 +65,7 @@
 						<li class="list-group-item">
 							<div class="clear">
 								<input name="desc" class="form-control alert-success"
-									placeholder="请输入服务名称" value=${result.service.content} ></input>
+									placeholder="请输入备注" value=${result.service.content} ></input>
 							</div>
 						</li>
 						<li class="list-group-item">
@@ -115,10 +115,10 @@
 				</li>
 				</ul>
 				</div>
-				<div>
+<!-- 				<div>
 					<button type="submit"
 						class="btn btn-default btn-info pull-right m-t m-b m-r">完成</button>
-				</div>
+				</div> -->
 			</form>
 		</section>
 	</section>

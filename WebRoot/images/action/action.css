@@ -1,0 +1,164 @@
+body{
+	color: #474747;
+	width: 100%;
+	height: 100%;
+	margin:0;
+	padding:0;
+}
+.aboutus{
+	width: 100%;
+	height: 29.31%;
+}
+.aboutus img {
+	display: block;
+	width: 100%;
+}
+.brief{
+	width: 100%;
+	color: #FF6700;
+	text-indent:2em;
+	font-size: 80%;
+	margin-top:-35% ;
+}
+.title{
+	background-color: #FF6700;
+	width: 100%;
+	vertical-align:middle ;
+	margin-top:25%;
+	margin-bottom:5%;
+}
+.title p{
+	color: #FFFFFF;
+	font-size: 100%;
+	text-align: center;
+	vertical-align:middle;
+	width: 100%;
+}
+
+.detail p{
+	font-size: 80%;
+	color: #474747;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.content{
+	background-color:#FFFFFF;
+	width: 100%;
+	margin-bottom: 40%;
+
+}
+.tableimg{
+	width: 100%;
+	margin-left: 3%;
+margin-right: 5%;
+}
+.tableimg table{
+	width: 100%;
+	display: block;
+	margin: auto 45
+;
+}
+.more{
+	width: 100%;
+}
+.more img {
+	display: block;
+	margin-top: 5%;
+	margin-left: 45%;
+	width:6%;
+}
+.line{
+	width: 100%;
+	border-top: solid 2px #ccc;
+	background-color: #EDEDED;
+	height: 18px;
+	margin-top: 5%;
+}
+.tableinfo{
+	color: #474747;
+	font-size: 100%;
+	border-bottom:solid 2px #CCCCCC ;
+}
+.tableinfo img{
+	margin: 7px 6px auto 15px;
+	height: 20px;
+}
+.act-det{
+	margin: 25px 15px 73px 15px;
+}
+
+@media screen and (width: 600px){
+	.act-det{
+		margin-bottom: 110px;
+	}
+}
+
+@media screen and (min-width: 375px) and (max-width: 414px){
+	.act-det{
+		margin-bottom: 100px;
+	}
+}
+
+.act-det td {
+	padding: 0px 0px;
+}
+
+.act-det img {
+	width: 20px;
+	height: 20px;
+}
+
+.act-det p{
+	font-size: 80%;
+	color: #474747;
+}
+.border{
+	color: #FFFFFF;
+	background-color: #08A4F9;
+	width: 20px;
+	height: 20px;
+}
+
+.footer-tip
+{
+	background-color:orange;
+	z-index:999;
+	position:fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+	_position:absolute;
+	overflow:visible;
+	height: 10%;
+}
+
+.footer-tip-image
+{
+	width: 9%;
+	height: auto;
+	margin-left: 20%;
+	float:left;
+	margin-top:2%;
+}
+
+.tip-content
+{
+	color: white;
+	font-size: 130%;
+	margin-left : 33%;
+	margin-top:5%;
+}
+
+.item-img{
+	width: 30%;
+	float: left;
+	height: 90px;
+	margin-left: 1%;
+margin-top: 1%;
+}
+
+.item-img1
+{
+	width: 33%;
+	height: 90px;
+}

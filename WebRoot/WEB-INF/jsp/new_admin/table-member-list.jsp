@@ -70,7 +70,7 @@
 											<td>${item.telephone}</td>
 											<td>${item.servicetype.name}</td>
 											<td>${item.gender}</td>
-											<td><a href="memberDetail.action?contentId=${item.memberId }" class="active"><i
+											<td><a href="memberDetail.action?contentId=${item.memberId }&menu=1&submenu=3&page=0&size=10" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
 												href="#modal" data-href="deleteMember.action?contentId=${item.memberId }&menu=1&submenu=3&page=0&size=10" data-toggle="modal"

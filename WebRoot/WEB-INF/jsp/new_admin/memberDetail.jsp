@@ -8,8 +8,8 @@
 			<p>认证信息</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
-				enctype="multipart/form-result">
+			<form action="editMember.action?menu=1&submenu=3&page=0&size=10"
+				method="post" enctype="multipart/form-data">
 				<div class="">
 					<input name="contentId" value="${result.memberId}"
 						style="display:none">
@@ -19,8 +19,8 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<textarea name="desc" class="form-control alert-success"
-									placeholder="请输入内容描述">${result.name }</textarea>
+								<textarea name="name" class="form-control alert-success"
+									placeholder="请输入姓名">${result.name }</textarea>
 							</div>
 						</li>
 						<li class="list-group-item">
@@ -28,7 +28,7 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<textarea name="desc" class="form-control alert-success"
+								<textarea name="telephone" class="form-control alert-success"
 									placeholder="请输入内容描述">${result.telephone }</textarea>
 							</div>
 						</li>
@@ -36,9 +36,20 @@
 						<li class="list-group-item">
 							<div class="clear">职位</div>
 						</li>
-						<li class="list-group-item"><input name="url"
-							class="form-control alert-success"
-							value="${result.servicetype.name }" placeholder="请输入职位">
+						<li class="list-group-item"><select id="position"
+							name="position"
+							class="selectpicker show-menu-arrow
+							form-control"
+							data-max-options="2">
+								<c:forEach items="${types}" var="item">
+									<option value="${item.typeId }"
+										<c:choose>
+							<c:when test="${result.servicetype.typeId==item.typeId }">
+							selected=selected
+							</c:when>
+						</c:choose>>${item.name}</option>
+								</c:forEach>
+						</select>
 				</div>
 				</li>
 
@@ -58,7 +69,7 @@
 				<li class="list-group-item">
 					<div class="clear">等级</div>
 				</li>
-				<li class="list-group-item"><input name="url"
+				<li class="list-group-item"><input name="gender"
 					class="form-control alert-success" value="${result.gender }"
 					placeholder="请输入房屋">
 					</div></li>

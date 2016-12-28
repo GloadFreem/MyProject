@@ -76,7 +76,7 @@
 													</a>
 												</c:forEach></td>
 											<td><a
-												href="eventDetail.action?contentId=${item.eventId }"
+												href="eventDetail.action?contentId=${item.eventId }&menu=4&sortmenu=1&submenu=1&page=0&size=10"
 												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"

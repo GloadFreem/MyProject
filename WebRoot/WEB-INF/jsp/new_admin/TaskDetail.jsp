@@ -8,7 +8,7 @@
 			<p>任务详情</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
+			<form action="editTask.action" method="post"
 				enctype="multipart/form-result">
 				<div class="">
 					<input name="contentId" value="${result.taskId}"
@@ -19,8 +19,8 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<input name="desc" class="form-control alert-success"
-									placeholder="请输入服务名称" value=${result.user.name }></input>
+								<input name="user" class="form-control alert-success"
+									placeholder="请指定员工" value=${result.user.name }></input>
 							</div>
 						</li>
 
@@ -30,7 +30,7 @@
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<textarea name="desc" class="form-control alert-success"
+						<textarea name="content" class="form-control alert-success"
 							placeholder="请输入内容描述">${result.content }</textarea>
 					</div>
 				</li>
@@ -39,7 +39,7 @@
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<input name="desc" class="form-control alert-success"
+						<input name="time" class="form-control alert-success"
 							placeholder="请输入时间" value=${result.taskDate }></input>
 					</div>
 				</li>

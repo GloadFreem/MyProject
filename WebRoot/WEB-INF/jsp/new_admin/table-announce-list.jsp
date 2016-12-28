@@ -66,7 +66,7 @@
 											<td>${item.content}</td>
 											<td>${item.publicDate}</td>
 											<td><a
-												href="announceDetail.action?contentId=${item.announceId }"
+												href="announceDetail.action?contentId=${item.announceId }&menu=7&sortmenu=1&submenu=1&page=0&size=10"
 												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"

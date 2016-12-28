@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.akchengtou.web.entity.Authentic;
 import com.akchengtou.web.entity.AuthenticDAO;
 import com.akchengtou.web.entity.MemberDAO;
+import com.akchengtou.web.entity.SystemuserDAO;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.entity.UserDAO;
 
@@ -20,6 +21,7 @@ public class UserManager {
 	private UserDAO userDao;
 	private AuthenticDAO authenticDao;
 	private MemberDAO memberDao;
+	private SystemuserDAO systemUserDao;
 
 	/***
 	 * @return 用户列表
@@ -95,6 +97,14 @@ public class UserManager {
 	@Autowired
 	public void setMemberDao(MemberDAO memberDao) {
 		this.memberDao = memberDao;
+	}
+
+	public SystemuserDAO getSystemUserDao() {
+		return systemUserDao;
+	}
+	@Autowired
+	public void setSystemUserDao(SystemuserDAO systemUserDao) {
+		this.systemUserDao = systemUserDao;
 	}
 
 }

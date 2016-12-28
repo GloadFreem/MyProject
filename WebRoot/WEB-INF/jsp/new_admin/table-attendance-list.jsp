@@ -49,7 +49,7 @@
 								</span>
 								</th>
 								<th>头像</th>
-								<th width="80">用户</th>
+								<th width="80">员工姓名</th>
 								<th width="10%">楼室</th>
 								<th width="40%">内容</th>
 								<th>日期</th>
@@ -71,12 +71,8 @@
 											<td>${item.building.name}</td>
 											<td>${item.content}</td>
 											<td>${item.requireDate}</td>
-											<td><a
-												href="attendanceDetail.action?contentId=${item.attendId }"
-												class="active"><i
-													class="fa fa-edit text-success text-active"></i><i
-													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"
-												data-href="deleteAttendance.action?contentId=${item.attendId }"
+											<td> <a href="#modal"
+												data-href="deleteAttendance.action?contentId=${item.attendId }&menu=6&sortmenu=2&submenu=1&page=0&size=10"
 												data-toggle="modal" class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

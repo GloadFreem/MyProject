@@ -49,7 +49,7 @@
 								</span>
 								</th>
 								<th>头像</th>
-								<th width="80">任务人</th>
+								<th width="80">员工姓名</th>
 								<th width="10%">手机号码</th>
 								<th width="30%">内容</th>
 								<th>要求时间</th>
@@ -73,12 +73,8 @@
 											<td>${item.attendance.content}</td>
 											<td>${item.attendance.requireDate }</td>
 											<td>${item.attendDate}</td>
-											<td><a
-												href="recordDetail.action?contentId=${item.recordId }"
-												class="active"><i
-													class="fa fa-edit text-success text-active"></i><i
-													class="fa fa-edit text-danger text"></i></a> | <a href="#modal"
-												data-href="deleteRecord.action?contentId=${item.recordId }&menu=6&sortmenu=2&submenu=1&page=0&size=10"
+											<td><a href="#modal"
+												data-href="deleteRecord.action?contentId=${item.recordId }&menu=6&sortmenu=2&submenu=2&page=0&size=10"
 												data-toggle="modal" class="active"><i
 													class="fa fa-trash-o text-success text-active"></i><i
 													class="fa fa-trash-o text-danger text"></i></a>

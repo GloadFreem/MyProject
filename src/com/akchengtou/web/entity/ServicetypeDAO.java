@@ -57,6 +57,16 @@ public class ServicetypeDAO {
 			throw re;
 		}
 	}
+	public void saveOrUpdate(Servicetype transientInstance) {
+		log.debug("saving Servicetype instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
 
 	public void delete(Servicetype persistentInstance) {
 		log.debug("deleting Servicetype instance");

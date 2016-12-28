@@ -60,6 +60,16 @@ public class MemberDAO {
 			throw re;
 		}
 	}
+	public void saveOrUpdate(Member transientInstance) {
+		log.debug("saving Member instance");
+		try {
+			getCurrentSession().saveOrUpdate(transientInstance);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
 
 	public void delete(Member persistentInstance) {
 		log.debug("deleting Member instance");

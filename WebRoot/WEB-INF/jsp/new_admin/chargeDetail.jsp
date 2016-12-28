@@ -8,7 +8,7 @@
 			<p>认证信息</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
+			<form action="editCharge.action?menu=2&sortmenu=2&submenu=1&page=0&size=10" method="post"
 				enctype="multipart/form-result">
 				<div class="">
 					<input name="contentId" value="${result.chargeId}"
@@ -20,7 +20,7 @@
 						<li class="list-group-item">
 							<div class="clear">
 								<input name="desc" class="form-control alert-success"
-									placeholder="请输入内容描述" value=${result.name }>
+									placeholder="请输入名称" value=${result.name }>
 							</div>
 						</li>
 						<li class="list-group-item">
@@ -29,7 +29,7 @@
 						<li class="list-group-item">
 							<div class="clear">
 								<input name="desc" class="form-control alert-success"
-									placeholder="请输入内容描述" value=${result.user.name }>
+									placeholder="请输入业主" value=${result.user.name }>
 							</div>
 						</li>
 						
@@ -52,7 +52,7 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<input name="desc" class="form-control alert-success"
+								<input name="amount" class="form-control alert-success"
 									placeholder="请输入内容描述" value=${result.price }>
 							</div>
 						</li>

@@ -72,7 +72,7 @@
 											<td>${item.identity.name}</td>
 											<td>${item.authenticstatus.name}</td>
 											<td>${item.authDate}</td>
-											<td><a href="authenticDetail.action?contentId=${item.authId }" class="active"><i
+											<td><a href="authenticDetail.action?contentId=${item.authId }&menu=1&submenu=2&page=0&size=10" class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a> | <a
 												href="#modal" data-href="deleteAuthentic.action?contentId=${item.authId }&menu=1&submenu=2&page=0&size=10" data-toggle="modal"

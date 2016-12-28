@@ -8,8 +8,8 @@
 			<p>服务详情</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
-				enctype="multipart/form-result">
+			<form action="editService.action?menu=2&sortmenu=1&submenu=1&page=0&size=10" method="post"
+				enctype="multipart/form-data">
 				<div class="">
 					<input name="contentId" value="${result.typeId}"
 						style="display:none">
@@ -19,7 +19,7 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<input name="desc" class="form-control alert-success"
+								<input name="name" class="form-control alert-success"
 									placeholder="请输入服务名称" value=${result.name }></input>
 							</div>
 						</li>
@@ -43,7 +43,7 @@
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<textarea name="desc" class="form-control alert-success"
+						<textarea name="content" class="form-control alert-success"
 							placeholder="请输入内容描述">${result.content }</textarea>
 					</div>
 				</li>
@@ -52,7 +52,7 @@
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<input name="desc" class="form-control alert-success"
+						<input name="price" class="form-control alert-success"
 							placeholder="请输入价格" value=${result.price }></input>
 					</div>
 				</li>

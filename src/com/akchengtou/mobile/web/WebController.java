@@ -50,9 +50,11 @@ import com.akchengtou.web.entity.Member;
 import com.akchengtou.web.entity.Message;
 import com.akchengtou.web.entity.MessageBean;
 import com.akchengtou.web.entity.Orderservice;
+import com.akchengtou.web.entity.Paytype;
 import com.akchengtou.web.entity.Propertycharges;
 import com.akchengtou.web.entity.Publiccontent;
 import com.akchengtou.web.entity.Servicetype;
+import com.akchengtou.web.entity.Systemuser;
 import com.akchengtou.web.entity.Task;
 import com.akchengtou.web.entity.User;
 import com.akchengtou.web.manager.AuthenticManager;
@@ -82,6 +84,44 @@ public class WebController extends BaseController {
 	 * ---------------------------------------------后端管理系统升级--------------------
 	 * -----------------------
 	 ***/
+	
+	@RequestMapping(value = "/newSystem/adminLogin")
+	public String loginAction(
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "password", required = false) String password,
+			HttpSession session, ModelMap map) {
+		if (name == null || password == null) {
+			map.put("tip", "账号或密码不能为空!");
+			return "/new_admin/login";
+		}
+		
+		
+		Object userId = session.getAttribute("userId");
+//		password = MD5.GetMD5Code(password);
+
+		List list = this.userManger.getSystemUserDao().findByAccount(name);
+		if (list != null && list.size() > 0) {
+			Systemuser user = (Systemuser) list.get(0);
+			if (user.getAccount().equals(name)
+					&& user.getPassword().equals(password)) {
+				session.setAttribute("userId", user.getUserId());
+			} else {
+				map.put("tip", "账号或密码错误，请检查后重试！");
+				return "/new_admin/login";
+			}
+		} else {
+			map.put("tip", "该账号不存在，请联系管理人员!");
+			return "/new_admin/login";
+		}
+
+		map.put("tip", "");
+		// session.setAttribute("userId", null);
+		
+		map.put("content", "content");
+		map.put("menu", 0);
+		map.put("submenu", 0);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
 	/***
 	 * 首页
 	 * 
@@ -460,6 +500,10 @@ public class WebController extends BaseController {
 				member.getMemberId());
 		User user = this.userManger.findUserById(userId);
 
+		List<Servicetype> types = this.serviceManager.getServiceTypeDao().findAll();
+		
+		
+		map.put("types", types);
 		map.put("user", user);
 		map.put("result", member);
 		map.put("content", "memberDetail");
@@ -727,6 +771,288 @@ public class WebController extends BaseController {
 
 		map.put("result", user);
 		map.put("content", "userDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	
+	@RequestMapping(value = "newSystem/editCharge")
+	public String editCharge(
+			@RequestParam(value = "amount", required = false) double price,
+			@RequestParam(value = "userId", required = false) Integer userId,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Propertycharges charge;
+		if(contentId!=null){
+			
+			 charge = this.serviceManager.getPropertychargesDao().findById(contentId);
+		}else{
+			charge = new Propertycharges();
+		}
+		
+		if (charge != null) {
+			charge.setPrice(price);
+			serviceManager.getPropertychargesDao().saveOrUpdate(charge);
+		}
+		
+		map.put("result", charge);
+		map.put("content", "chargeDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	@RequestMapping(value = "newSystem/editTask")
+	public String editTask(
+			@RequestParam(value = "userId", required = false) Integer userId,
+			@RequestParam(value = "content", required = false) String content,
+			@RequestParam(value = "time", required = false) String time,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Task task;
+		User user = null;
+		if(userId!=null)
+		{
+			user = this.userManger.findUserById(userId);
+		}
+		
+		
+		if(contentId!=null){
+			
+			task = this.taskManager.getTaskDao().findById(contentId);
+		}else{
+			task = new Task();
+		}
+		
+		if (task != null) {
+			task.setContent(content);
+			task.setComplete(false);
+			
+			if(user!=null)
+			{
+				task.setUser(user);
+			}
+			this.taskManager.getTaskDao().saveOrUpdate(task);
+		}
+		
+		map.put("result", task);
+		map.put("content", "TaskDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	
+	@RequestMapping(value = "newSystem/editAnnounce")
+	public String editAnnounce(
+			@RequestParam(value = "userId", required = false) Integer userId,
+			@RequestParam(value = "content", required = false) String content,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Announcement task;
+		User user = null;
+		
+		
+		if(contentId!=null){
+			
+			task = this.systemManager.getNoticeDao().findById(contentId);
+		}else{
+			task = new Announcement();
+		}
+		
+		if (task != null) {
+			task.setContent(content);
+			task.setTitle(title);
+			
+			if(contentId!=null){
+				
+				this.systemManager.getNoticeDao().saveOrUpdate(task);
+			}else{
+				this.systemManager.getNoticeDao().save(task);
+			}
+			
+		}
+		
+		map.put("result", task);
+		map.put("content", "announceDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/editAuthentic")
+	public String editAuthentic(
+			@RequestParam(value = "identity", required = false) Integer identity,
+			@RequestParam(value = "status", required = false) Integer status,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Authentic authentic = this.userManger.getAuthenticDao().findById(contentId);
+		if (authentic != null) {
+			authentic.setName(name);
+			authentic.getIdentity().setIdentiyTypeId(identity);
+			authentic.getAuthenticstatus().setStatusId(status);
+			// 保存头像
+			if (image != null) {
+				authentic.setIdCard(image);
+			}
+			
+			if (file != null) {
+				// 保存图片
+				String fileName = String.format(
+						AKConfig.STRING_USER_HEADER_PICTURE_FORMAT,
+						new Date().getTime());
+				String result = FileUtil.savePicture(file, fileName,
+						"upload/headerImages/");
+				if (!result.equals("")) {
+					fileName = AKConfig.STRING_SYSTEM_ADDRESS
+							+ "upload/headerImages/" + result;
+					authentic.setIdCard(fileName);
+				}
+			}
+			
+			this.userManger.getAuthenticDao().saveOrUpdate(authentic);
+		}
+		
+		map.put("result", authentic);
+		map.put("content", "authenticDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/editMember")
+	public String editMember(
+			@RequestParam(value = "gender", required = false) double gender,
+			@RequestParam(value = "position", required = false) Integer position,
+			@RequestParam(value = "telephone", required = false) String telephone,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Member member = this.userManger.getMemberDao().findById(contentId);
+		if (member != null) {
+			member.setName(name);
+			member.setTelephone(telephone);
+			member.setGender(gender);
+			member.getServicetype().setTypeId(position);
+			// 保存头像
+			if (image != null) {
+				member.setImage(image);
+			}
+			
+			if (file != null) {
+				// 保存图片
+				String fileName = String.format(
+						AKConfig.STRING_USER_HEADER_PICTURE_FORMAT,
+						new Date().getTime());
+				String result = FileUtil.savePicture(file, fileName,
+						"upload/headerImages/");
+				if (!result.equals("")) {
+					fileName = AKConfig.STRING_SYSTEM_ADDRESS
+							+ "upload/headerImages/" + result;
+					member.setImage(fileName);
+				}
+			}
+			
+			this.userManger.getMemberDao().saveOrUpdate(member);
+		}
+		
+		List<Servicetype> types = this.serviceManager.getServiceTypeDao().findAll();
+		
+		
+		map.put("types", types);
+		map.put("result", member);
+		map.put("content", "memberDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/editService")
+	public String editService(
+			@RequestParam(value = "price", required = false) float price,
+			@RequestParam(value = "content", required = false) String content,
+			@RequestParam(value = "image", required = false) String image,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		
+		Servicetype type;
+		if(contentId!=null){
+		type = this.serviceManager.getServiceTypeDao().findById(contentId);
+		}else{
+			type = new Servicetype();
+			Paytype  pay = new Paytype();
+			pay.setTypeId(1);
+			type.setPaytype(pay);
+			
+		}
+		if (type != null) {
+			type.setName(name);
+			type.setContent(content);
+			type.setPrice(price);
+			// 保存头像
+			if (image != null) {
+				type.setImage(image);
+			}
+			
+			if (file != null) {
+				// 保存图片
+				String fileName = String.format(
+						AKConfig.STRING_USER_HEADER_PICTURE_FORMAT,
+						new Date().getTime());
+				String result = FileUtil.savePicture(file, fileName,
+						"upload/headerImages/");
+				if (!result.equals("")) {
+					fileName = AKConfig.STRING_SYSTEM_ADDRESS
+							+ "upload/headerImages/" + result;
+					type.setImage(fileName);
+				}
+			}
+			if(contentId!=null){
+				this.serviceManager.getServiceTypeDao().saveOrUpdate(type);
+			}else{
+				this.serviceManager.getServiceTypeDao().save(type);
+			}
+		}
+		
+		
+		map.put("result", type);
+		map.put("content", "serviceDetail");
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
 		map.put("submenu", submenu);

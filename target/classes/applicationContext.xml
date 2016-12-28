@@ -19,7 +19,7 @@
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value></value>
+			<value>Changeme_123</value>
 		</property>
 	</bean>
 	<bean id="sessionFactory"
@@ -75,7 +75,8 @@
 				<value>com.akchengtou.web.entity.Charge</value>
 				<value>com.akchengtou.web.entity.Price</value>
 				<value>com.akchengtou.web.entity.Charges</value>
-				<value>com.akchengtou.web.entity.Propertycharges</value></list>
+				<value>com.akchengtou.web.entity.Propertycharges</value>
+				<value>com.akchengtou.web.entity.Systemuser</value></list>
 		</property>
 	</bean>
 	<bean id="transactionManager"
@@ -277,6 +278,12 @@
 	</bean>
 	<bean id="PropertychargesDAO"
 		class="com.akchengtou.web.entity.PropertychargesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SystemuserDAO"
+		class="com.akchengtou.web.entity.SystemuserDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

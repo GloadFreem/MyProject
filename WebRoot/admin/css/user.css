@@ -1,0 +1,137 @@
+.authinfo {
+	width: 95%;
+	border-style: dashed;
+	border-color: green;
+	border-radius: 5px;
+	border-width: 2px;
+	margin-left: 2.5%;
+	margin-top: 10px;
+}
+
+.authinfo-item {
+	margin: 20px;
+}
+
+.authinfo-item-key {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #8B989F;
+	height: 40px;
+	line-height: 40px;
+	color: white;
+}
+
+.textarea {
+	color: black;
+	width: 100%;
+	height: 200px;
+}
+
+.search {
+	width: 50%;
+	float: left;
+}
+
+.search-img {
+	height: 35px;
+}
+
+.textarea {
+	color: black;
+	width: 95%;
+	height: 200px;
+}
+
+.img-frame {
+	width: 90%;
+}
+
+.user-select {
+	width: 48%;
+	height: 45px;
+	border-radius: 5px;
+	border-color: #ff001b;
+	border-width: 1px;
+	border-style: dashed;
+}
+
+.player {
+	margin-top: 50px;
+}
+
+.play-start {
+	width: 50px;
+	height: 100px;
+	float: left;
+}
+
+.play-start img {
+	width: 40%;
+	margin-top: 25px;
+}
+
+.play-progress {
+	width: 100%;
+}
+
+.action-bar {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.action-bar img {
+	width: 94%;
+}
+
+.progress-bar img {
+	width: 3px;
+	position: absolute;
+	margin-top: -4%;
+	left: 130px;
+	height: 40px;
+}
+
+.insert {
+	margin-bottom: 50px;
+}
+
+.insert img {
+	margin-top: 30px;
+	margin-left: 40%;
+}
+
+.content-item {
+	width: 150px;
+}
+
+.content-item-tip {
+	width: 100%;
+}
+
+.content-item-tip input {
+	width: 100%;
+}
+
+.content-tip-img {
+	width: 100%;
+}
+
+.content-tip-img img {
+	width: 100%;
+}
+
+progress {
+	margin-top: 15px;
+	width: 30%;
+}
+
+.contents
+{
+	height:auto;
+	margin-top:30px;	
+}
+
+.content-item
+{
+	float:left;
+}

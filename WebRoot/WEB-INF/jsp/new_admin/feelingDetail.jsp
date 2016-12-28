@@ -83,10 +83,10 @@
 
 				</ul>
 				</div>
-				<div>
+<!-- 				<div>
 					<button type="submit"
 						class="btn btn-default btn-info pull-right m-t m-b m-r">完成</button>
-				</div>
+				</div> -->
 			</form>
 		</section>
 	</section>

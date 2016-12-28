@@ -330,7 +330,7 @@
 												href="orderList.action?&menu=3&sortmenu=1&submenu=1&page=0&size=10">
 												<i class="fa fa-angle-right"></i> <span>订单列表</span>
 											</a>
-											</li>
+						<%-- 					</li>
 											<c:choose>
 												<c:when test="${submenu==2}">
 													<li class="active">
@@ -343,7 +343,7 @@
 												href="orderDetail.action?&menu=3&sortmenu=1&submenu=2&page=0&size=10">
 												<i class="fa fa-angle-right"></i> <span>添加订单</span>
 											</a>
-											</li>
+											</li> --%>
 											<c:choose>
 												<c:when test="${submenu==3}">
 													<li class="active">
@@ -661,7 +661,7 @@
 													<li>
 												</c:otherwise>
 											</c:choose>
-											<a href="announceList.action?&menu=7&sortmenu=1&submenu=1&page=0&size=10"> <i
+											<a href="announceList.action?menu=7&sortmenu=1&submenu=1&page=0&size=10"> <i
 												class="fa fa-angle-right"></i> <span>公告列表</span>
 											</a>
 											</li>
