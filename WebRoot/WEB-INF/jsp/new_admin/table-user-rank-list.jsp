@@ -12,10 +12,17 @@
 				<header class="panel-heading"> 排行榜 </header>
 				<div class="row text-sm wrapper">
 					<div class="col-sm-4 hidden-xs">
-						<select class="input-sm form-control input-s-sm inline">
-							<option value="0">10</option>
-							<option value="1">50</option>
-							<option value="2">100</option>
+						<select name="size"
+							class="input-sm form-control input-s-sm inline">
+							<c:forEach items="${sizes}" var="item">
+								<option value=${item
+									}
+									<c:choose>
+									<c:when test="${size==item}">
+										 selected=selected
+									</c:when>
+								</c:choose>>${item }</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="col-sm-4 m-b-xs">
@@ -41,10 +48,9 @@
 						<thead>
 							<tr>
 								<th width="20"><input type="checkbox"></th>
-								<th width="90" class="th-sortable" data-toggle="class">序号
-									<span class="th-sort"> <i class="fa fa-sort-down text"></i>
-										<i class="fa fa-sort-up text-active"></i> <i
-										class="fa fa-sort"></i>
+								<th width="90" class="th-sortable" data-toggle="class">序号 <span
+									class="th-sort"> <i class="fa fa-sort-down text"></i> <i
+										class="fa fa-sort-up text-active"></i> <i class="fa fa-sort"></i>
 								</span>
 								</th>
 								<th>头像</th>
@@ -63,12 +69,15 @@
 											<td><input type="checkbox" name="post[]"
 												value="${item.userId}"></td>
 											<td>${item.userId}</td>
-											<td width="100"><a href="${item.image}" target="blank"><img src="${item.image}" alt="城投逸园" class="img-responsive"/></a></td>
+											<td width="100"><a href="${item.image}" target="blank"><img
+													src="${item.image}" alt="城投逸园" class="img-responsive" /></a></td>
 											<td>${item.name}</td>
 											<td>${item.score}</td>
 											<td>${item.gender}</td>
 											<td>${item.sort}</td>
-											<td><a href="userDetail.action?contentId=${item.userId }" class="active"><i
+											<td><a
+												href="userDetail.action?contentId=${item.userId }"
+												class="active"><i
 													class="fa fa-edit text-success text-active"></i><i
 													class="fa fa-edit text-danger text"></i></a>
 										</tr>
@@ -83,25 +92,40 @@
 					<div class="row">
 						<div class="col-sm-4 hidden-xs">
 							<select class="input-sm form-control input-s-sm inline">
-								<option value="0">修改</option>
 								<option value="1">删除</option>
 								<option value="2">导出</option>
 							</select>
 							<button class="btn btn-sm btn-default">应用</button>
 						</div>
-						<div class="col-sm-4 text-center">
-							<small class="text-muted inline m-t-sm m-b-sm">显示 20-30 /
-								50 条记录</small>
-						</div>
 						<div class="col-sm-4 text-right text-center-xs">
-							<ul class="pagination pagination-lg">
-								<li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-								<li class="active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+							<ul class="pagination">
+
+								<c:choose>
+									<c:when test="${page>0}">
+										<li><a name="pre" href="#"><i
+												class="fa fa-chevron-left"></i></a></li>
+									</c:when>
+								</c:choose>
+
+
+								<c:forEach items="${pages}" var="item">
+									<li
+										<c:choose>
+										<c:when test="${page==item}">
+											class="active"
+										</c:when>
+									</c:choose>><a
+										name="page" href="#">${item+1}</a></li>
+								</c:forEach>
+
+								<c:choose>
+									<c:when test="${page<count}">
+										<li><a name="next" href="#"><i
+												class="fa fa-chevron-right"></i></a></li>
+									</c:when>
+								</c:choose>
+
+
 							</ul>
 						</div>
 					</div>
@@ -110,6 +134,59 @@
 		</section>
 	</section>
 </section>
+<script type="text/javascript">
+	$("a[name='page']").click(
+			function() {
+				var size = $("select[name='size']").val();
+				var page = $(this).text() - 1;
+				var menu = ${menu};
+				var sortmenu = ${sortmenu};
+				var submenu = ${submenu};
+				var url = "userRankList.action?" + "size=" + size + "&page=" + page
+						+ "&menu=" + menu + "&sortmenu=" + sortmenu
+						+ "&submenu=" + submenu;
+				//alert(url);
+
+				window.location.href = url;
+
+			});
+	$("a[name='pre']").click(
+			function() {
+				var size = $("select[name='size']").val();
+				var page = ${page};
+				if (page > 0) {
+					page--;
+				}
+				var menu = ${menu};
+				var sortmenu = ${sortmenu};
+				var submenu = ${submenu};
+				var url = "userRankList.action?" + "size=" + size + "&page=" + page
+						+ "&menu=" + menu + "&sortmenu=" + sortmenu
+						+ "&submenu=" + submenu;
+				//alert(url);
+
+				window.location.href = url;
+
+			});
+	$("a[name='next']").click(
+			function() {
+				var size = $("select[name='size']").val();
+				var page = ${page};
+				if (page < ${count}) {
+					page++;
+				}
+				var menu = ${menu};
+				var sortmenu = ${sortmenu};
+				var submenu = ${submenu};
+				var url = "userRankList.action?" + "size=" + size + "&page=" + page
+						+ "&menu=" + menu + "&sortmenu=" + sortmenu
+						+ "&submenu=" + submenu;
+				//alert(url);
+
+				window.location.href = url;
+
+			});
+</script>
 
 <div id="modal" class="modal fade" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -130,7 +207,7 @@
 				<div class="modal-footer">
 					<input type="hidden" id="ID" name="ID" />
 					<button type="submit" class="btn btn-default" data-dismiss="modal">取消</button>
-					<a id="confirm" class="btn btn-info" >确认</a>
+					<a id="confirm" class="btn btn-info">确认</a>
 				</div>
 			</form>
 		</div>

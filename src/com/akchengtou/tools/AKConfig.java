@@ -245,6 +245,13 @@ public class AKConfig {
 			add("匠心之作，精品项目络绎不绝，赶快收下它吧！");
 		}
 	};
+	public static List SIZES = new ArrayList() {
+		{
+			add(10);
+			add(50);
+			add(100);
+		}
+	};
 
 	public static List STRING_SHARE_GOLD = new ArrayList() {
 		{

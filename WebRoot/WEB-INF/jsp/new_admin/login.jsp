@@ -14,7 +14,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<title>【金指投投融资】--登录</title>
+<title>【城投逸园】--登录</title>
 <link rel="stylesheet" type="text/css" href="./css/style.css">
 <script type="text/javascript" src="../images/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"
@@ -64,7 +64,7 @@
 						<img class="icon-img" alt="金指投" src="../admin/images/person.png">
 					</div>
 					<div class="textfield">
-						<input name="name" type="text" value="请输入登录账号" />
+						<input name="name" type="text" placeholder="请输入登录账号" value="${account}" />
 					</div>
 				</div>
 

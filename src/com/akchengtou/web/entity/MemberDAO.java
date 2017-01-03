@@ -167,6 +167,36 @@ public class MemberDAO {
 			throw re;
 		}
 	}
+	
+	public List findByPage(int size,Integer page) {
+		log.debug("finding all Member instances");
+		try {
+			String queryString = "from Member";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(size);
+			queryObject.setFirstResult(size*page);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer countOfInstance() {
+		log.debug("finding all Member instances");
+		try {
+			String queryString = "select count(*) from Member";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			if(queryObject.list()!=null)
+			{
+				return Integer.parseInt(queryObject.list().get(0).toString());
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 	public List findByType(Servicetype type,Integer page) {
 		log.debug("finding all Member instances");
 		try {

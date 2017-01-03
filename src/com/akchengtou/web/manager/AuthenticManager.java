@@ -71,8 +71,8 @@ public class AuthenticManager {
 		return null;
 	}
 	
-	public List findRankingByIdentitype(Identity type,Integer page) {
-		List list = this.authenticDao.findAuthenticByIdentiytype(type.getIdentiyTypeId(),page);
+	public List findRankingByIdentitype(Identity type,Integer page,Integer size) {
+		List list = this.authenticDao.findAuthenticByIdentiytype(type.getIdentiyTypeId(),page,size);
 		if (list != null && list.size() > 0) {
 			List results = new ArrayList();
 			for(int i = 0;i<list.size();i++)

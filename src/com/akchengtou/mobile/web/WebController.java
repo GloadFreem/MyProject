@@ -1,5 +1,7 @@
 package com.akchengtou.mobile.web;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,7 +86,7 @@ public class WebController extends BaseController {
 	 * ---------------------------------------------后端管理系统升级--------------------
 	 * -----------------------
 	 ***/
-	
+
 	@RequestMapping(value = "/newSystem/adminLogin")
 	public String loginAction(
 			@RequestParam(value = "name", required = false) String name,
@@ -94,10 +96,9 @@ public class WebController extends BaseController {
 			map.put("tip", "账号或密码不能为空!");
 			return "/new_admin/login";
 		}
-		
-		
+
 		Object userId = session.getAttribute("userId");
-//		password = MD5.GetMD5Code(password);
+		// password = MD5.GetMD5Code(password);
 
 		List list = this.userManger.getSystemUserDao().findByAccount(name);
 		if (list != null && list.size() > 0) {
@@ -116,12 +117,14 @@ public class WebController extends BaseController {
 
 		map.put("tip", "");
 		// session.setAttribute("userId", null);
-		
+
+		map.put("account", name);
 		map.put("content", "content");
 		map.put("menu", 0);
 		map.put("submenu", 0);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	/***
 	 * 首页
 	 * 
@@ -147,14 +150,62 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
+		if (size == null) {
+			size = 10;
+		}
 
-		List list = this.userManger.getUserDao().findAll();
+		if (page == null) {
+			page = 0;
+		}
+		
+
+		List list = this.userManger.getUserDao().findByPage(size, page);
+
+		Integer count = this.userManger.getUserDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
 		map.put("result", list);
 		map.put("content", "table-user-list");
 
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
 		map.put("submenu", submenu);
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
 
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
@@ -168,8 +219,56 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
+		
+		if (size == null) {
+			size = 10;
+		}
 
-		List list = this.userManger.getAuthenticDao().findAll();
+		if (page == null) {
+			page = 0;
+		}
+
+		List list = this.userManger.getAuthenticDao().findByPage(size, page);
+		Integer count = this.userManger.getAuthenticDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+		
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
+		
+		
 		map.put("result", list);
 		map.put("content", "table-authentic-list");
 		map.put("menu", menu);
@@ -188,7 +287,53 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.userManger.getMemberDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		List list = this.userManger.getMemberDao().findByPage(size, page);
+		Integer count = this.userManger.getMemberDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+		
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
 		map.put("result", list);
 		map.put("content", "table-member-list");
 		map.put("menu", menu);
@@ -207,6 +352,15 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
+		
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
 		if (type == null) {
 			type = 1;
 		}
@@ -219,7 +373,47 @@ public class WebController extends BaseController {
 
 		// 根据用户身份类型获取排行榜
 		List list = this.authenticManager.findRankingByIdentitype(
-				authentic.getIdentity(), page);
+				authentic.getIdentity(), page,size);
+		Integer count = this.authenticManager.getAuthenticDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+		
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
+		
+		
 
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
@@ -238,7 +432,54 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.serviceManager.getServiceTypeDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		List list = this.serviceManager.getServiceTypeDao().findByPage(size, page);
+		Integer count = this.serviceManager.getServiceTypeDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+		
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
+		
 		map.put("result", list);
 		map.put("content", "table-service-list");
 		map.put("menu", menu);
@@ -257,7 +498,56 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.serviceManager.getPropertychargesDao().findAll();
+
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		
+		List list = this.serviceManager.getPropertychargesDao().findByPage(size, page);
+		Integer count = this.serviceManager.getPropertychargesDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if(num-page>5)
+				{
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				}else{
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+		
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count/size);
+		map.put("pages", pages);
+		
 		map.put("result", list);
 		map.put("content", "table-charges-list");
 		map.put("menu", menu);
@@ -500,9 +790,9 @@ public class WebController extends BaseController {
 				member.getMemberId());
 		User user = this.userManger.findUserById(userId);
 
-		List<Servicetype> types = this.serviceManager.getServiceTypeDao().findAll();
-		
-		
+		List<Servicetype> types = this.serviceManager.getServiceTypeDao()
+				.findAll();
+
 		map.put("types", types);
 		map.put("user", user);
 		map.put("result", member);
@@ -776,8 +1066,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
-	
+
 	@RequestMapping(value = "newSystem/editCharge")
 	public String editCharge(
 			@RequestParam(value = "amount", required = false) double price,
@@ -789,20 +1078,21 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Propertycharges charge;
-		if(contentId!=null){
-			
-			 charge = this.serviceManager.getPropertychargesDao().findById(contentId);
-		}else{
+		if (contentId != null) {
+
+			charge = this.serviceManager.getPropertychargesDao().findById(
+					contentId);
+		} else {
 			charge = new Propertycharges();
 		}
-		
+
 		if (charge != null) {
 			charge.setPrice(price);
 			serviceManager.getPropertychargesDao().saveOrUpdate(charge);
 		}
-		
+
 		map.put("result", charge);
 		map.put("content", "chargeDetail");
 		map.put("menu", menu);
@@ -810,7 +1100,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	@RequestMapping(value = "newSystem/editTask")
 	public String editTask(
 			@RequestParam(value = "userId", required = false) Integer userId,
@@ -821,33 +1111,30 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Task task;
 		User user = null;
-		if(userId!=null)
-		{
+		if (userId != null) {
 			user = this.userManger.findUserById(userId);
 		}
-		
-		
-		if(contentId!=null){
-			
+
+		if (contentId != null) {
+
 			task = this.taskManager.getTaskDao().findById(contentId);
-		}else{
+		} else {
 			task = new Task();
 		}
-		
+
 		if (task != null) {
 			task.setContent(content);
 			task.setComplete(false);
-			
-			if(user!=null)
-			{
+
+			if (user != null) {
 				task.setUser(user);
 			}
 			this.taskManager.getTaskDao().saveOrUpdate(task);
 		}
-		
+
 		map.put("result", task);
 		map.put("content", "TaskDetail");
 		map.put("menu", menu);
@@ -855,7 +1142,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
-	
+
 	@RequestMapping(value = "newSystem/editAnnounce")
 	public String editAnnounce(
 			@RequestParam(value = "userId", required = false) Integer userId,
@@ -866,31 +1153,30 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Announcement task;
 		User user = null;
-		
-		
-		if(contentId!=null){
-			
+
+		if (contentId != null) {
+
 			task = this.systemManager.getNoticeDao().findById(contentId);
-		}else{
+		} else {
 			task = new Announcement();
 		}
-		
+
 		if (task != null) {
 			task.setContent(content);
 			task.setTitle(title);
-			
-			if(contentId!=null){
-				
+
+			if (contentId != null) {
+
 				this.systemManager.getNoticeDao().saveOrUpdate(task);
-			}else{
+			} else {
 				this.systemManager.getNoticeDao().save(task);
 			}
-			
+
 		}
-		
+
 		map.put("result", task);
 		map.put("content", "announceDetail");
 		map.put("menu", menu);
@@ -898,6 +1184,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/editAuthentic")
 	public String editAuthentic(
 			@RequestParam(value = "identity", required = false) Integer identity,
@@ -910,8 +1197,9 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
-		Authentic authentic = this.userManger.getAuthenticDao().findById(contentId);
+
+		Authentic authentic = this.userManger.getAuthenticDao().findById(
+				contentId);
 		if (authentic != null) {
 			authentic.setName(name);
 			authentic.getIdentity().setIdentiyTypeId(identity);
@@ -920,7 +1208,7 @@ public class WebController extends BaseController {
 			if (image != null) {
 				authentic.setIdCard(image);
 			}
-			
+
 			if (file != null) {
 				// 保存图片
 				String fileName = String.format(
@@ -934,10 +1222,10 @@ public class WebController extends BaseController {
 					authentic.setIdCard(fileName);
 				}
 			}
-			
+
 			this.userManger.getAuthenticDao().saveOrUpdate(authentic);
 		}
-		
+
 		map.put("result", authentic);
 		map.put("content", "authenticDetail");
 		map.put("menu", menu);
@@ -945,6 +1233,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/editMember")
 	public String editMember(
 			@RequestParam(value = "gender", required = false) double gender,
@@ -958,7 +1247,7 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Member member = this.userManger.getMemberDao().findById(contentId);
 		if (member != null) {
 			member.setName(name);
@@ -969,7 +1258,7 @@ public class WebController extends BaseController {
 			if (image != null) {
 				member.setImage(image);
 			}
-			
+
 			if (file != null) {
 				// 保存图片
 				String fileName = String.format(
@@ -983,13 +1272,13 @@ public class WebController extends BaseController {
 					member.setImage(fileName);
 				}
 			}
-			
+
 			this.userManger.getMemberDao().saveOrUpdate(member);
 		}
-		
-		List<Servicetype> types = this.serviceManager.getServiceTypeDao().findAll();
-		
-		
+
+		List<Servicetype> types = this.serviceManager.getServiceTypeDao()
+				.findAll();
+
 		map.put("types", types);
 		map.put("result", member);
 		map.put("content", "memberDetail");
@@ -998,6 +1287,7 @@ public class WebController extends BaseController {
 		map.put("submenu", submenu);
 		return AKConfig.NEW_SERVER_CONTROL;
 	}
+
 	@RequestMapping(value = "newSystem/editService")
 	public String editService(
 			@RequestParam(value = "price", required = false) float price,
@@ -1010,16 +1300,16 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		Servicetype type;
-		if(contentId!=null){
-		type = this.serviceManager.getServiceTypeDao().findById(contentId);
-		}else{
+		if (contentId != null) {
+			type = this.serviceManager.getServiceTypeDao().findById(contentId);
+		} else {
 			type = new Servicetype();
-			Paytype  pay = new Paytype();
+			Paytype pay = new Paytype();
 			pay.setTypeId(1);
 			type.setPaytype(pay);
-			
+
 		}
 		if (type != null) {
 			type.setName(name);
@@ -1029,7 +1319,7 @@ public class WebController extends BaseController {
 			if (image != null) {
 				type.setImage(image);
 			}
-			
+
 			if (file != null) {
 				// 保存图片
 				String fileName = String.format(
@@ -1043,14 +1333,13 @@ public class WebController extends BaseController {
 					type.setImage(fileName);
 				}
 			}
-			if(contentId!=null){
+			if (contentId != null) {
 				this.serviceManager.getServiceTypeDao().saveOrUpdate(type);
-			}else{
+			} else {
 				this.serviceManager.getServiceTypeDao().save(type);
 			}
 		}
-		
-		
+
 		map.put("result", type);
 		map.put("content", "serviceDetail");
 		map.put("menu", menu);
@@ -1334,6 +1623,70 @@ public class WebController extends BaseController {
 		List list = this.systemManager.getSystemMessageDao().findAll();
 		map.put("result", list);
 		map.put("content", "table-message-list");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	/***
+	 * 一键导入物业费
+	 * 
+	 * @param contentId
+	 * @param menu
+	 * @param submenu
+	 * @param sortmenu
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "newSystem/importChargeOrder")
+	public String importChargeOrder(
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+
+		map.put("tip", "订单上传完毕!");
+		map.put("content", "importChargeOrder");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+
+	@RequestMapping(value = "newSystem/submitImportCharges")
+	public String submitImportCharges(
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			HttpSession session, ModelMap map) throws FileNotFoundException,
+			Exception {
+
+		if (file != null) {
+			// 保存图片
+			String fileName = String.format(
+					AKConfig.STRING_USER_HEADER_PICTURE_FORMAT,
+					new Date().getTime());
+			String result = FileUtil.savePicture(file, fileName,
+					"upload/headerImages/");
+			if (!result.equals("")) {
+				fileName = AKConfig.STRING_SYSTEM_ADDRESS
+						+ "upload/headerImages/" + result;
+
+				String path = session.getServletContext().getRealPath("upload");
+
+				List list = this.serviceManager
+						.importBrandPeriodSort(new FileInputStream(path
+								+ "/headerImages/" + result));
+
+				map.put("data", list);
+
+			}
+		}
+
+		map.put("tip", "订单上传完毕!");
+		map.put("content", "importChargeOrder");
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
 		map.put("submenu", submenu);

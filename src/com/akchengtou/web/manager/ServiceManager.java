@@ -1,6 +1,7 @@
 package com.akchengtou.web.manager;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.httpclient.HttpException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jdom.JDOMException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import com.akchengtou.web.entity.ServiceimagesDAO;
 import com.akchengtou.web.entity.Servicetype;
 import com.akchengtou.web.entity.ServicetypeDAO;
 import com.akchengtou.web.entity.User;
+import com.akchengtou.web.entity.UserDAO;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,6 +60,7 @@ public class ServiceManager {
 	private PriceDAO priceDao;
 	private OrderstatusDAO orderStatusDao;
 	private EventDAO eventDao;
+	private UserDAO userDao;
 
 	/***
 	 * 获取分页服务列表
@@ -518,7 +522,73 @@ public class ServiceManager {
 
 		return orderDesc;
 	}
+	
+	
+	public List<Propertycharges> importBrandPeriodSort(InputStream in) throws Exception  {
+		
+		List<Propertycharges> brandMobileInfos = readBrandPeriodSorXls(in);
+		for (Propertycharges brandMobileInfo : brandMobileInfos) {
+			this.getPropertychargesDao().save(brandMobileInfo);
+		}
+		return brandMobileInfos;
+	}
+	
+	private  List<Propertycharges> readBrandPeriodSorXls(InputStream is)
+			throws IOException {
+		HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
+		List<Propertycharges> brandMobileInfos = new ArrayList<Propertycharges>();
+		Propertycharges brandMobileInfo;
+		// 循环工作表Sheet
+		for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+			org.apache.poi.hssf.usermodel.HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+			if (hssfSheet == null) {
+				continue;
+			}
+			// 循环行Row
+			for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+				brandMobileInfo = new Propertycharges();
+				org.apache.poi.hssf.usermodel.HSSFRow hssfRow = hssfSheet.getRow(rowNum);
+				for (int i = 0; i < hssfRow.getLastCellNum(); i++) {
+					org.apache.poi.hssf.usermodel.HSSFCell brandIdHSSFCell = hssfRow.getCell(i);
+					if (i == 0) {
+						String name = getCellValue(brandIdHSSFCell);
+						List<User> users = this.getUserDao().findByName(name);
+						if(users!=null && users.size()>0)
+						{
+							User user = users.get(0);
+							if(user!=null)
+							{
+								brandMobileInfo.setUser(user);
+							}
+						}
+					} else if (i == 1) {
+						brandMobileInfo.setName(getCellValue(brandIdHSSFCell));
+						continue;
+					} else if (i == 2) {
+						brandMobileInfo.setPrice(Double.valueOf(getCellValue(brandIdHSSFCell)));
+					} else if (i == 3) {
+						brandMobileInfo.setStatus(getCellValue(brandIdHSSFCell));
+					} else if (i == 4) {
+						try {
+							Date date = DateUtils.parseDateTime(getCellValue(brandIdHSSFCell));
+							brandMobileInfo.setEndDate(date);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} 
+				}
+				brandMobileInfos.add(brandMobileInfo);
+				}
+			}
+		return brandMobileInfos;
+	}
 
+	
+	private String getCellValue(org.apache.poi.hssf.usermodel.HSSFCell cell)
+	{
+		return cell.getStringCellValue();
+	}
 	public ServiceDAO getServiceDao() {
 		return serviceDao;
 	}
@@ -637,6 +707,14 @@ public class ServiceManager {
 	@Autowired
 	public void setEventDao(EventDAO eventDao) {
 		this.eventDao = eventDao;
+	}
+
+	public UserDAO getUserDao() {
+		return userDao;
+	}
+	@Autowired
+	public void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
 	}
 
 }

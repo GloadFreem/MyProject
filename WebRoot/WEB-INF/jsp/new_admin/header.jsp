@@ -277,6 +277,19 @@
 												<i class="fa fa-angle-right"></i> <span>录入物业费</span>
 											</a>
 											</li>
+											<c:choose>
+												<c:when test="${submenu==2&& sortmenu==3}">
+													<li class="active">
+												</c:when>
+												<c:otherwise>
+													<li>
+												</c:otherwise>
+											</c:choose>
+											<a
+												href="importChargeOrder.action?&menu=2&sortmenu=2&submenu=3&page=0&size=10">
+												<i class="fa fa-angle-right"></i> <span>一键导入物业费账单</span>
+											</a>
+											</li>
 										</ul>
 										</li>
 										<!--<li > <a href="#form" > <i class="fa fa-angle-down text"></i> <i class="fa fa-angle-up text-active"></i> <span>Form</span> </a>-->

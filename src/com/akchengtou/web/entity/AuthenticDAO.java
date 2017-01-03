@@ -92,15 +92,24 @@ public class AuthenticDAO {
 	}
 	
 	
-	public List findAuthenticByIdentiytype(Integer typeId,Integer page)
+	public List findAuthenticByIdentiytype(Integer typeId,Integer page,Integer size)
 	{
 		String sqlString = "select a.user_id,a.name,u.score,u.image,u.gender from authentic as a left join user as u on a.user_id = u.user_id where a.identiy_type_id =?  order by u.score desc";
 		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString);
-		queryObject.setFirstResult(10*page);
-		queryObject.setMaxResults(10);
+		queryObject.setFirstResult(size*page);
+		queryObject.setMaxResults(size);
 		queryObject.setParameter(0, typeId);
 		
 		return queryObject.list();
+	}
+	
+	public Integer countOfInstance(Integer typeId,Integer page,Integer size)
+	{
+		String sqlString = "select a.user_id,a.name,u.score,u.image,u.gender from authentic as a left join user as u on a.user_id = u.user_id where a.identiy_type_id =?  order by u.score desc";
+		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString);
+		queryObject.setParameter(0, typeId);
+		
+		return queryObject.list().size();
 	}
 	
 	public Authentic findById(java.lang.Integer id) {
@@ -160,6 +169,37 @@ public class AuthenticDAO {
 			throw re;
 		}
 	}
+	
+	public List findByPage(int size,Integer page) {
+		log.debug("finding all Authentic instances");
+		try {
+			String queryString = "from Authentic";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(size);
+			queryObject.setFirstResult(size*page);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer countOfInstance() {
+		log.debug("finding all Authentic instances");
+		try {
+			String queryString = "select count(*) from Authentic";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			if(queryObject.list()!=null)
+			{
+				return Integer.parseInt(queryObject.list().get(0).toString());
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
 
 	public Authentic merge(Authentic detachedInstance) {
 		log.debug("merging Authentic instance");
