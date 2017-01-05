@@ -138,6 +138,37 @@ public class AttendancerecordDAO {
 		}
 	}
 	
+	public List findByPage(int size,Integer page) {
+		log.debug("finding all Attendancerecord instances");
+		try {
+			String queryString = "from Attendancerecord";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(size);
+			queryObject.setFirstResult(size*page);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer countOfInstance() {
+		log.debug("finding all Attendancerecord instances");
+		try {
+			String queryString = "select count(*) from attendancerecord";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			if(queryObject.list()!=null)
+			{
+				return Integer.parseInt(queryObject.list().get(0).toString());
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	
 	
 	public List findByRecordIdAndUser(User user,Integer taskId,Date date)
 	{

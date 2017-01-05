@@ -187,7 +187,7 @@ public class AuthenticDAO {
 	public Integer countOfInstance() {
 		log.debug("finding all Authentic instances");
 		try {
-			String queryString = "select count(*) from Authentic";
+			String queryString = "select count(*) from authentic";
 			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
 			if(queryObject.list()!=null)
 			{

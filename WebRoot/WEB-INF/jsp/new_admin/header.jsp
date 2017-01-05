@@ -27,19 +27,17 @@
 							<a href="#" class="media list-group-item"> <span
 								class="pull-left thumb-sm"> <img src="images/avatar.jpg"
 									alt="John said" class="img-circle">
-							</span> <span class="media-body block m-b-none"> Use awesome
-									animate.css<br> <small class="text-muted">10 分钟前</small>
+							</span> <span class="media-body block m-b-none"> 上报事件 <br> <small class="text-muted">10 分钟前</small>
 							</span>
 							</a> <a href="#" class="media list-group-item"> <span
-								class="media-body block m-b-none"> 资讯更新通知<br> <small
+								class="media-body block m-b-none"> 1条订单更新<br> <small
 									class="text-muted">1 小时前</small>
 							</span>
 							</a>
 						</div>
 						<footer class="panel-footer text-sm">
 							<a href="#" class="pull-right"><i class="fa fa-cog"></i></a> <a
-								href="#notes" data-toggle="class:show animated fadeInRight">See
-								all the notifications</a>
+								href="#notes" data-toggle="class:show animated fadeInRight">查看全部消息</a>
 						</footer>
 					</section>
 				</section></li>
@@ -327,7 +325,7 @@
 												<li>
 											</c:otherwise>
 										</c:choose>
-										<a href="#table"> <i class="fa fa-angle-down text"></i> <i
+										<a href="#table"><b class="badge bg-info pull-right">369</b> <i class="fa fa-angle-down text"></i> <i
 											class="fa fa-angle-up text-active"></i> <span>预约订单</span>
 										</a>
 										<ul class="nav bg">

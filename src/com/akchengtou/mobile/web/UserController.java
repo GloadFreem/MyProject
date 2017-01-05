@@ -348,7 +348,7 @@ public class UserController extends BaseController {
 			}
 			// 根据用户身份类型获取排行榜
 			list = this.authenticManager.findRankingByIdentitype(authentic
-					.getIdentity(),page);
+					.getIdentity(),page,10);
 		} else {
 			list = new ArrayList();
 		}
@@ -381,7 +381,7 @@ public class UserController extends BaseController {
 
 			// 根据用户身份类型获取排行榜
 			list = this.authenticManager.findRankingByIdentitype(authentic
-					.getIdentity(),page);
+					.getIdentity(),page,10);
 		} else {
 			list = new ArrayList();
 		}
@@ -409,7 +409,7 @@ public class UserController extends BaseController {
 		Identity type = new Identity();
 		type.setIdentiyTypeId(2);
 		// 根据用户身份类型获取排行榜
-		list = this.authenticManager.findRankingByIdentitype(type,page);
+		list = this.authenticManager.findRankingByIdentitype(type,page,10);
 		if (list == null) {
 			list = new ArrayList();
 		}
@@ -581,6 +581,33 @@ public class UserController extends BaseController {
 
 		return getResult();
 	}
+	
+	/***
+	 * 搜索
+	 * 
+	 * @param map
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "newSystem/SearchUserByName")
+	@ResponseBody
+	public Map SearchUserByName(
+			@RequestParam(value = "name", required = false) String key,
+			   @RequestParam(value="menu",required=false)Integer menu,
+			   @RequestParam(value="sortmenu",required=false)Integer sortmenu,
+			   @RequestParam(value="submenu",required=false)Integer submenu,
+			ModelMap map, HttpSession session) {
+		this.result = new HashMap();
+		List list = this.userManger.getUserDao().findByKeyName(key);
+
+		
+		this.result.put("data", list);
+		this.status = 200;
+		this.message = "";
+
+		return getResult();
+	}
+	
 
 	@RequestMapping("/requestPlatformIntroduce")
 	@ResponseBody

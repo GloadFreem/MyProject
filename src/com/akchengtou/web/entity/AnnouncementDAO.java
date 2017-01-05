@@ -2,11 +2,15 @@ package com.akchengtou.web.entity;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -138,6 +142,37 @@ public class AnnouncementDAO {
 			throw re;
 		}
 	}
+	
+	public List findByPage(int size,Integer page) {
+		log.debug("finding all Announcement instances");
+		try {
+			String queryString = "from Announcement";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(size);
+			queryObject.setFirstResult(size*page);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer countOfInstance() {
+		log.debug("finding all Announcement instances");
+		try {
+			String queryString = "select count(*) from announcement";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			if(queryObject.list()!=null)
+			{
+				return Integer.parseInt(queryObject.list().get(0).toString());
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
 
 	public Announcement merge(Announcement detachedInstance) {
 		log.debug("merging Announcement instance");

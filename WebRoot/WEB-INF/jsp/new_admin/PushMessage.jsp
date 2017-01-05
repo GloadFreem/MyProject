@@ -5,11 +5,12 @@
 <section id="content">
 	<section class="vbox">
 		<header class="header bg-light bg-gradient b-b">
-			<p>消息推送</p>
+			<p>编辑消息</p>
 		</header>
 		<section class="scrollable wrapper">
-			<form action="editAuthentic.action" method="post"
-				enctype="multipart/form-result">
+			<form
+				action="editMessage.action?menu=7&sortmenu=2&submenu=2&page=0&size=10"
+				method="post" enctype="multipart/form-data">
 				<div class="">
 					<input name="contentId" value="${result.messageId}"
 						style="display:none">
@@ -19,41 +20,46 @@
 						</li>
 						<li class="list-group-item">
 							<div class="clear">
-								<input name="desc" class="form-control alert-success"
-									placeholder="请输入服务名称" value=${result.title }></input>
+								<input name="title" class="form-control alert-success"
+									placeholder="请输入标题" value=${result.title }></input>
 							</div>
 						</li>
 						<li class="list-group-item">
-							<div class="clear">用户</div>
+							<div class="clear">推送对象</div>
 						</li>
 						<li class="list-group-item">
-							<div class="clear">
-								<input name="desc" class="form-control alert-success"
-									placeholder="请选择用户" value=${result.user.name }></input>
+							<div class="input-group">
+								<input name="name" id="name" type="text" class="form-control"
+									placeholder="输入 关键字 进行搜索" value="${result.user.name }">
+								<span class="input-group-btn">
+									<button id="searchbtn" type="button"
+										class="btn btn-info btn-icon">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
 							</div>
-						</li>
-
-						<li class="list-group-item">
-							<div class="clear">图片</div>
-						</li>
-						<li class="list-group-item">
-							<div class="clear">
-								<img alt="${result.user.name }" src="${result.user.image }"
-									class="col-xs-2 m-b"> <input name="image"
-									class="form-control alert-success" value="${result.user.image }"
-									placeholder="请输入内容链接">
-							</div> <input name="file" id="input-1" type="file" class="file">
+							<div>
+								<select class="selectpicker show-menu-arrow form-control"
+									data-max-options="2" name='projectId' id='projectId'>
+									<option value="0" selected=selected>全部</option>
+								</select>
+							</div>
 				</div>
+
+
+				</li>
+
 				</li>
 
 
+
 				<li class="list-group-item">
-					<div class="clear">内容</div>
+					<div class="clear">推送内容</div>
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<textarea name="desc" class="form-control alert-success"
-							placeholder="请输入内容描述">${result.content }</textarea>
+						<textarea name="content" class="form-control alert-success"
+							placeholder="请输入内容">${result.content }</textarea>
 					</div>
 				</li>
 				<li class="list-group-item">
@@ -61,19 +67,25 @@
 				</li>
 				<li class="list-group-item">
 					<div class="clear">
-						<input name="desc" class="form-control alert-success"
-							placeholder="请输入价格" value=${result.readed }></input>
+						<input name="flagStr" class="form-control alert-success"
+							placeholder="是否已阅读"
+							value=<c:choose>
+										<c:when test="${result.readed}">
+										 已阅读
+									</c:when>
+									<c:otherwise>未阅读</c:otherwise>
+									</c:choose>></input>
 					</div>
 				</li>
 
 				<li class="list-group-item">
 					<div class="clear">通知时间</div>
 				</li>
-				<li class="list-group-item"><input name="url"
-					class="form-control alert-success" value="${result.publicDate }"
-					placeholder="请输入支付方式">
-				</div>
-				</li>
+				<li class="list-group-item"><input name="time"
+					class="form-control alert-success"
+					value="${result.getPublicDate() }" placeholder="请输入支付方式">
+
+					</div></li>
 
 				</ul>
 				</div>
@@ -85,3 +97,32 @@
 		</section>
 	</section>
 </section>
+
+<script type="text/javascript">
+	$("#searchbtn").click(
+			function() {
+				$.ajax({
+					url : "SearchUserByName.action",
+					data : {
+						"name" : $("input[name='name']").val(),
+					},
+					success : function(data) {
+						selector = $("select[name='projectId']");
+						selector.empty();
+				
+
+					 	data.data.forEach(function(e) {
+							select = "<option value='"+e.userId+"'>" + e.name
+									+ "</option>"
+							selector.append(select);
+						});
+						selector.selectpicker('refresh');
+					}
+				});
+
+			});
+
+	$("#projectId").change(function() {
+		$("input[name='name']").val($(this).find("option:selected").text());
+	});
+</script>

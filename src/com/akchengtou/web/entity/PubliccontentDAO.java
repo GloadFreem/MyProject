@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -139,6 +140,36 @@ public class PubliccontentDAO {
 			String queryString = "from Publiccontent";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public List findByPage(int size,Integer page) {
+		log.debug("finding all Publiccontent instances");
+		try {
+			String queryString = "from Publiccontent";
+			Query queryObject = getCurrentSession().createQuery(queryString);
+			queryObject.setMaxResults(size);
+			queryObject.setFirstResult(size*page);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	public Integer countOfInstance() {
+		log.debug("finding all Publiccontent instances");
+		try {
+			String queryString = "select count(*) from Publiccontent";
+			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
+			if(queryObject.list()!=null)
+			{
+				return Integer.parseInt(queryObject.list().get(0).toString());
+			}
+			return 0;
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;

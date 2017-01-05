@@ -163,7 +163,7 @@ public class PropertychargesDAO {
 	public Integer countOfInstance() {
 		log.debug("finding all Propertycharges instances");
 		try {
-			String queryString = "select count(*) from Propertycharges";
+			String queryString = "select count(*) from propertycharges";
 			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
 			if(queryObject.list()!=null)
 			{

@@ -397,7 +397,7 @@ public class MailUtil {
 	public static void sendUserRegist(MailUtil mu,String telephone) throws Exception {
 		String toEmails = AKConfig.STRING_MAIL_SERVER_TO_EMIAL;
 //		String toEmails = AKConfig.STRING_MAIL_SERVER_USER;
-		String subject = "用户注册--【金指投投融资】";
+		String subject = "用户注册--【城投逸园】";
 //		StringBuilder builder = new StringBuilder();
 		String dateString = DateUtils.dateToString(new Date(),"YYYY-MM-DD HH:MM:SS");
 		String content = String.format(AKConfig.STRING_EMIAL_REGIST, telephone,dateString);
@@ -414,7 +414,7 @@ public class MailUtil {
 	public static void sendUserAuthenticQuick(MailUtil mu,String telephone,String name) throws Exception {
 		String toEmails = AKConfig.STRING_MAIL_SERVER_TO_EMIAL;
 //		String toEmails = AKConfig.STRING_MAIL_SERVER_USER;
-		String subject = "用户认证催单--【金指投投融资】";
+		String subject = "用户认证催单--【城投逸园】";
 //		StringBuilder builder = new StringBuilder();
 		String content = String.format(AKConfig.STRING_EMIAL_AUTHENTIC_QUICK, telephone,name);
 //		builder.append(content);
@@ -429,7 +429,7 @@ public class MailUtil {
 	public static void sendUserInvest(MailUtil mu,String telephone,String name,String projectName,float count) throws Exception {
 		String toEmails = AKConfig.STRING_MAIL_SERVER_TO_EMIAL;
 //		String toEmails = AKConfig.STRING_MAIL_SERVER_USER;
-		String subject = "认投消息--【金指投投融资】";
+		String subject = "认投消息--【城投逸园】";
 //		StringBuilder builder = new StringBuilder();
 		String dateString = DateUtils.dateToString(new Date(),"YYYY-MM-DD HH:MM:SS");
 		String content = String.format(AKConfig.STRING_EMIAL_INVEST,name, telephone,dateString,projectName,count);
@@ -445,7 +445,7 @@ public class MailUtil {
 	public static void sendUserAuthentic(MailUtil mu,String telephone) throws Exception {
 		String toEmails = AKConfig.STRING_MAIL_SERVER_TO_EMIAL;
 //		String toEmails = AKConfig.STRING_MAIL_SERVER_USER;
-		String subject = "用户认证消息--【金指投投融资】";
+		String subject = "用户认证消息--【城投逸园】";
 //		StringBuilder builder = new StringBuilder();
 		String dateString = DateUtils.dateToString(new Date(),"YYYY-MM-DD HH:MM:SS");
 		String content = String.format(AKConfig.STRING_EMIAL_AUTHENTIC, telephone,dateString);
@@ -460,7 +460,7 @@ public class MailUtil {
 	public static void sendUserInvest(MailUtil mu,String telephone) throws Exception {
 		String toEmails = AKConfig.STRING_MAIL_SERVER_TO_EMIAL;
 //		String toEmails = AKConfig.STRING_MAIL_SERVER_USER;
-		String subject = "用户认投消息--【金指投投融资】";
+		String subject = "用户认投消息--【城投逸园】";
 //		StringBuilder builder = new StringBuilder();
 		String dateString = DateUtils.dateToString(new Date(),"YYYY-MM-DD HH:MM:SS");
 		String content = String.format(AKConfig.STRING_EMIAL_AUTHENTIC, telephone,dateString);

@@ -168,6 +168,8 @@ public class MemberDAO {
 		}
 	}
 	
+	
+	
 	public List findByPage(int size,Integer page) {
 		log.debug("finding all Member instances");
 		try {
@@ -185,7 +187,7 @@ public class MemberDAO {
 	public Integer countOfInstance() {
 		log.debug("finding all Member instances");
 		try {
-			String queryString = "select count(*) from Member";
+			String queryString = "select count(*) from member";
 			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
 			if(queryObject.list()!=null)
 			{

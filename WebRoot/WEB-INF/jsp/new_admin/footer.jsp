@@ -1,5 +1,3 @@
-<!-- Bootstrap -->
-<!-- App -->
 <script src="js/charts/easypiechart/jquery.easy-pie-chart.js"
 	cache="false"></script>
 <script src="js/charts/sparkline/jquery.sparkline.min.js" cache="false"></script>

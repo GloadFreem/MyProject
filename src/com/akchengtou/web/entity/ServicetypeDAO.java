@@ -169,7 +169,7 @@ public class ServicetypeDAO {
 	public Integer countOfInstance() {
 		log.debug("finding all Servicetype instances");
 		try {
-			String queryString = "select count(*) from Servicetype";
+			String queryString = "select count(*) from servicetype";
 			SQLQuery queryObject = getCurrentSession().createSQLQuery(queryString);
 			if(queryObject.list()!=null)
 			{

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+
 /**
  * A data access object (DAO) providing persistence and search support for User
  * entities. Transaction control of the save(), update() and delete() operations
@@ -185,6 +186,16 @@ public class UserDAO {
 			throw re;
 		}
 	}
+	
+	public List<User> findByKeyName(Object name) {
+		String sqlString = "select * from user where name like ?";
+		
+		SQLQuery queryObject = getCurrentSession().createSQLQuery(sqlString).addEntity(User.class);
+		queryObject.setParameter(0, "%"+name+"%");
+		
+		return queryObject.list();
+	}
+	
 	public List findByPage(int size,Integer page) {
 		log.debug("finding all User instances");
 		try {

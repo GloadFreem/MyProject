@@ -157,7 +157,6 @@ public class WebController extends BaseController {
 		if (page == null) {
 			page = 0;
 		}
-		
 
 		List list = this.userManger.getUserDao().findByPage(size, page);
 
@@ -167,12 +166,11 @@ public class WebController extends BaseController {
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -204,7 +202,7 @@ public class WebController extends BaseController {
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
 
 		return AKConfig.NEW_SERVER_CONTROL;
@@ -219,7 +217,7 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		if (size == null) {
 			size = 10;
 		}
@@ -235,12 +233,11 @@ public class WebController extends BaseController {
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -261,14 +258,13 @@ public class WebController extends BaseController {
 		if (sortmenu == null) {
 			sortmenu = 0;
 		}
-		
+
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
-		
-		
+
 		map.put("result", list);
 		map.put("content", "table-authentic-list");
 		map.put("menu", menu);
@@ -294,7 +290,7 @@ public class WebController extends BaseController {
 		if (page == null) {
 			page = 0;
 		}
-		
+
 		List list = this.userManger.getMemberDao().findByPage(size, page);
 		Integer count = this.userManger.getMemberDao().countOfInstance();
 
@@ -302,12 +298,11 @@ public class WebController extends BaseController {
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -328,11 +323,11 @@ public class WebController extends BaseController {
 		if (sortmenu == null) {
 			sortmenu = 0;
 		}
-		
+
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
 		map.put("result", list);
 		map.put("content", "table-member-list");
@@ -352,7 +347,7 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		
+
 		if (size == null) {
 			size = 10;
 		}
@@ -360,7 +355,7 @@ public class WebController extends BaseController {
 		if (page == null) {
 			page = 0;
 		}
-		
+
 		if (type == null) {
 			type = 1;
 		}
@@ -373,19 +368,19 @@ public class WebController extends BaseController {
 
 		// 根据用户身份类型获取排行榜
 		List list = this.authenticManager.findRankingByIdentitype(
-				authentic.getIdentity(), page,size);
-		Integer count = this.authenticManager.getAuthenticDao().countOfInstance();
+				authentic.getIdentity(), page, size);
+		Integer count = this.authenticManager.getAuthenticDao()
+				.countOfInstance();
 
 		List pages = new ArrayList();
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -406,14 +401,12 @@ public class WebController extends BaseController {
 		if (sortmenu == null) {
 			sortmenu = 0;
 		}
-		
+
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
-		
-		
 
 		map.put("result", list);
 		map.put("content", "table-user-rank-list");
@@ -439,20 +432,21 @@ public class WebController extends BaseController {
 		if (page == null) {
 			page = 0;
 		}
-		
-		List list = this.serviceManager.getServiceTypeDao().findByPage(size, page);
-		Integer count = this.serviceManager.getServiceTypeDao().countOfInstance();
+
+		List list = this.serviceManager.getServiceTypeDao().findByPage(size,
+				page);
+		Integer count = this.serviceManager.getServiceTypeDao()
+				.countOfInstance();
 
 		List pages = new ArrayList();
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -473,13 +467,13 @@ public class WebController extends BaseController {
 		if (sortmenu == null) {
 			sortmenu = 0;
 		}
-		
+
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
-		
+
 		map.put("result", list);
 		map.put("content", "table-service-list");
 		map.put("menu", menu);
@@ -498,7 +492,6 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-
 		if (size == null) {
 			size = 10;
 		}
@@ -506,21 +499,21 @@ public class WebController extends BaseController {
 		if (page == null) {
 			page = 0;
 		}
-		
-		
-		List list = this.serviceManager.getPropertychargesDao().findByPage(size, page);
-		Integer count = this.serviceManager.getPropertychargesDao().countOfInstance();
+
+		List list = this.serviceManager.getPropertychargesDao().findByPage(
+				size, page);
+		Integer count = this.serviceManager.getPropertychargesDao()
+				.countOfInstance();
 
 		List pages = new ArrayList();
 		Integer num = count / size;
 		if (page < num) {
 			if (page < 5) {
-				if(num-page>5)
-				{
+				if (num - page > 5) {
 					for (int i = 0; i < 5; i++) {
 						pages.add(i);
 					}
-				}else{
+				} else {
 					for (int i = 0; i <= num; i++) {
 						pages.add(i);
 					}
@@ -541,13 +534,13 @@ public class WebController extends BaseController {
 		if (sortmenu == null) {
 			sortmenu = 0;
 		}
-		
+
 		map.put("sizes", AKConfig.SIZES);
 		map.put("size", size);
 		map.put("page", page);
-		map.put("count", count/size);
+		map.put("count", count / size);
 		map.put("pages", pages);
-		
+
 		map.put("result", list);
 		map.put("content", "table-charges-list");
 		map.put("menu", menu);
@@ -566,7 +559,55 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.serviceManager.getOrderServiceDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		List list = this.serviceManager.getOrderServiceDao().findByPage(size,
+				page);
+		Integer count = this.serviceManager.getOrderServiceDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+
 		map.put("result", list);
 		map.put("content", "table-order-list");
 		map.put("menu", menu);
@@ -585,7 +626,16 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List<Member> list = this.serviceManager.getMemberDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		List<Member> list = this.serviceManager.getMemberDao().findByPage(size,
+				page);
 
 		// ser
 		List result = new ArrayList();
@@ -603,6 +653,45 @@ public class WebController extends BaseController {
 			result.add(data);
 
 		}
+
+		Integer count = this.serviceManager.getMemberDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+
 		map.put("result", result);
 		map.put("content", "table-member-order-list");
 		map.put("menu", menu);
@@ -621,7 +710,53 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.serviceManager.getEventDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		List list = this.serviceManager.getEventDao().findByPage(size, page);
+		Integer count = this.serviceManager.getEventDao().countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+
 		map.put("result", list);
 		map.put("content", "table-event-list");
 		map.put("menu", menu);
@@ -640,7 +775,56 @@ public class WebController extends BaseController {
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
 
-		List list = this.feelingManager.getPublicContentDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		List list = this.feelingManager.getPublicContentDao().findByPage(size,
+				page);
+
+		Integer count = this.feelingManager.getPublicContentDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+
 		map.put("result", list);
 		map.put("content", "table-feeling-list");
 		map.put("menu", menu);
@@ -658,8 +842,58 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		List list = this.taskManager.getTaskDao().findAll();
-		map.put("result", list);
+		
+
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		
+		List list = this.taskManager.getTaskDao().findByPage(size, page);
+		
+		Integer count = this.taskManager.getTaskDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+		map.put("result", list);	
 		map.put("content", "table-task-list");
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
@@ -676,7 +910,57 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		List list = this.systemManager.getNoticeDao().findAll();
+		
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		
+		List list = this.systemManager.getNoticeDao().findByPage(size, page);
+		Integer count = this.systemManager.getNoticeDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+		map.put("result", list);	
+		
 		map.put("result", list);
 		map.put("content", "table-announce-list");
 		map.put("menu", menu);
@@ -694,7 +978,55 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		List list = this.systemManager.getSystemMessageDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		List list = this.systemManager.getSystemMessageDao().findByPage(size, page);
+		Integer count = this.systemManager.getSystemMessageDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+		map.put("result", list);	
+		
 		map.put("result", list);
 		map.put("content", "table-message-list");
 		map.put("menu", menu);
@@ -706,12 +1038,54 @@ public class WebController extends BaseController {
 	@RequestMapping(value = "newSystem/workResult")
 	public String workResult(
 			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "menu", required = false) Integer menu,
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
+		
 
-		List list = this.taskManager.getAttendanceRecordDao().findAll();
+		List list = this.taskManager.getAttendanceRecordDao().findByPage(size, page);
+		Integer count = this.taskManager.getAttendanceRecordDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+		map.put("result", list);	
 
 		map.put("result", list);
 		map.put("content", "table-workResult-list");
@@ -730,7 +1104,55 @@ public class WebController extends BaseController {
 			@RequestParam(value = "submenu", required = false) Integer submenu,
 			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
 			ModelMap map) {
-		List list = this.taskManager.getAttendanceDao().findAll();
+		if (size == null) {
+			size = 10;
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+		
+		List list = this.taskManager.getAttendanceDao().findByPage(size, page);
+		Integer count = this.taskManager.getAttendanceDao()
+				.countOfInstance();
+
+		List pages = new ArrayList();
+		Integer num = count / size;
+		if (page < num) {
+			if (page < 5) {
+				if (num - page > 5) {
+					for (int i = 0; i < 5; i++) {
+						pages.add(i);
+					}
+				} else {
+					for (int i = 0; i <= num; i++) {
+						pages.add(i);
+					}
+				}
+			} else {
+				for (int i = page; i < page + 5; i++) {
+					pages.add(i);
+				}
+			}
+		} else {
+			page = num;
+
+			for (int i = 0; i <= page; i++) {
+				pages.add(i);
+			}
+		}
+
+		if (sortmenu == null) {
+			sortmenu = 0;
+		}
+
+		map.put("sizes", AKConfig.SIZES);
+		map.put("size", size);
+		map.put("page", page);
+		map.put("count", count / size);
+		map.put("pages", pages);
+		map.put("result", list);	
+		
 		map.put("result", list);
 		map.put("content", "table-attendance-list");
 		map.put("menu", menu);
@@ -1282,6 +1704,56 @@ public class WebController extends BaseController {
 		map.put("types", types);
 		map.put("result", member);
 		map.put("content", "memberDetail");
+		map.put("menu", menu);
+		map.put("sortmenu", sortmenu);
+		map.put("submenu", submenu);
+		return AKConfig.NEW_SERVER_CONTROL;
+	}
+	@RequestMapping(value = "newSystem/editMessage")
+	public String editMessage(
+			@RequestParam(value = "projectId", required = false) Integer projectId,
+			@RequestParam(value = "content", required = false) String content,
+			@RequestParam(value = "flag", required = false) Integer flag,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "contentId", required = false) Integer contentId,
+			@RequestParam(value = "menu", required = false) Integer menu,
+			@RequestParam(value = "submenu", required = false) Integer submenu,
+			@RequestParam(value = "sortmenu", required = false) Integer sortmenu,
+			ModelMap map) {
+		Message message = new Message();
+		if(contentId!=null)
+		{
+			message = this.systemManager.getSystemMessageDao().findById(contentId);
+		}
+		
+		if(projectId!=null)
+		{
+			User  user = this.userManger.findUserById(projectId);
+			if(user!=null)
+			{
+				message.setUser(user);
+			}
+		}
+		
+		message.setTitle(title);
+		message.setContent(content);
+		message.setPublicDate(new Date());
+		message.setReaded(false);
+//		if(flag==0)
+//		{
+//		}else{
+//			message.setReaded(true);
+//		}
+		
+		if(contentId!=null)
+		{
+			this.systemManager.getSystemMessageDao().saveOrUpdate(message);
+		}else{
+			this.systemManager.getSystemMessageDao().save(message);
+		}
+		
+		map.put("result", message);
+		map.put("content", "messageDetail");
 		map.put("menu", menu);
 		map.put("sortmenu", sortmenu);
 		map.put("submenu", submenu);

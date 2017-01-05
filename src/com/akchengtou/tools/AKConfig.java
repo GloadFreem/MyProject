@@ -129,7 +129,6 @@ public class AKConfig {
 			add("adminAddActionImage.action");
 			add("adminAddAction.action");
 			add("adminIndex.action");
-			add("adminAddAuthentic.action");
 			add("adminSearchUserByName.action");
 			add("adminUploadFeelingImage.action");
 			add("adminAddCycle.action");
@@ -166,24 +165,24 @@ public class AKConfig {
 	public static String STRING_PASSWORD_RESET_FAIL = "密码失败！";
 
 	// 短信模板
-	public static String STRING_SMS_REGISTE = "感谢你注册金指投--专注中国成长型企业股权投融资";
-	public static String STRING_SMS_ROADSHOW_SUBMIT = "尊贵的金指投用户, 你的项目申请提交成功。根据您项目的实际情况, 会有专门的顾问和你取得联系, 请保持手机畅通。如有疑问请致电 18691883712";
-	public static String STRING_SMS_ROADSHOW_VALID_TRUE = "尊贵的金指投用户，您的路演申请提交成功，已进入项目审核阶段，我们的工作人员将会在第一时间联系您，请保持手机畅通。您可以打开【金指投】APP->个人中心->进度查看->我的路演 查看详情，感谢您长期以来的支持！";
-	public static String STRING_SMS_ROADSHOW_VALID_FALSE = "尊贵的金指投用户, 您的路演申请未通过审核。请打开【金指投】APP->个人中心->进度查看->我的路演 查看原因。请您及时修改、完善信息并重新提交申请。如有疑问请致电 18691883712";
-	public static String STRING_SMS_INVESTOR_SUBMIT = "尊贵的金指投用户，恭喜您的“VIP投资人认证”提交成功。您可以打开【金指投】APP->个人中心->进度查看->投资人认证 查看详情。如有疑问请致电 18691883712";
-	public static String STRING_SMS_AUTH_TRUE = "尊贵的金指投用户，恭喜您的“VIP投资人认证”通过审核，小金将于后续贴身为您服务。使用金指投APP，开启您的投融资之旅吧！如有疑问请致电 18691883712";
-	public static String STRING_SMS_AUTH_FALSE = "尊贵的金指投用户，小金抱歉的通知您，您的“VIP投资人认证”未通过审核。如有疑问请致电 18691883712";
-	public static String STRING_SMS_PARTICIPATE_SUBMIT = "尊贵的金指投用户，您的[%s]来现场申请已提交。请打开【金指投】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
-	public static String STRING_SMS_PARTICIPATE_VALID_TRUE = "尊贵的金指投用户，您于[%s]申请参加[%s]来现场申请通过审核。打开【金指投】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
-	public static String STRING_SMS_PARTICIPATE_VALID_FALSE = "尊贵的金指投用户，您于[%s]申请参加[%s]来现场申请未通过审核。 请打开【金指投】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
-	public static String STRING_SMS_INVEST_VALID_TRUE = "尊贵的金指投用户，您于[%s]投资[%s][%s]万。如有问题请致电 18681838312, 或致邮 kf@jinzht.com。我们的工作人员将会第一时间联系您，请您保持手机畅通。您也可以打开【金指投】APP->个人>中心->我的投融资->我投资的项目 查看详情。";
+	public static String STRING_SMS_REGISTE = "感谢你注册城投逸园--专注中国成长型企业股权投融资";
+	public static String STRING_SMS_ROADSHOW_SUBMIT = "尊贵的城投逸园用户, 你的项目申请提交成功。根据您项目的实际情况, 会有专门的顾问和你取得联系, 请保持手机畅通。如有疑问请致电 18691883712";
+	public static String STRING_SMS_ROADSHOW_VALID_TRUE = "尊贵的城投逸园用户，您的路演申请提交成功，已进入项目审核阶段，我们的工作人员将会在第一时间联系您，请保持手机畅通。您可以打开【城投逸园】APP->个人中心->进度查看->我的路演 查看详情，感谢您长期以来的支持！";
+	public static String STRING_SMS_ROADSHOW_VALID_FALSE = "尊贵的城投逸园用户, 您的路演申请未通过审核。请打开【城投逸园】APP->个人中心->进度查看->我的路演 查看原因。请您及时修改、完善信息并重新提交申请。如有疑问请致电 18691883712";
+	public static String STRING_SMS_INVESTOR_SUBMIT = "尊贵的城投逸园用户，恭喜您的“VIP投资人认证”提交成功。您可以打开【城投逸园】APP->个人中心->进度查看->投资人认证 查看详情。如有疑问请致电 18691883712";
+	public static String STRING_SMS_AUTH_TRUE = "尊贵的城投逸园用户，恭喜您的“VIP投资人认证”通过审核，小金将于后续贴身为您服务。使用城投逸园APP，开启您的投融资之旅吧！如有疑问请致电 18691883712";
+	public static String STRING_SMS_AUTH_FALSE = "尊贵的城投逸园用户，小金抱歉的通知您，您的“VIP投资人认证”未通过审核。如有疑问请致电 18691883712";
+	public static String STRING_SMS_PARTICIPATE_SUBMIT = "尊贵的城投逸园用户，您的[%s]来现场申请已提交。请打开【城投逸园】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
+	public static String STRING_SMS_PARTICIPATE_VALID_TRUE = "尊贵的城投逸园用户，您于[%s]申请参加[%s]来现场申请通过审核。打开【城投逸园】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
+	public static String STRING_SMS_PARTICIPATE_VALID_FALSE = "尊贵的城投逸园用户，您于[%s]申请参加[%s]来现场申请未通过审核。 请打开【城投逸园】APP->个人中心->进度查看->来现场 查看详情。如有疑问请致电 18691883712";
+	public static String STRING_SMS_INVEST_VALID_TRUE = "尊贵的城投逸园用户，您于[%s]投资[%s][%s]万。如有问题请致电 18681838312, 或致邮 kf@jinzht.com。我们的工作人员将会第一时间联系您，请您保持手机畅通。您也可以打开【城投逸园】APP->个人>中心->我的投融资->我投资的项目 查看详情。";
 
 	// 系统
-	public static String STRING_APPP_SHARE_TITLE = "【金指投投融资】";
-	public static String STRING_APPP_SHARE_CONTENT = "金指投--专注于中国成长型企业股权投融资平台";
+	public static String STRING_APPP_SHARE_TITLE = "【城投逸园】";
+	public static String STRING_APPP_SHARE_CONTENT = "城投逸园--专注于中国成长型企业股权投融资平台";
 	public static String STRING_PYTHON_SYSTEM_ADDRESS = "http://www.jinzht.com/phone5/";
-//	public static String STRING_SYSTEM_ADDRESS = "http://59.110.11.95:8080/akchengtou/";
-	public static String STRING_SYSTEM_ADDRESS = "http://localhost:8080/akchengtou/";
+	public static String STRING_SYSTEM_ADDRESS = "http://59.110.11.95:8080/akchengtou/";
+//	public static String STRING_SYSTEM_ADDRESS = "http://localhost:8080/akchengtou/";
 	// public static String STRING_SYSTEM_ADDRESS =
 	// "http://www.jinzht.com:8080/jinzht/";
 	// public static String STRING_SYSTEM_INTRODUCE
@@ -240,7 +239,7 @@ public class AKConfig {
 		{
 			add("一款互联网投融资神器");
 			add("金融界大咖眼中的投融资神器");
-			add("做投融资就用金指投");
+			add("做投融资就用城投逸园");
 			add("匠心之作，急速解决创业路上资金短缺问题");
 			add("匠心之作，精品项目络绎不绝，赶快收下它吧！");
 		}
@@ -278,7 +277,7 @@ public class AKConfig {
 		}
 	};
 
-	public static String STRING_SHARE_CONTENT_TITLE = "您的好友分享了一篇【金指投投融资】圈子，请点击查看吧!";
+	public static String STRING_SHARE_CONTENT_TITLE = "您的好友分享了一篇【城投逸园】圈子，请点击查看吧!";
 
 	// 活动
 	public static String STRING_ACTION_ADD_SUCCESS = "报名信息提交成功!";
@@ -329,15 +328,15 @@ public class AKConfig {
 	public static String STRING_JAK = "cc3fdb255d49497c5fd3d402"; // access key
 	public static String STRING_JMS = "4bcf1021c013e29b4f77a7b7"; // master
 																	// secret
-	public static String STRING_PUSH_ALERT = "【金指投投融资】--金日投条";
-	public static String STRING_PUSH_TITLE = "【金指投投融资】";
-	public static String STRING_PUSH_CONTENT = "【金指投投融资】";
+	public static String STRING_PUSH_ALERT = "【城投逸园】--金日投条";
+	public static String STRING_PUSH_TITLE = "【城投逸园】";
+	public static String STRING_PUSH_CONTENT = "【城投逸园】";
 
 	// 邮件消息
-	public static String STRING_EMIAL_REGIST = "<div style='font-size:16px'>亲爱的金指投小伙伴:<br/>新用户%s于%s注册账户，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验金指投优质服务！</div>";
-	public static String STRING_EMIAL_AUTHENTIC = "<div style='font-size:16px'>亲爱的金指投小伙伴:<br/>用户%s于%s认证，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验金指投优质服务！</div>";
-	public static String STRING_EMIAL_INVEST = "<div style='font-size:16px'>亲爱的金指投小伙伴:<br/>用户【%s】%s于%s认投【%s】项目%.2f万，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验金指投优质服务！</div>";
-	public static String STRING_EMIAL_AUTHENTIC_QUICK = "<div style='font-size:16px'>亲爱的金指投小伙伴:<br/>用户【%s】%s请求加快审核身份认证，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验金指投优质服务！</div>";
+	public static String STRING_EMIAL_REGIST = "<div style='font-size:16px'>亲爱的城投逸园小伙伴:<br/>新用户%s于%s注册账户，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验城投逸园优质服务！</div>";
+	public static String STRING_EMIAL_AUTHENTIC = "<div style='font-size:16px'>亲爱的城投逸园小伙伴:<br/>用户%s于%s认证，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验城投逸园优质服务！</div>";
+	public static String STRING_EMIAL_INVEST = "<div style='font-size:16px'>亲爱的城投逸园小伙伴:<br/>用户【%s】%s于%s认投【%s】项目%.2f万，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验城投逸园优质服务！</div>";
+	public static String STRING_EMIAL_AUTHENTIC_QUICK = "<div style='font-size:16px'>亲爱的城投逸园小伙伴:<br/>用户【%s】%s请求加快审核身份认证，请尽快审核信息，请以工匠心用心对待每一位来之不易的用户，让他能够充分体验城投逸园优质服务！</div>";
 
 	// 密码规则
 	public static String STRING_PASWWORD_RULE = "%s%slindyang";
